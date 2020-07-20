@@ -6,6 +6,7 @@ public class Status : MonoBehaviour
 {
     public float HP;
     public float Attack;
+    public float Speed;
     public float MaxHP = 1000f;
 
     // Start is called before the first frame update

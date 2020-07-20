@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 726075210}
   m_Layer: 0
   m_Name: Attack
-  m_TagString: Untagged
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -239,6 +239,7 @@ GameObject:
   m_Component:
   - component: {fileID: 739224975}
   - component: {fileID: 739224974}
+  - component: {fileID: 739224976}
   - component: {fileID: 739224973}
   m_Layer: 0
   m_Name: Main Camera
@@ -312,6 +313,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &739224976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739224972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14c2bd929d1bdaf40b55125141c04934, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minX: -5
+  maxX: 10
+  minY: 0
+  maxY: 10
 --- !u!1 &1374223126
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +342,7 @@ GameObject:
   - component: {fileID: 1374223127}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -342,8 +359,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b711f99db0e20464fb9c7c21001bf4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WalkSped: 10
-  RunSpeed: 20
+  WalkSped: 8
+  RunSpeed: 16
   attackObject: {fileID: 726075209}
   timer: 0
   limitTimer: 30

@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
 
         transform.position += new Vector3( LR, UD, 0).normalized*(WalkSped * Time.deltaTime);
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetButton("A"))
         {
             transform.position += new Vector3(LR, UD, 0).normalized * (RunSpeed * Time.deltaTime);
         }
@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
     //攻撃
     void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isAttack)
+        if (Input.GetButtonDown("X") && !isAttack)
         {
             attackObject.SetActive(true);
             isAttack = true;

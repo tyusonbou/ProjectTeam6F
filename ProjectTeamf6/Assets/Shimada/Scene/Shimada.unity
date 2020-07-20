@@ -453,6 +453,7 @@ MonoBehaviour:
   SpeedUpPoint: 1.2
   BaseType: 1
   ON: 0
+  Touch: 0
 --- !u!61 &1439478523
 BoxCollider2D:
   m_ObjectHideFlags: 0

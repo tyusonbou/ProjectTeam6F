@@ -11,13 +11,19 @@ public class Base : MonoBehaviour
     Status status;
     GameObject Player;
     [SerializeField]
+    private float HP;//拠点の体力
+    [SerializeField]
     private float AttackPoint;//攻撃上昇値
     [SerializeField]
     private float SpeedPoint;//速度上昇値
     [SerializeField]
+    private float RecoveryPoint;//回復量
+    [SerializeField]
     private float AttackUpPoint;//インスペクタで変更できる値
     [SerializeField]
     private float SpeedUpPoint;//インスペクタで変更できる値
+    [SerializeField]
+    private float RecoveryUpPoint;//インスペクタで変更できる値
     [SerializeField]
     private int BaseType;//拠点の種類
     public bool ON;
@@ -47,7 +53,7 @@ public class Base : MonoBehaviour
                         break;
                     //村（攻撃力バフ）の場合
                     case 1:
-                        if (ON)
+                        if (ON == true)
                         {
                             StartCoroutine("AttackUp");
                             ON = false;
@@ -55,7 +61,7 @@ public class Base : MonoBehaviour
                         break;
                     //村（速度バフ）の場合
                     case 2:
-                        if (ON)
+                        if (ON == true)
                         {
                             StartCoroutine("SpeedUp");
                             ON = false;
@@ -63,12 +69,50 @@ public class Base : MonoBehaviour
                         break;
                     //村（回復力バフ）の場合
                     case 3:
-
+                        if (ON == true)
+                        {
+                            StartCoroutine("RecoveryUp");
+                            ON = false;
+                        }
                         break;
                 }
             }
         }
+        if(HP <= 0)
+        {
+            HP = 0;
+            switch (BaseType)
+            {
+                //拠点の場合
+                case 0:
 
+                    break;
+                //村（攻撃力バフ）の場合
+                case 1:
+                    if (ON == false)
+                    {
+                        StartCoroutine("AttackDown");
+                        ON = true;
+                    }
+                        break;
+                //村（速度バフ）の場合
+                case 2:
+                    if (ON == false)
+                    {
+                        StartCoroutine("SpeedDown");
+                        ON = true;
+                    }
+                    break;
+                //村（回復力バフ）の場合
+                case 3:
+                    if (ON == false)
+                    {
+                        StopCoroutine("RecoveryUp");
+                        ON = true;
+                    }
+                        break;
+            }
+        }
     }
 
     //攻撃力バフ
@@ -78,6 +122,14 @@ public class Base : MonoBehaviour
         //攻撃力の増加する値を計算
         AttackPoint = status.Attack * (AttackUpPoint - 1.0f);
         status.Attack = status.Attack + AttackPoint;
+        yield return null;
+    }
+    //攻撃力ダウン
+    IEnumerator AttackDown()
+    {
+        GetComponent<Renderer>().material.color = Color.white;
+        //攻撃力の増加する値を計算
+        status.Attack = status.Attack - AttackPoint;
         yield return null;
     }
 
@@ -90,14 +142,28 @@ public class Base : MonoBehaviour
         status.Speed = status.Speed + SpeedPoint;
         yield return null;
     }
+    //速度ダウン
+    IEnumerator SpeedDown()
+    {
+        GetComponent<Renderer>().material.color = Color.clear;
+        //速度の増加する値を計算
+        status.Speed = status.Speed - SpeedPoint;
+        yield return null;
+    }
 
     //全回復
-    IEnumerator Recovery()
+    IEnumerator RecoveryUp()
     {
+        GetComponent<Renderer>().material.color = Color.green;
         //ステータスの最大HPを回復
         status.HP = status.HP + status.MaxHP;
+        while(true)
+        {
+            RecoveryPoint = status.MaxHP * (RecoveryUpPoint - 1.0f);
+            status.HP = status.HP + RecoveryPoint;
+            yield return new WaitForSeconds(1.0f);
+        }
         
-        yield return null;
     }
 
     void OnTriggerStay2D(Collider2D col)
@@ -135,11 +201,17 @@ public class Base : MonoBehaviour
             //拠点の種類
             ba.BaseType = EditorGUILayout.IntField("拠点の種類", ba.BaseType);
 
+            // -- 拠点の体力 --
+            ba.HP = EditorGUILayout.FloatField("拠点の耐久値", ba.HP);
+
             // -- 攻撃 --
             ba.AttackUpPoint = EditorGUILayout.FloatField("攻撃上昇倍率", ba.AttackUpPoint);
 
             // -- 速度 --
             ba.SpeedUpPoint = EditorGUILayout.FloatField("速度上昇倍率", ba.SpeedUpPoint);
+
+            // -- 回復量 --
+            ba.RecoveryUpPoint = EditorGUILayout.FloatField("回復量", ba.RecoveryUpPoint);
 
             //値の変更を保存
             EditorUtility.SetDirty(ba);

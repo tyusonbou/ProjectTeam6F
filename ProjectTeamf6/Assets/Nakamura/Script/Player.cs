@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     float WalkSped;　//歩き速度
     [SerializeField] 
     float RunSpeed;　//走り速度
+    [SerializeField]
+    float PlayerHP; //プレイヤーHP
 
     [SerializeField]
     GameObject attackObject;

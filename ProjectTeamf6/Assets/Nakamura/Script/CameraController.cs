@@ -14,11 +14,20 @@ public class CameraController : MonoBehaviour
     public float minY;
     public float maxY;
 
+    private float CameraSize;
+    public float SizeS;
+    public float SizeM;
+    public float SizeL;
+
+    string CameraSizeState;
+
     // Start is called before the first frame update
     void Start()
     {
         camera = GetComponent<Camera>();
         player = GameObject.Find("Player");
+        CameraSizeState = "M";
+        CameraSize = SizeM;
     }
 
     // Update is called once per frame
@@ -55,9 +64,25 @@ public class CameraController : MonoBehaviour
 
     void CameraMove()
     {
+        camera.orthographicSize = CameraSize;
+
         if (Input.GetButtonDown("R3"))
         {
-
+            switch (CameraSizeState)
+            {
+                case "S":
+                    CameraSizeState = "M";
+                    CameraSize = SizeM;
+                    break;
+                case "M":
+                    CameraSizeState = "L";
+                    CameraSize = SizeL;
+                    break;
+                case "L":
+                    CameraSizeState = "S";
+                    CameraSize = SizeS;
+                    break;
+            }
         }
     }
 }

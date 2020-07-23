@@ -9,10 +9,14 @@ public class Player : MonoBehaviour
     [SerializeField] 
     float RunSpeed;　//走り速度
     [SerializeField]
-    float PlayerHP; //プレイヤーHP
+    public static float PlayerHP; //プレイヤーHP
+    [SerializeField]
+    public static float PlayerAttack;
 
     [SerializeField]
-    GameObject attackObject;
+    GameObject attackSword;
+    [SerializeField]
+    GameObject attackBullet;
 
     string MoveState;　//向き
 
@@ -29,7 +33,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         MoveState = "RIGHT";
-        attackObject.SetActive(false);
+        attackSword.SetActive(false);
         isAttack = false;
     }
 
@@ -38,6 +42,7 @@ public class Player : MonoBehaviour
     {
         ChangeState();
         Attack();
+        Bullet();
     }
 
     private void FixedUpdate()
@@ -98,9 +103,9 @@ public class Player : MonoBehaviour
     //攻撃
     void Attack()
     {
-        if (Input.GetButtonDown("X") && !isAttack)
+        if (Input.GetButtonDown("Y") && !isAttack)
         {
-            attackObject.SetActive(true);
+            attackSword.SetActive(true);
             isAttack = true;
             timer = 0;
         }
@@ -111,10 +116,27 @@ public class Player : MonoBehaviour
 
             if (timer > limitTimer)
             {
-                attackObject.SetActive(false);
+                attackSword.SetActive(false);
                 isAttack = false;
             }
         }
         
+    }
+
+    void Bullet()
+    {
+        if (Input.GetButtonDown("X"))
+        {
+            Instantiate(attackBullet);
+        }
+    }
+
+    public float ReturnPlayerHP()
+    {
+        return PlayerHP;
+    }
+    public float ReturnAttackP()
+    {
+        return PlayerAttack;
     }
 }

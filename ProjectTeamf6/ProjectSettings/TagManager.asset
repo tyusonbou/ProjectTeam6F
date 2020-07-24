@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
+<<<<<<< HEAD
   tags: []
+=======
+  tags:
+  - Attack
+>>>>>>> parent of b6c1bfb... Merge pull request #21 from tyusonbou/Nakamura09
   layers:
   - Default
   - TransparentFX

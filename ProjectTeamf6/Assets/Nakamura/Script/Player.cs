@@ -227,7 +227,33 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    //private void OnTriggerEnter2D(Collider2D col)
+    //{
+    //    if ((col.gameObject.tag == "Enemy") && (!isKnockBack))
+    //    {
+    //        isKnockBack = true;
+    //        PlayerHP -= 1;
+
+    //        Vector3 knockBackDirection = (col.gameObject.transform.position - transform.position).normalized;
+
+    //        knockBackDirection.x *= -1;
+    //        knockBackDirection.y -= 1;
+    //        knockBackDirection.z += 1;
+
+    //        rb2d.velocity = Vector2.zero;
+    //        rb2d.AddForce(knockBackDirection * EnemyAttack);
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D col)
+    //{
+    //    if ((col.gameObject.tag == "Enemy")  && (isKnockBack))
+    //    {
+    //        rb2d.velocity = Vector2.zero;
+    //    }
+    //}
+
+    private void OnCollisionEnter2D(Collision2D col)
     {
         if ((col.gameObject.tag == "Enemy") && (!isKnockBack))
         {
@@ -245,9 +271,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D col)
+    private void OnCollisionExit2D(Collision2D col)
     {
-        if ((col.gameObject.tag == "Enemy")  && (isKnockBack))
+        if ((col.gameObject.tag == "Enemy") && (isKnockBack))
         {
             rb2d.velocity = Vector2.zero;
         }

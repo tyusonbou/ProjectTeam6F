@@ -7,7 +7,7 @@ public class Pl_EnemyMove : MonoBehaviour
     [SerializeField, Header("体力"), Range(0, 100)]
     private float health = 5;
     [SerializeField, Header("攻撃力"), Range(0, 100)]
-    private float damege = 5;
+    private float damage = 5;
     [SerializeField, Header("スピード"), Range(0, 100)]
     private float speed = 5;
     [SerializeField]
@@ -50,6 +50,11 @@ public class Pl_EnemyMove : MonoBehaviour
         EnemySX = pex / pesq * speed;
         EnemySY = pey / pesq * speed;
         transform.position += new Vector3(EnemySX, EnemySY);
+        if (isDamage == true)
+        {
+            Damage();
+        }
+        IsDestroy();
     }
 
     void Damage()
@@ -80,17 +85,18 @@ public class Pl_EnemyMove : MonoBehaviour
             }
         }
         */
+        isDamage = false;
     }
 
     void IsDestroy()
     {
         if (health <= 0)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
-    void OnTriggerEnter2D(Collision2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
 
         if (other.gameObject.CompareTag("Attack"))
@@ -99,12 +105,8 @@ public class Pl_EnemyMove : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collision2D other)
+    public float RetrunEnemyAttackP()
     {
-
-        if (other.gameObject.CompareTag("Attack"))
-        {
-            isDamage = false;
-        }
+        return damage;
     }
 }

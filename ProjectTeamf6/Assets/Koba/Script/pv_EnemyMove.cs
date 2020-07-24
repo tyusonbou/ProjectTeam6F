@@ -24,7 +24,6 @@ public class pv_EnemyMove : MonoBehaviour
 
     Rigidbody2D rb;
 
-
     Vector2 playerPos, playerBasePos, village1Pos, village2Pos, village3Pos, village4Pos;
     float pex, pey, pesq;
     float pbex, pbey, pbesq;
@@ -60,6 +59,7 @@ public class pv_EnemyMove : MonoBehaviour
     {
         var velocity = rb.velocity;
 
+        //velocity = Vector2.zero;
         playerPos = player.transform.position;
         if (playerBase != null)
         {
@@ -86,6 +86,13 @@ public class pv_EnemyMove : MonoBehaviour
         currentTime += Time.deltaTime;
         if (updateTime < currentTime)
         {
+            //プレイヤーとの距離をだす
+            {
+                pex = (playerPos.x - transform.position.x);
+                pey = (playerPos.y - transform.position.y);
+                pesq = Mathf.Sqrt((pex * pex) + (pey * pey));
+            }
+
             //プレイヤーの本拠地との距離を出す
             {
                 pbex = (playerBasePos.x - transform.position.x);
@@ -130,12 +137,18 @@ public class pv_EnemyMove : MonoBehaviour
                 }
                 else
                 {
-                    if (pbesq < pv1esq)
+                    if (pesq < pbesq)
+                    {
+                        sqrMax = pesq;
+                        state = 1;
+                    }
+                    else
                     {
                         sqrMax = pbesq;
                         state = 2;
                     }
-                    else if (village1 != null)
+
+                    if (sqrMax > pv1esq && village1 != null)
                     {
                         sqrMax = pv1esq;
                         state = 3;
@@ -164,7 +177,7 @@ public class pv_EnemyMove : MonoBehaviour
         }
         Debug.Log(state);
 
-        if (state == 1)
+        if (state == 1 || state == 7)
         {
             State1();
         }
@@ -190,13 +203,19 @@ public class pv_EnemyMove : MonoBehaviour
         }
 
         transform.position += new Vector3(EnemySX, EnemySY);
-        forward = (velocity.x < -1.0f) ? "Left" : (1.0f < velocity.x) ? "right" : forward;
-        varti = (velocity.y < -1.0f) ? "down" : (velocity.y > 1.0f) ? "up" : varti;
 
+        forward = (velocity.x < -1.0f) ? "left" : (velocity.x > 1.0f) ? "right" : forward;
+        varti = (velocity.y < -1.0f) ? "down" : (velocity.y > 1.0f) ? "up" : varti;
+        Debug.Log(forward);
+        Debug.Log(varti);
         if (isDamage == true)
         {
             Damage();
         }
+        IsDestroy();
+
+        //velocity += new Vector2(EnemySX, EnemySY);
+        //rb.velocity = velocity;
     }
 
     void State1()
@@ -281,17 +300,18 @@ public class pv_EnemyMove : MonoBehaviour
             }
         }
         */
+        isDamage = false;
     }
 
     void IsDestroy()
     {
         if (health <= 0)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
-    void OnTriggerEnter2D(Collision2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
 
         if (other.gameObject.CompareTag("Attack"))
@@ -300,6 +320,7 @@ public class pv_EnemyMove : MonoBehaviour
         }
     }
 
+    /*
     void OnTriggerExit2D(Collision2D other)
     {
 
@@ -307,5 +328,11 @@ public class pv_EnemyMove : MonoBehaviour
         {
             isDamage = false;
         }
+    }
+    */
+
+    public float ReturnEnemyAttackP()
+    {
+        return damage;
     }
 }

@@ -30,7 +30,7 @@ public class PauseScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown("START")) 
         {
             if (!menu)
             {
@@ -67,7 +67,7 @@ public class PauseScript : MonoBehaviour
             // リトライ
             if (number == 0)
             {
-                if (Input.GetKey(KeyCode.Space))
+                if (Input.GetButtonDown("A")) 
                 {
                     menu = false;
                     Time.timeScale = 1f;
@@ -79,7 +79,7 @@ public class PauseScript : MonoBehaviour
             {
 
                 // アプリケーション終了
-                if (Input.GetKey(KeyCode.Space))
+                if (Input.GetButtonDown("A"))
                 {
                     Quit();
                 }

@@ -10,6 +10,12 @@ public class Base : MonoBehaviour
 {
     Status status;
     GameObject Player;
+    GameObject pb_enemy;
+    GameObject pl_enemy;
+    GameObject enemy;
+    EnemyMove enmove;
+    Pb_EnemyMove pben;
+    Pl_EnemyMove plen;
     [SerializeField]
     private float HP;//拠点の体力
     [SerializeField]
@@ -26,21 +32,26 @@ public class Base : MonoBehaviour
     private float RecoveryUpPoint;//インスペクタで変更できる値
     [SerializeField]
     private int BaseType;//拠点の種類
-    public bool ON;
-    public bool Touch;
+    public bool ON;//一回だけ
+    public bool Touch;//触れているか
+    public bool Baf;//バフを発生しているかどうか
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.Find("Player");
+        
         status = Player.GetComponent<Status>();
         ON = true;
         Touch = false;
-        
+        Baf = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        enemy = GameObject.Find("enemy");
+        pb_enemy = GameObject.Find("pb_Enemy");
+        pl_enemy = GameObject.Find("player_Enemy");
         if (Touch == true)
         {
             if (Input.GetButtonDown("A"))
@@ -53,7 +64,7 @@ public class Base : MonoBehaviour
                         break;
                     //村（攻撃力バフ）の場合
                     case 1:
-                        if (ON == true)
+                        if (ON == true && Baf == false)
                         {
                             StartCoroutine("AttackUp");
                             ON = false;
@@ -61,7 +72,7 @@ public class Base : MonoBehaviour
                         break;
                     //村（速度バフ）の場合
                     case 2:
-                        if (ON == true)
+                        if (ON == true && Baf == false)
                         {
                             StartCoroutine("SpeedUp");
                             ON = false;
@@ -69,7 +80,7 @@ public class Base : MonoBehaviour
                         break;
                     //村（回復力バフ）の場合
                     case 3:
-                        if (ON == true)
+                        if (ON == true && Baf == false)
                         {
                             StartCoroutine("RecoveryUp");
                             ON = false;
@@ -81,6 +92,10 @@ public class Base : MonoBehaviour
         if(HP <= 0)
         {
             HP = 0;
+            if(Baf == false)
+            {
+                BaseType = 4;
+            }
             switch (BaseType)
             {
                 //拠点の場合
@@ -89,7 +104,7 @@ public class Base : MonoBehaviour
                     break;
                 //村（攻撃力バフ）の場合
                 case 1:
-                    if (ON == false)
+                    if (ON == false && Baf == true)
                     {
                         StartCoroutine("AttackDown");
                         ON = true;
@@ -97,7 +112,7 @@ public class Base : MonoBehaviour
                         break;
                 //村（速度バフ）の場合
                 case 2:
-                    if (ON == false)
+                    if (ON == false && Baf == true)
                     {
                         StartCoroutine("SpeedDown");
                         ON = true;
@@ -105,19 +120,29 @@ public class Base : MonoBehaviour
                     break;
                 //村（回復力バフ）の場合
                 case 3:
-                    if (ON == false)
+                    if (ON == false && Baf == true)
                     {
+                        Baf = false;
                         StopCoroutine("RecoveryUp");
                         ON = true;
                     }
                         break;
             }
         }
+        switch(BaseType)
+        {
+            case 4:
+                //ゾンビ村スクリプト起動
+                GetComponent<Renderer>().material.color = Color.grey;
+                //Reset();
+                break;
+        }
     }
 
     //攻撃力バフ
     IEnumerator AttackUp()
     {
+        Baf = true;
         GetComponent<Renderer>().material.color = Color.red;
         //攻撃力の増加する値を計算
         AttackPoint = status.Attack * (AttackUpPoint - 1.0f);
@@ -127,6 +152,7 @@ public class Base : MonoBehaviour
     //攻撃力ダウン
     IEnumerator AttackDown()
     {
+        Baf = false;
         GetComponent<Renderer>().material.color = Color.white;
         //攻撃力の増加する値を計算
         status.Attack = status.Attack - AttackPoint;
@@ -136,6 +162,7 @@ public class Base : MonoBehaviour
     //速度バフ
     IEnumerator SpeedUp()
     {
+        Baf = true;
         GetComponent<Renderer>().material.color = Color.blue;
         //速度の増加する値を計算
         SpeedPoint = status.Speed * (SpeedUpPoint - 1.0f);
@@ -145,6 +172,7 @@ public class Base : MonoBehaviour
     //速度ダウン
     IEnumerator SpeedDown()
     {
+        Baf = false;
         GetComponent<Renderer>().material.color = Color.clear;
         //速度の増加する値を計算
         status.Speed = status.Speed - SpeedPoint;
@@ -154,6 +182,7 @@ public class Base : MonoBehaviour
     //全回復
     IEnumerator RecoveryUp()
     {
+        Baf = true;
         GetComponent<Renderer>().material.color = Color.green;
         //ステータスの最大HPを回復
         status.HP = status.HP + status.MaxHP;
@@ -164,6 +193,30 @@ public class Base : MonoBehaviour
             yield return new WaitForSeconds(1.0f);
         }
         
+    }
+
+    void Reset()
+    {
+        HP += 100;
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.name == "enemy")
+        {
+            enmove = col.gameObject.GetComponent<EnemyMove>();
+            //HP = HP - enmove.damege;
+        }
+        else if(col.gameObject.name == "pb_Enemy")
+        {
+            pben = col.gameObject.GetComponent<Pb_EnemyMove>();
+            //HP = HP - pben.damege;
+        }
+        else if(col.gameObject.name == "player_Enemy")
+        {
+            plen = col.gameObject.GetComponent<Pl_EnemyMove>();
+            //HP = HP - plen.damege;
+        }
     }
 
     void OnTriggerStay2D(Collider2D col)

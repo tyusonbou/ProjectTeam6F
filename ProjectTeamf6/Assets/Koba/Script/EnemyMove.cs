@@ -8,11 +8,13 @@ public class EnemyMove : MonoBehaviour
     [SerializeField, Header("体力"), Range(0, 100)]
     private float health = 5;
     [SerializeField, Header("攻撃力"), Range(0, 100)]
-    private float damege = 5;
+    private float damage = 5;
     [SerializeField, Header("スピード"), Range(0, 100)]
     private float speed = 5;
     [SerializeField, Header("状態の更新時間"), Range(0, 100)]
     private float updateTime = 3.0f;
+    [SerializeField]
+    private Player playerScript;
 
     public GameObject player;
     public GameObject playerBase;
@@ -32,14 +34,19 @@ public class EnemyMove : MonoBehaviour
     float pv4ex, pv4ey, pv4esq;
     float sqrMax;
 
+    string foward;
+    string varti;
+
     //ゾンビの状態
     float state;
 
     float EnemySX, EnemySY;
-
+    float playerDamage;
     float currentTime;
 
-    bool isAttract;
+    public bool isAttract;
+    bool isDamage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,7 +58,8 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //var velocity = rb.velocity;
+        var velocity = rb.velocity;
+
         //velocity = Vector2.zero;
         playerPos = player.transform.position;
         if (playerBase != null)
@@ -123,6 +131,7 @@ public class EnemyMove : MonoBehaviour
 
             //一番近い地点を出す
             {
+                //プレイヤーが注意を引いてるかどうか
                 if (isAttract == true)
                 {
                     state = 1;
@@ -196,6 +205,15 @@ public class EnemyMove : MonoBehaviour
 
         transform.position += new Vector3(EnemySX, EnemySY);
 
+        foward = (velocity.x < -1.0f) ? "left" : (velocity.x > 1.0f) ? "right" : foward;
+        varti = (velocity.y < -1.0f) ? "down" : (velocity.y > 1.0f) ? "up" : varti;
+
+        if (isDamage == true)
+        {
+            Damage();
+        }
+
+
         //velocity += new Vector2(EnemySX, EnemySY);
         //rb.velocity = velocity;
     }
@@ -252,5 +270,50 @@ public class EnemyMove : MonoBehaviour
         pv4esq = Mathf.Sqrt((pv4ex * pv4ex) + (pv4ey * pv4ey));
         EnemySX = pv4ex / pv4esq * speed;
         EnemySY = pv4ey / pv4esq * speed;
+    }
+
+    void Damage()
+    {
+        playerDamage = playerScript.ReturnAttackP();
+        health -= playerDamage;
+        if (foward == "left")
+        {
+            if (varti == "down")
+            {
+                transform.position += new Vector3(3.0f, 3.0f, 0.0f);
+            }
+            if(varti == "up")
+            {
+                transform.position += new Vector3(3.0f, -3.0f, 0.0f);
+            }
+        }
+        else
+        {
+            if (varti == "down")
+            {
+                transform.position += new Vector3(-3.0f, 3.0f, 0.0f);
+            }
+            if (varti == "up")
+            {
+                transform.position += new Vector3(-3.0f, -3.0f, 0.0f);
+            }
+        }
+    }
+
+    void IsDestroy()
+    {
+        if (health <= 0)
+        {
+            Destroy(this);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+
+        if (other.gameObject.CompareTag("Attack"))
+        {
+            isDamage = true;
+        }
     }
 }

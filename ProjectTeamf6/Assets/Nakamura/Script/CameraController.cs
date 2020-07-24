@@ -14,7 +14,9 @@ public class CameraController : MonoBehaviour
     public float minY;
     public float maxY;
 
-    private float CameraSize;
+    public float moveDouble;
+
+    private float cameraSize;
     public float SizeS;
     public float SizeM;
     public float SizeL;
@@ -27,7 +29,7 @@ public class CameraController : MonoBehaviour
         camera = GetComponent<Camera>();
         player = GameObject.Find("Player");
         CameraSizeState = "M";
-        CameraSize = SizeM;
+        cameraSize = SizeM;
     }
 
     // Update is called once per frame
@@ -35,36 +37,39 @@ public class CameraController : MonoBehaviour
     {
         CameraFollow();
         CameraMove();
+        CameraSizeChange();
     }
 
     void CameraFollow()
     {
         Vector3 playerPos = player.transform.position;
 
-        transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);
+        //transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);
+        transform.position = new Vector3(
+            playerPos.x + (Input.GetAxis("RSX") * cameraSize), playerPos.y + (Input.GetAxisRaw("RSY") * cameraSize * 4 / 5), transform.position.z);
 
-        if (playerPos.x <= minX)
+        if (transform.position.x <= minX + cameraSize + (cameraSize*4 / 5))
         {
-            transform.position = new Vector3(minX, transform.position.y, transform.position.z);
+            transform.position = new Vector3(minX + cameraSize + (cameraSize*4 / 5), transform.position.y, transform.position.z);
         }
-        else if (playerPos.x >= maxX)
+        else if (transform.position.x >= maxX - cameraSize - (cameraSize*4 / 5)) 
         {
-            transform.position = new Vector3(maxX, transform.position.y, transform.position.z);
+            transform.position = new Vector3(maxX - cameraSize - (cameraSize*4 / 5), transform.position.y, transform.position.z);
         }
 
-        if (playerPos.y <= minY)
+        if (transform.position.y <= minY + cameraSize)
         {
-            transform.position = new Vector3(transform.position.x, minY, transform.position.z);
+            transform.position = new Vector3(transform.position.x, minY + cameraSize, transform.position.z);
         }
-        else if (playerPos.y >= maxY)
+        else if (transform.position.y >= maxY - cameraSize) 
         {
-            transform.position = new Vector3(transform.position.x, maxY, transform.position.z);
+            transform.position = new Vector3(transform.position.x, maxY - cameraSize, transform.position.z);
         }
     }
 
-    void CameraMove()
+    void CameraSizeChange()
     {
-        camera.orthographicSize = CameraSize;
+        camera.orthographicSize = cameraSize;
 
         if (Input.GetButtonDown("R3"))
         {
@@ -72,17 +77,22 @@ public class CameraController : MonoBehaviour
             {
                 case "S":
                     CameraSizeState = "M";
-                    CameraSize = SizeM;
+                    cameraSize = SizeM;
                     break;
                 case "M":
                     CameraSizeState = "L";
-                    CameraSize = SizeL;
+                    cameraSize = SizeL;
                     break;
                 case "L":
                     CameraSizeState = "S";
-                    CameraSize = SizeS;
+                    cameraSize = SizeS;
                     break;
             }
         }
+    }
+
+    void CameraMove()
+    {
+        
     }
 }

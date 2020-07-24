@@ -88,10 +88,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c2bd929d1bdaf40b55125141c04934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -5
-  maxX: 10
-  minY: 0
-  maxY: 10
+  minX: -24
+  maxX: 24
+  minY: -24
+  maxY: 24
+  moveDouble: 5
   SizeS: 5
   SizeM: 7.5
   SizeL: 10

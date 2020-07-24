@@ -17,8 +17,12 @@ public class ZombieVillageSpawn : MonoBehaviour
         }
         int point1 = Random.Range(0, zombieVillage.Length);
 
-
         int point2 = Random.Range(0, zombieVillage.Length);
+
+        while (point2 == point1)
+        {
+            point2 = Random.Range(0, zombieVillage.Length);
+        }
 
 
         //最初からあるゾンビ村

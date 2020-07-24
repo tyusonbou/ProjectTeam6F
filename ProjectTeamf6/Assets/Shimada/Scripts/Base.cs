@@ -31,7 +31,7 @@ public class Base : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Player = GameObject.Find("player");
+        Player = GameObject.Find("Player");
         status = Player.GetComponent<Status>();
         ON = true;
         Touch = false;
@@ -43,7 +43,7 @@ public class Base : MonoBehaviour
     {
         if (Touch == true)
         {
-            if (Input.GetKeyDown("joystick button 0"))
+            if (Input.GetButtonDown("A"))
             {
                 switch (BaseType)
                 {

@@ -42,9 +42,9 @@ public class ZombieVillageSpawn : MonoBehaviour
     {
 
 
-        foreach (var n in zombieVillage)
-        {
-            Debug.Log(n);
-        }
+        //foreach (var n in zombieVillage)
+        //{
+        //    Debug.Log(n);
+        //}
     }
 }

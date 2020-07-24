@@ -8,7 +8,10 @@ TagManager:
 =======
   tags:
   - Attack
+<<<<<<< HEAD
 >>>>>>> parent of b6c1bfb... Merge pull request #21 from tyusonbou/Nakamura09
+=======
+>>>>>>> parent of eb2dec1... カメラ、プレイヤー変更
   layers:
   - Default
   - TransparentFX

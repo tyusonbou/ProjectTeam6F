@@ -10,11 +10,19 @@ public class Pl_EnemyMove : MonoBehaviour
     private float damege = 5;
     [SerializeField, Header("スピード"), Range(0, 100)]
     private float speed = 5;
+    [SerializeField]
+    private Player playerScript;
+
     public GameObject player;
-    private Vector2 playerPos;
+
+    Vector2 playerPos;
     float pex, pey, pesq;
     float EnemySX, EnemySY;
-    private Rigidbody2D rb;
+
+    float playerDamage;
+
+    bool isDamage;
+    Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,5 +50,61 @@ public class Pl_EnemyMove : MonoBehaviour
         EnemySX = pex / pesq * speed;
         EnemySY = pey / pesq * speed;
         transform.position += new Vector3(EnemySX, EnemySY);
+    }
+
+    void Damage()
+    {
+        playerDamage = playerScript.ReturnAttackP();
+        health -= playerDamage;
+        /*
+        if (forward == "left")
+        {
+            if (varti == "down")
+            {
+                transform.position += new Vector3(3.0f, 3.0f, 0.0f);
+            }
+            if (varti == "up")
+            {
+                transform.position += new Vector3(3.0f, -3.0f, 0.0f);
+            }
+        }
+        else
+        {
+            if (varti == "down")
+            {
+                transform.position += new Vector3(-3.0f, 3.0f, 0.0f);
+            }
+            if (varti == "up")
+            {
+                transform.position += new Vector3(-3.0f, -3.0f, 0.0f);
+            }
+        }
+        */
+    }
+
+    void IsDestroy()
+    {
+        if (health <= 0)
+        {
+            Destroy(this);
+        }
+    }
+
+    void OnTriggerEnter2D(Collision2D other)
+    {
+
+        if (other.gameObject.CompareTag("Attack"))
+        {
+            isDamage = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collision2D other)
+    {
+
+        if (other.gameObject.CompareTag("Attack"))
+        {
+            isDamage = false;
+        }
     }
 }

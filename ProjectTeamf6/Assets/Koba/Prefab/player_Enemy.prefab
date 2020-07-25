@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7882536909706371476}
   - component: {fileID: 5171670333301279033}
   - component: {fileID: 198384213472687989}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: player_Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ MonoBehaviour:
   damage: 5
   speed: 0.1
   playerScript: {fileID: 0}
-  player: {fileID: 0}
+  attractObj: {fileID: 0}
 --- !u!50 &5171670333301279033
 Rigidbody2D:
   serializedVersion: 4

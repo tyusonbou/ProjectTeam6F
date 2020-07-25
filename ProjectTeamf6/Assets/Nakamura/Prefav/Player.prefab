@@ -415,8 +415,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b711f99db0e20464fb9c7c21001bf4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WalkSped: 4
   RunSpeed: 1.5
+  PlayerHP: 0
+  PlayerMaxHP: 0
+  PlayerAttack: 0
+  ATKRB: 100
+  EnemyP: 10
   EnemyAttack: 1000
   attackSword: {fileID: 7930285454129924785}
   attackSword2: {fileID: 171802497}
@@ -492,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee625525a7dc2894780354544c7e44d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 10
+  HP: 50
   Attack: 5
   Speed: 4
   MaxHP: 50

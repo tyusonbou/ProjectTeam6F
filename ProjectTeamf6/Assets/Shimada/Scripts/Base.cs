@@ -13,8 +13,6 @@ public class Base : MonoBehaviour
     GameObject pb_enemy;
     GameObject pl_enemy;
     GameObject enemy;
-    EnemyMove enmove;
-    Pb_EnemyMove pben;
     Pl_EnemyMove plen;
     [SerializeField]
     private float HP;//拠点の体力
@@ -204,6 +202,13 @@ public class Base : MonoBehaviour
     {
         if(col.gameObject.name == "enemy")
         {
+<
+
+        }
+        else if(col.gameObject.name == "pb_Enemy")
+        {
+            
+
             //enmove = col.gameObject.GetComponent<EnemyMove>();
             //HP = HP - enmove.damege;
         }
@@ -211,6 +216,7 @@ public class Base : MonoBehaviour
         {
             //pben = col.gameObject.GetComponent<Pb_EnemyMove>();
             //HP = HP - pben.damege;
+
         }
         else if(col.gameObject.name == "player_Enemy")
         {

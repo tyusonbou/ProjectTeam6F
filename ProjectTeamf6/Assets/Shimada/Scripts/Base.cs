@@ -202,15 +202,25 @@ public class Base : MonoBehaviour
     {
         if(col.gameObject.name == "enemy")
         {
-            
+<
+
         }
         else if(col.gameObject.name == "pb_Enemy")
         {
             
+
+            //enmove = col.gameObject.GetComponent<EnemyMove>();
+            //HP = HP - enmove.damege;
+        }
+        else if(col.gameObject.name == "pb_Enemy")
+        {
+            //pben = col.gameObject.GetComponent<Pb_EnemyMove>();
+            //HP = HP - pben.damege;
+
         }
         else if(col.gameObject.name == "player_Enemy")
         {
-            plen = col.gameObject.GetComponent<Pl_EnemyMove>();
+            //plen = col.gameObject.GetComponent<Pl_EnemyMove>();
             //HP = HP - plen.damege;
         }
     }

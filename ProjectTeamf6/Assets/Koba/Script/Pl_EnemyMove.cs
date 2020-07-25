@@ -13,10 +13,11 @@ public class Pl_EnemyMove : MonoBehaviour
     [SerializeField]
     private Player playerScript;
 
-    public GameObject player;
+    GameObject player;
+    public GameObject attractObj;
 
-    Vector2 playerPos;
-    float pex, pey, pesq;
+    Vector2 playerPos, attractObjPos;
+
     float EnemySX, EnemySY;
 
     float playerDamage;
@@ -27,34 +28,56 @@ public class Pl_EnemyMove : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        player = GameObject.Find("Player");
+        playerScript = player.GetComponent<Player>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
-    }
-
-    void Move()
-    {
-        playerPos = player.transform.position;
-        var velocity = rb.velocity;
-
-        //プレイヤーとの距離をだす
+        if (attractObj == null)
         {
-            pex = (playerPos.x - transform.position.x);
-            pey = (playerPos.y - transform.position.y);
-            pesq = Mathf.Sqrt((pex * pex) + (pey * pey));
+            attractObj = GameObject.Find("attractObject(Clone)");
+            State1();
+        }
+        else
+        {
+            State7();
         }
 
-        EnemySX = pex / pesq * speed;
-        EnemySY = pey / pesq * speed;
         transform.position += new Vector3(EnemySX, EnemySY);
         if (isDamage == true)
         {
             Damage();
         }
         IsDestroy();
+    }
+
+    void State1()
+    {
+        playerPos = player.transform.position;
+        //var velocity = rb.velocity;
+
+        //プレイヤーとの距離をだす
+        float x = (playerPos.x - transform.position.x);
+        float y = (playerPos.y - transform.position.y);
+        float xysq = Mathf.Sqrt((x * x) + (y * y));
+
+        EnemySX = x / xysq * speed;
+        EnemySY = y / xysq * speed;
+
+    }
+
+    void State7()
+    {
+        attractObjPos = attractObj.transform.position;
+        float x = (attractObjPos.x - transform.position.x);
+        float y = (attractObjPos.y - transform.position.y);
+        float xysq = Mathf.Sqrt((x * x) + (y * y));
+
+        EnemySX = x / xysq * speed;
+        EnemySY = y / xysq * speed;
+
     }
 
     void Damage()

@@ -15,16 +15,17 @@ public class pv_EnemyMove : MonoBehaviour
     [SerializeField]
     private Player playerScript;
 
-    public GameObject player;
-    public GameObject playerBase;
-    public GameObject village1;
-    public GameObject village2;
-    public GameObject village3;
-    public GameObject village4;
+    GameObject player;
+    GameObject playerBase;
+    GameObject village1;
+    GameObject village2;
+    GameObject village3;
+    GameObject village4;
+    GameObject attractObj;
 
     Rigidbody2D rb;
 
-    Vector2 playerPos, playerBasePos, village1Pos, village2Pos, village3Pos, village4Pos;
+    Vector2 playerPos, playerBasePos, village1Pos, village2Pos, village3Pos, village4Pos,attractObjPos;
     float pex, pey, pesq;
     float pbex, pbey, pbesq;
     float pv1ex, pv1ey, pv1esq;
@@ -43,15 +44,21 @@ public class pv_EnemyMove : MonoBehaviour
     float playerDamage;
     float currentTime;
 
-    public bool isAttract;
+    //public bool isAttract;
     bool isDamage;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        player = GameObject.Find("Player");
+        playerBase = GameObject.Find("playerBase");
+        village1 = GameObject.Find("village1");
+        village2 = GameObject.Find("village2");
+        village3 = GameObject.Find("playerVillage1");
+        village4 = GameObject.Find("playerVillage2");
+        playerScript = player.GetComponent<Player>();
         currentTime = 3.0f;
-        isAttract = false;
     }
 
     // Update is called once per frame
@@ -83,59 +90,55 @@ public class pv_EnemyMove : MonoBehaviour
             village4Pos = village4.transform.position;
         }
 
-        currentTime += Time.deltaTime;
-        if (updateTime < currentTime)
+        if (attractObj == null)
         {
-            //プレイヤーとの距離をだす
+            attractObj = GameObject.Find("attractObject(Clone)");
+            currentTime += Time.deltaTime;
+            if (updateTime < currentTime)
             {
-                pex = (playerPos.x - transform.position.x);
-                pey = (playerPos.y - transform.position.y);
-                pesq = Mathf.Sqrt((pex * pex) + (pey * pey));
-            }
-
-            //プレイヤーの本拠地との距離を出す
-            {
-                pbex = (playerBasePos.x - transform.position.x);
-                pbey = (playerBasePos.y - transform.position.y);
-                pbesq = Mathf.Sqrt((pbex * pbex) + (pbey * pbey));
-            }
-
-            //村1との距離を出す
-            {
-                pv1ex = (village1Pos.x - transform.position.x);
-                pv1ey = (village1Pos.y - transform.position.y);
-                pv1esq = Mathf.Sqrt((pv1ex * pv1ex) + (pv1ey * pv1ey));
-            }
-
-            //村2との距離を出す
-            {
-                pv2ex = (village2Pos.x - transform.position.x);
-                pv2ey = (village2Pos.y - transform.position.y);
-                pv2esq = Mathf.Sqrt((pv2ex * pv2ex) + (pv2ey * pv2ey));
-            }
-
-            //村3との距離を出す
-            {
-                pv3ex = (village3Pos.x - transform.position.x);
-                pv3ey = (village3Pos.y - transform.position.y);
-                pv3esq = Mathf.Sqrt((pv3ex * pv3ex) + (pv3ey * pv3ey));
-            }
-
-            //村4との距離を出す
-            {
-                pv4ex = (village4Pos.x - transform.position.x);
-                pv4ey = (village4Pos.y - transform.position.y);
-                pv4esq = Mathf.Sqrt((pv4ex * pv4ex) + (pv4ey * pv4ey));
-            }
-
-            //一番近い地点を出す
-            {
-                //プレイヤーが注意を引いてるかどうか
-                if (isAttract == true)
+                //プレイヤーとの距離をだす
                 {
-                    state = 1;
+                    pex = (playerPos.x - transform.position.x);
+                    pey = (playerPos.y - transform.position.y);
+                    pesq = Mathf.Sqrt((pex * pex) + (pey * pey));
                 }
-                else
+
+                //プレイヤーの本拠地との距離を出す
+                {
+                    pbex = (playerBasePos.x - transform.position.x);
+                    pbey = (playerBasePos.y - transform.position.y);
+                    pbesq = Mathf.Sqrt((pbex * pbex) + (pbey * pbey));
+                }
+
+                //村1との距離を出す
+                {
+                    pv1ex = (village1Pos.x - transform.position.x);
+                    pv1ey = (village1Pos.y - transform.position.y);
+                    pv1esq = Mathf.Sqrt((pv1ex * pv1ex) + (pv1ey * pv1ey));
+                }
+
+                //村2との距離を出す
+                {
+                    pv2ex = (village2Pos.x - transform.position.x);
+                    pv2ey = (village2Pos.y - transform.position.y);
+                    pv2esq = Mathf.Sqrt((pv2ex * pv2ex) + (pv2ey * pv2ey));
+                }
+
+                //村3との距離を出す
+                {
+                    pv3ex = (village3Pos.x - transform.position.x);
+                    pv3ey = (village3Pos.y - transform.position.y);
+                    pv3esq = Mathf.Sqrt((pv3ex * pv3ex) + (pv3ey * pv3ey));
+                }
+
+                //村4との距離を出す
+                {
+                    pv4ex = (village4Pos.x - transform.position.x);
+                    pv4ey = (village4Pos.y - transform.position.y);
+                    pv4esq = Mathf.Sqrt((pv4ex * pv4ex) + (pv4ey * pv4ey));
+                }
+
+                //一番近い地点を出す
                 {
                     if (pesq < pbesq)
                     {
@@ -172,12 +175,17 @@ public class pv_EnemyMove : MonoBehaviour
                         state = 6;
                     }
                 }
+                currentTime = 0.0f;
             }
-            currentTime = 0.0f;
         }
+        else
+        {
+            state = 7;
+        }
+
         Debug.Log(state);
 
-        if (state == 1 || state == 7)
+        if (state == 1)
         {
             State1();
         }
@@ -200,6 +208,10 @@ public class pv_EnemyMove : MonoBehaviour
         if (state == 6)
         {
             State6();
+        }
+        if(state == 7)
+        {
+            State7();
         }
 
         transform.position += new Vector3(EnemySX, EnemySY);
@@ -270,6 +282,16 @@ public class pv_EnemyMove : MonoBehaviour
         pv4esq = Mathf.Sqrt((pv4ex * pv4ex) + (pv4ey * pv4ey));
         EnemySX = pv4ex / pv4esq * speed;
         EnemySY = pv4ey / pv4esq * speed;
+    }
+
+    void State7()
+    {
+        attractObjPos = attractObj.transform.position;
+        float x = (attractObjPos.x - transform.position.x);
+        float y = (attractObjPos.y - transform.position.y);
+        float xysqr = Mathf.Sqrt((x * x) + (y * y));
+        EnemySX = x / xysqr * speed;
+        EnemySY = y / xysqr * speed;
     }
 
     void Damage()

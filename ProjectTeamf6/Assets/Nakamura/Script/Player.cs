@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject hatuentou;
 
+    Status status;
+
     string MoveState;　//向き
 
     float LR; //左右移動用
@@ -53,8 +55,9 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        PlayerHP = 10;
-        PlayerAttack = 5;
+        status = GetComponent<Status>();
+        //PlayerHP = 10;
+        //PlayerAttack = 5;
         MoveState = "RIGHT";
 
         doAttack = 0;
@@ -67,16 +70,29 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SetStatus();
         ChangeState();
         Attack();
         Bullet();
         Scream();
         KnockBack();
+
     }
 
     private void FixedUpdate()
     {
         Move();
+    }
+
+    void SetStatus()
+    {
+        PlayerHP = status.HP;
+        PlayerAttack = status.Attack;
+        WalkSped = status.Speed;
+        if (PlayerHP > status.MaxHP)
+        {
+            PlayerHP = status.MaxHP;
+        }
     }
 
     //向き判定
@@ -125,7 +141,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetButton("A"))
         {
-            transform.position += new Vector3(LR, UD, 0).normalized * (RunSpeed * Time.deltaTime);
+            transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped * RunSpeed * Time.deltaTime);
         }
     }
 

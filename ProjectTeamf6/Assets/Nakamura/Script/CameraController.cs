@@ -35,8 +35,12 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    private void FixedUpdate()
+    {
         CameraFollow();
-        CameraMove();
         CameraSizeChange();
     }
 
@@ -91,8 +95,4 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    void CameraMove()
-    {
-        
-    }
 }

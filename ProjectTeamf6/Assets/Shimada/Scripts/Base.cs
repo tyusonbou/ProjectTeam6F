@@ -228,7 +228,6 @@ public class Base : MonoBehaviour
     {
         if (BaseType != 4)
         {
-<<<<<<< HEAD
             if (col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)")
             {
                 //スクリプトを参照
@@ -247,8 +246,6 @@ public class Base : MonoBehaviour
                 //なぜかニ回呼ばれるので２で割る
                 HP = HP - BaseDamege / 2;
             }
-=======
-<
 
         }
         else if(col.gameObject.name == "pb_Enemy")
@@ -263,16 +260,15 @@ public class Base : MonoBehaviour
             //pben = col.gameObject.GetComponent<Pb_EnemyMove>();
             //HP = HP - pben.damege;
 
->>>>>>> 988c1bee0169bf3246cd107011e5df715654ef7b
         }
         if (BaseType == 4 && col.gameObject.tag == "Player")
         {
-<<<<<<< HEAD
+
             HP = HP - 10;
-=======
+
             //plen = col.gameObject.GetComponent<Pl_EnemyMove>();
             //HP = HP - plen.damege;
->>>>>>> 988c1bee0169bf3246cd107011e5df715654ef7b
+
         }
     }
 

@@ -14,6 +14,8 @@ public class pv_EnemyMove : MonoBehaviour
     private float updateTime = 3.0f;
     [SerializeField]
     private Player playerScript;
+    [SerializeField]
+    private SearchAreaMove searchScript;
 
     GameObject player;
     GameObject playerBase;
@@ -25,7 +27,7 @@ public class pv_EnemyMove : MonoBehaviour
 
     Rigidbody2D rb;
 
-    Vector2 playerPos, playerBasePos, village1Pos, village2Pos, village3Pos, village4Pos,attractObjPos;
+    Vector2 playerPos, playerBasePos, village1Pos, village2Pos, village3Pos, village4Pos, attractObjPos;
     float pex, pey, pesq;
     float pbex, pbey, pbesq;
     float pv1ex, pv1ey, pv1esq;
@@ -46,6 +48,7 @@ public class pv_EnemyMove : MonoBehaviour
 
     //public bool isAttract;
     bool isDamage;
+    public bool isSearchPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +62,33 @@ public class pv_EnemyMove : MonoBehaviour
         village4 = GameObject.Find("playerVillage2");
         playerScript = player.GetComponent<Player>();
         currentTime = 3.0f;
+
+        int rand = Random.Range(1, 5);
+        
+        if(rand == 1)
+        {
+            health = 100.0f;
+            damage = 5.0f;
+            speed = 0.5f;
+        }
+        if(rand == 2)
+        {
+            health = 200.0f;
+            damage = 5.0f;
+            speed = 0.1f;
+        }
+        if(rand == 3)
+        {
+            health = 50.0f;
+            damage = 10.0f;
+            speed = 0.5f;
+        }
+        if(rand == 4)
+        {
+            health = 50.0f;
+            damage = 5.0f;
+            speed = 1.0f;
+        }
     }
 
     // Update is called once per frame
@@ -92,94 +122,103 @@ public class pv_EnemyMove : MonoBehaviour
 
         if (attractObj == null)
         {
+            gameObject.layer = LayerMask.NameToLayer("Enemy");
             attractObj = GameObject.Find("attractObject(Clone)");
-            currentTime += Time.deltaTime;
-            if (updateTime < currentTime)
+            isSearchPlayer = searchScript.RetrunIsSearchPlayer();
+            if (isSearchPlayer == true)
             {
-                //プレイヤーとの距離をだす
+                state = 1;
+            }
+            else {
+                currentTime += Time.deltaTime;
+                if (updateTime < currentTime)
                 {
-                    pex = (playerPos.x - transform.position.x);
-                    pey = (playerPos.y - transform.position.y);
-                    pesq = Mathf.Sqrt((pex * pex) + (pey * pey));
-                }
-
-                //プレイヤーの本拠地との距離を出す
-                {
-                    pbex = (playerBasePos.x - transform.position.x);
-                    pbey = (playerBasePos.y - transform.position.y);
-                    pbesq = Mathf.Sqrt((pbex * pbex) + (pbey * pbey));
-                }
-
-                //村1との距離を出す
-                {
-                    pv1ex = (village1Pos.x - transform.position.x);
-                    pv1ey = (village1Pos.y - transform.position.y);
-                    pv1esq = Mathf.Sqrt((pv1ex * pv1ex) + (pv1ey * pv1ey));
-                }
-
-                //村2との距離を出す
-                {
-                    pv2ex = (village2Pos.x - transform.position.x);
-                    pv2ey = (village2Pos.y - transform.position.y);
-                    pv2esq = Mathf.Sqrt((pv2ex * pv2ex) + (pv2ey * pv2ey));
-                }
-
-                //村3との距離を出す
-                {
-                    pv3ex = (village3Pos.x - transform.position.x);
-                    pv3ey = (village3Pos.y - transform.position.y);
-                    pv3esq = Mathf.Sqrt((pv3ex * pv3ex) + (pv3ey * pv3ey));
-                }
-
-                //村4との距離を出す
-                {
-                    pv4ex = (village4Pos.x - transform.position.x);
-                    pv4ey = (village4Pos.y - transform.position.y);
-                    pv4esq = Mathf.Sqrt((pv4ex * pv4ex) + (pv4ey * pv4ey));
-                }
-
-                //一番近い地点を出す
-                {
-                    if (pesq < pbesq)
+                    //プレイヤーとの距離をだす
                     {
-                        sqrMax = pesq;
-                        state = 1;
-                    }
-                    else
-                    {
-                        sqrMax = pbesq;
-                        state = 2;
+                        pex = (playerPos.x - transform.position.x);
+                        pey = (playerPos.y - transform.position.y);
+                        pesq = Mathf.Sqrt((pex * pex) + (pey * pey));
                     }
 
-                    if (sqrMax > pv1esq && village1 != null)
+                    //プレイヤーの本拠地との距離を出す
                     {
-                        sqrMax = pv1esq;
-                        state = 3;
+                        pbex = (playerBasePos.x - transform.position.x);
+                        pbey = (playerBasePos.y - transform.position.y);
+                        pbesq = Mathf.Sqrt((pbex * pbex) + (pbey * pbey));
                     }
 
-                    if (sqrMax > pv2esq && village2 != null)
+                    //村1との距離を出す
                     {
-                        sqrMax = pv2esq;
-                        state = 4;
+                        pv1ex = (village1Pos.x - transform.position.x);
+                        pv1ey = (village1Pos.y - transform.position.y);
+                        pv1esq = Mathf.Sqrt((pv1ex * pv1ex) + (pv1ey * pv1ey));
                     }
 
-                    if (sqrMax > pv3esq && village3 != null)
+                    //村2との距離を出す
                     {
-                        sqrMax = pv3esq;
-                        state = 5;
+                        pv2ex = (village2Pos.x - transform.position.x);
+                        pv2ey = (village2Pos.y - transform.position.y);
+                        pv2esq = Mathf.Sqrt((pv2ex * pv2ex) + (pv2ey * pv2ey));
                     }
 
-                    if (sqrMax > pv4esq && village4 != null)
+                    //村3との距離を出す
                     {
-                        sqrMax = pv4esq;
-                        state = 6;
+                        pv3ex = (village3Pos.x - transform.position.x);
+                        pv3ey = (village3Pos.y - transform.position.y);
+                        pv3esq = Mathf.Sqrt((pv3ex * pv3ex) + (pv3ey * pv3ey));
                     }
+
+                    //村4との距離を出す
+                    {
+                        pv4ex = (village4Pos.x - transform.position.x);
+                        pv4ey = (village4Pos.y - transform.position.y);
+                        pv4esq = Mathf.Sqrt((pv4ex * pv4ex) + (pv4ey * pv4ey));
+                    }
+
+                    //一番近い地点を出す
+                    {
+                        if (pesq < pbesq)
+                        {
+                            sqrMax = pesq;
+                            state = 1;
+                        }
+                        else
+                        {
+                            sqrMax = pbesq;
+                            state = 2;
+                        }
+
+                        if (sqrMax > pv1esq && village1 != null)
+                        {
+                            sqrMax = pv1esq;
+                            state = 3;
+                        }
+
+                        if (sqrMax > pv2esq && village2 != null)
+                        {
+                            sqrMax = pv2esq;
+                            state = 4;
+                        }
+
+                        if (sqrMax > pv3esq && village3 != null)
+                        {
+                            sqrMax = pv3esq;
+                            state = 5;
+                        }
+
+                        if (sqrMax > pv4esq && village4 != null)
+                        {
+                            sqrMax = pv4esq;
+                            state = 6;
+                        }
+                    }
+                    currentTime = 0.0f;
                 }
-                currentTime = 0.0f;
             }
         }
         else
         {
+            gameObject.layer = LayerMask.NameToLayer("AttractEnemy");
             state = 7;
         }
 
@@ -209,7 +248,7 @@ public class pv_EnemyMove : MonoBehaviour
         {
             State6();
         }
-        if(state == 7)
+        if (state == 7)
         {
             State7();
         }

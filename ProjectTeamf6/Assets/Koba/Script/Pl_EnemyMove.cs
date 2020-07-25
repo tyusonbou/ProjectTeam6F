@@ -30,6 +30,32 @@ public class Pl_EnemyMove : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
         playerScript = player.GetComponent<Player>();
+
+        int rand = Random.Range(1, 5);
+        if (rand == 1)
+        {
+            health = 100.0f;
+            damage = 5.0f;
+            speed = 0.5f;
+        }
+        if (rand == 2)
+        {
+            health = 200.0f;
+            damage = 5.0f;
+            speed = 0.1f;
+        }
+        if (rand == 3)
+        {
+            health = 50.0f;
+            damage = 10.0f;
+            speed = 0.5f;
+        }
+        if (rand == 4)
+        {
+            health = 50.0f;
+            damage = 5.0f;
+            speed = 1.0f;
+        }
     }
 
     // Update is called once per frame
@@ -77,7 +103,6 @@ public class Pl_EnemyMove : MonoBehaviour
 
         EnemySX = x / xysq * speed;
         EnemySY = y / xysq * speed;
-
     }
 
     void Damage()

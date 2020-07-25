@@ -11,6 +11,7 @@ public class EnemyBaseMove : MonoBehaviour
 
     public GameObject pv_enemy;
     public GameObject pl_enemy;
+
     float currentTime;
 
     // Start is called before the first frame update
@@ -32,7 +33,7 @@ public class EnemyBaseMove : MonoBehaviour
             currentTime += Time.deltaTime;
             if (spawnTime < currentTime)
             {
-                Instantiate(pv_enemy, transform.position, Quaternion.identity);
+                GameObject enemy = Instantiate(pv_enemy, transform.position, Quaternion.identity);
                 Instantiate(pl_enemy, transform.position, Quaternion.identity);
                 currentTime = 0.0f;
             }

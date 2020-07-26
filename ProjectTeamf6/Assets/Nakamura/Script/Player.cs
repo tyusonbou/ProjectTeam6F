@@ -46,17 +46,17 @@ public class Player : MonoBehaviour
     public float ALimitTimer;
     public float STimer;
     public float SLimitTimer;
-    public float invisibleTimer;
-    public float invisibleInterval;
+    //public float invisibleTimer;
+    //public float invisibleInterval;
 
     [SerializeField]
     bool isAttack;
-    [SerializeField]
-    bool isKnockBack;
+    //[SerializeField]
+    //bool isKnockBack;
     [SerializeField]
     public bool isScream;
 
-    Renderer spriteRenderer;
+    //Renderer spriteRenderer;
 
     // Start is called before the first frame update
     void Start()
@@ -73,9 +73,9 @@ public class Player : MonoBehaviour
         attackSword3.SetActive(false);
         isAttack = false;
 
-        PlayerHP = status.HP;
+       
 
-        spriteRenderer = GetComponent<Renderer>();
+        //spriteRenderer = GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
         Attack();
         Bullet();
         Scream();
-        KnockBack();
+        //KnockBack();
         Death();
     }
 
@@ -97,13 +97,14 @@ public class Player : MonoBehaviour
 
     void SetStatus()
     {
+        PlayerHP = status.HP;
         PlayerMaxHP = status.MaxHP;
         PlayerAttack = status.Attack;
         WalkSped = status.Speed;
-        if (PlayerHP >PlayerMaxHP)
-        {
-            PlayerHP = PlayerMaxHP;
-        }
+        //if (PlayerHP >PlayerMaxHP)
+        //{
+        //    PlayerHP = PlayerMaxHP;
+        //}
     }
 
     //向き判定
@@ -255,26 +256,26 @@ public class Player : MonoBehaviour
         }
     }
 
-    //ノックバック
-    void KnockBack()
-    {
-        if (isKnockBack)
-        {
-            invisibleTimer += Time.deltaTime;
-            float level = Mathf.Abs(Mathf.Sin(Time.time * 10));
-            spriteRenderer.material.color = new Color(1f, 1f, 1f, level);
-            if (invisibleTimer > invisibleInterval)
-            {
-                invisibleTimer = 0;
+    ////ノックバック
+    //void KnockBack()
+    //{
+    //    if (isKnockBack)
+    //    {
+    //        invisibleTimer += Time.deltaTime;
+    //        float level = Mathf.Abs(Mathf.Sin(Time.time * 10));
+    //        spriteRenderer.material.color = new Color(1f, 1f, 1f, level);
+    //        if (invisibleTimer > invisibleInterval)
+    //        {
+    //            invisibleTimer = 0;
                 
-                isKnockBack = false;
-            }
-        }
-        else
-        {
-            spriteRenderer.material.color = new Color(1f, 1f, 1f, 1f);
-        }
-    }
+    //            isKnockBack = false;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        spriteRenderer.material.color = new Color(1f, 1f, 1f, 1f);
+    //    }
+    //}
 
     //死亡処理
     void Death()
@@ -311,31 +312,31 @@ public class Player : MonoBehaviour
     //    }
     //}
 
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        if ((col.gameObject.tag == "Enemy") && (!isKnockBack))
-        {
-            isKnockBack = true;
-            PlayerHP -= EnemyP;
+    //private void OnCollisionEnter2D(Collision2D col)
+    //{
+    //    if ((col.gameObject.tag == "Enemy") && (!isKnockBack))
+    //    {
+    //        isKnockBack = true;
+    //        PlayerHP -= EnemyP;
 
-            Vector3 knockBackDirection = (col.gameObject.transform.position - transform.position).normalized;
+    //        Vector3 knockBackDirection = (col.gameObject.transform.position - transform.position).normalized;
 
-            knockBackDirection.x *= -1;
-            knockBackDirection.y *= -1;
-            knockBackDirection.z += 1;
+    //        knockBackDirection.x *= -1;
+    //        knockBackDirection.y *= -1;
+    //        knockBackDirection.z += 1;
 
-            rb2d.velocity = Vector2.zero;
-            rb2d.AddForce(knockBackDirection * EnemyAttack);
-        }
-    }
+    //        rb2d.velocity = Vector2.zero;
+    //        rb2d.AddForce(knockBackDirection * EnemyAttack);
+    //    }
+    //}
 
-    private void OnCollisionExit2D(Collision2D col)
-    {
-        if ((col.gameObject.tag == "Enemy") && (isKnockBack))
-        {
-            rb2d.velocity = Vector2.zero;
-        }
-    }
+    //private void OnCollisionExit2D(Collision2D col)
+    //{
+    //    if ((col.gameObject.tag == "Enemy") && (isKnockBack))
+    //    {
+    //        rb2d.velocity = Vector2.zero;
+    //    }
+    //}
 
     public float ReturnPlayerHP()
     {

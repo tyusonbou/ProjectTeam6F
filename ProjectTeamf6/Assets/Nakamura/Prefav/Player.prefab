@@ -422,6 +422,8 @@ MonoBehaviour:
   ATKRB: 100
   EnemyP: 10
   EnemyAttack: 1000
+  BulletCount: []
+  BulletLimit: 4
   attackSword: {fileID: 7930285454129924785}
   attackSword2: {fileID: 171802497}
   attackSword3: {fileID: 1005797790}
@@ -433,7 +435,7 @@ MonoBehaviour:
   STimer: 0
   SLimitTimer: 300
   invisibleTimer: 0
-  invisibleInterval: 3
+  invisibleInterval: 2
   isAttack: 0
   isKnockBack: 0
   isScream: 0

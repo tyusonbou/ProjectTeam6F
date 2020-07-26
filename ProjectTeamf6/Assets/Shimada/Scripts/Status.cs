@@ -54,6 +54,7 @@ public class Status : MonoBehaviour
         else
         {
             spriteRenderer.material.color = new Color(1f, 1f, 1f, 1f);
+            rb2d.velocity = Vector2.zero;
         }
     }
 

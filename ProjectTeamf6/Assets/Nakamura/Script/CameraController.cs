@@ -75,7 +75,7 @@ public class CameraController : MonoBehaviour
     {
         camera.orthographicSize = cameraSize;
 
-        if (Input.GetButtonDown("R3"))
+        if (Input.GetButtonDown("RB"))
         {
             switch (CameraSizeState)
             {

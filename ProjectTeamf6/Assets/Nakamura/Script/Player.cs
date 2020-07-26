@@ -179,7 +179,7 @@ public class Player : MonoBehaviour
             attackSword.SetActive(false);
             attackSword2.SetActive(true);
             doAttack = 3;
-            ATimer -= 10;
+            ATimer -= 13;
             rb2d.velocity = Vector2.zero;
 
             rb2d.AddForce(transform.up * ATKRB * 1.2f);

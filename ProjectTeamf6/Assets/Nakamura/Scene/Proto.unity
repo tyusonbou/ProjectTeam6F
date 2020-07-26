@@ -513,6 +513,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2726677169456748126, guid: 44523d95d60e486419dc93c412746763,
+        type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3604460323720657153, guid: 44523d95d60e486419dc93c412746763,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -656,7 +661,7 @@ PrefabInstance:
     - target: {fileID: 7608686879576896914, guid: 44523d95d60e486419dc93c412746763,
         type: 3}
       propertyPath: m_PixelPerfect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7716998757504156293, guid: 44523d95d60e486419dc93c412746763,
         type: 3}
@@ -1347,17 +1352,17 @@ PrefabInstance:
     - target: {fileID: 5929273974019747301, guid: 5a1ef7a64e4e85c4d86ecb569fa64306,
         type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 0.254717
       objectReference: {fileID: 0}
     - target: {fileID: 5929273974019747301, guid: 5a1ef7a64e4e85c4d86ecb569fa64306,
         type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 0.24750802
       objectReference: {fileID: 0}
     - target: {fileID: 5929273974019747301, guid: 5a1ef7a64e4e85c4d86ecb569fa64306,
         type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 0.24750802
       objectReference: {fileID: 0}
     - target: {fileID: 8150447942817126502, guid: 5a1ef7a64e4e85c4d86ecb569fa64306,
         type: 3}

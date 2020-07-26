@@ -20,6 +20,9 @@ public class Player : MonoBehaviour
     public float EnemyAttack;
 
     private float doAttack;//攻撃コンボ用
+    [SerializeField]
+    List<GameObject> BulletCount = new List<GameObject>();
+    public int BulletLimit;
 
     [SerializeField]
     GameObject attackSword;
@@ -53,6 +56,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     public bool isScream;
 
+    Renderer spriteRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +74,8 @@ public class Player : MonoBehaviour
         isAttack = false;
 
         PlayerHP = status.HP;
+
+        spriteRenderer = GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -158,7 +165,7 @@ public class Player : MonoBehaviour
             isAttack = true;
             doAttack = 1;
             ATimer = 0;
-            rb2d.AddForce(transform.up * ATKRB);
+            //rb2d.AddForce(transform.up * ATKRB);
             
         }
         if (Input.GetButtonUp("Y") && doAttack == 1)
@@ -216,10 +223,15 @@ public class Player : MonoBehaviour
     //遠距離攻撃
     void Bullet()
     {
-        if (Input.GetButtonDown("X") && !isAttack)
+        if (Input.GetButtonDown("X") && !isAttack && BulletCount.Count < BulletLimit)
         {
-            Instantiate(attackBullet, transform.position , transform.rotation);
+            BulletCount.Add(Instantiate(attackBullet, transform.position, transform.rotation));
         }
+        if(BulletCount.Count == BulletLimit)
+        {
+            BulletCount.Clear();
+        }
+        
     }
 
     //発煙設置
@@ -249,12 +261,18 @@ public class Player : MonoBehaviour
         if (isKnockBack)
         {
             invisibleTimer += Time.deltaTime;
+            float level = Mathf.Abs(Mathf.Sin(Time.time * 10));
+            spriteRenderer.material.color = new Color(1f, 1f, 1f, level);
             if (invisibleTimer > invisibleInterval)
             {
                 invisibleTimer = 0;
                 
                 isKnockBack = false;
             }
+        }
+        else
+        {
+            spriteRenderer.material.color = new Color(1f, 1f, 1f, 1f);
         }
     }
 

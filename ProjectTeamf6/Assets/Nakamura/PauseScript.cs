@@ -53,6 +53,16 @@ public class PauseScript : MonoBehaviour
 
         RedText();
 
+        if (GameObject.Find("Player") == null)
+        {
+            retry.GetComponent<Text>().text = "リトライ";
+            if (!menu)
+            {
+                menu = true;
+                Time.timeScale = 0f;
+            }
+
+        }
     }
 
     void GameOverSelect()
@@ -69,8 +79,19 @@ public class PauseScript : MonoBehaviour
             {
                 if (Input.GetButtonDown("A")) 
                 {
-                    menu = false;
-                    Time.timeScale = 1f;
+                    if (GameObject.Find("Player") == null)
+                    {
+                        // 現在のScene名を取得する
+                        Scene loadScene = SceneManager.GetActiveScene();
+                        // Sceneの読み直し
+                        SceneManager.LoadScene(loadScene.name);
+                    }
+                    else
+                    {
+                        menu = false;
+                        Time.timeScale = 1f;
+                    }
+                    
                 }
             }
 

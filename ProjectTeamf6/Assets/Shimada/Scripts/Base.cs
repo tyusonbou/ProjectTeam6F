@@ -246,7 +246,6 @@ public class Base : MonoBehaviour
                 //なぜかニ回呼ばれるので２で割る
                 HP = HP - BaseDamege / 2;
             }
-
         }
         else if(col.gameObject.name == "pb_Enemy")
         {
@@ -259,7 +258,6 @@ public class Base : MonoBehaviour
         {
             //pben = col.gameObject.GetComponent<Pb_EnemyMove>();
             //HP = HP - pben.damege;
-
         }
         if (BaseType == 4 && col.gameObject.tag == "Player")
         {

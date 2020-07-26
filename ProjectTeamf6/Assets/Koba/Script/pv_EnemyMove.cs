@@ -17,6 +17,11 @@ public class pv_EnemyMove : MonoBehaviour
     [SerializeField]
     private SearchAreaMove searchScript;
 
+    Base village1Script;
+    Base village2Script;
+    Base village3Script;
+    Base village4Script;
+
     GameObject player;
     GameObject playerBase;
     GameObject village1;
@@ -35,6 +40,11 @@ public class pv_EnemyMove : MonoBehaviour
     float pv3ex, pv3ey, pv3esq;
     float pv4ex, pv4ey, pv4esq;
     float sqrMax;
+
+    public int village1Judg;
+    public int village2Judg;
+    public int village3Judg;
+    public int village4Judg;
 
     string forward;
     string varti;
@@ -60,30 +70,36 @@ public class pv_EnemyMove : MonoBehaviour
         village2 = GameObject.Find("village2");
         village3 = GameObject.Find("playerVillage1");
         village4 = GameObject.Find("playerVillage2");
+
         playerScript = player.GetComponent<Player>();
+        village1Script = village1.GetComponent<Base>();
+        village2Script = village2.GetComponent<Base>();
+        village3Script = village3.GetComponent<Base>();
+        village4Script = village4.GetComponent<Base>();
+
         currentTime = 3.0f;
 
         int rand = Random.Range(1, 5);
-        
-        if(rand == 1)
+
+        if (rand == 1)
         {
             health = 100.0f;
             damage = 5.0f;
             speed = 0.5f;
         }
-        if(rand == 2)
+        if (rand == 2)
         {
             health = 200.0f;
             damage = 5.0f;
             speed = 0.1f;
         }
-        if(rand == 3)
+        if (rand == 3)
         {
             health = 50.0f;
             damage = 10.0f;
             speed = 0.5f;
         }
-        if(rand == 4)
+        if (rand == 4)
         {
             health = 50.0f;
             damage = 5.0f;
@@ -177,6 +193,11 @@ public class pv_EnemyMove : MonoBehaviour
 
                     //一番近い地点を出す
                     {
+                        village1Judg = village1Script.ReturnBaseType();
+                        village2Judg = village2Script.ReturnBaseType();
+                        village3Judg = village3Script.ReturnBaseType();
+                        village4Judg = village4Script.ReturnBaseType();
+
                         if (pesq < pbesq)
                         {
                             sqrMax = pesq;
@@ -188,25 +209,25 @@ public class pv_EnemyMove : MonoBehaviour
                             state = 2;
                         }
 
-                        if (sqrMax > pv1esq && village1 != null)
+                        if (sqrMax > pv1esq && village1Judg != 4)
                         {
                             sqrMax = pv1esq;
                             state = 3;
                         }
 
-                        if (sqrMax > pv2esq && village2 != null)
+                        if (sqrMax > pv2esq && village2Judg != 4)
                         {
                             sqrMax = pv2esq;
                             state = 4;
                         }
 
-                        if (sqrMax > pv3esq && village3 != null)
+                        if (sqrMax > pv3esq && village3Judg != 4)
                         {
                             sqrMax = pv3esq;
                             state = 5;
                         }
 
-                        if (sqrMax > pv4esq && village4 != null)
+                        if (sqrMax > pv4esq && village4Judg != 4)
                         {
                             sqrMax = pv4esq;
                             state = 6;

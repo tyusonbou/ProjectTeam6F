@@ -10,13 +10,19 @@ public class Pl_EnemyMove : MonoBehaviour
     private float damage = 5;
     [SerializeField, Header("スピード"), Range(0, 100)]
     private float speed = 5;
+    [SerializeField, Header("ノックバック距離"), Range(0, 100)]
+    private float knockBack = 2.0f;
     [SerializeField]
     private Player playerScript;
 
     GameObject player;
     public GameObject attractObj;
 
+    Vector2 oldPos;
     Vector2 playerPos, attractObjPos;
+
+    string forward;
+    string varti;
 
     float EnemySX, EnemySY;
 
@@ -36,25 +42,25 @@ public class Pl_EnemyMove : MonoBehaviour
         {
             health = 100.0f;
             damage = 5.0f;
-            speed = 0.5f;
+            //speed = 0.5f;
         }
         if (rand == 2)
         {
             health = 200.0f;
             damage = 5.0f;
-            speed = 0.1f;
+            //speed = 0.1f;
         }
         if (rand == 3)
         {
             health = 50.0f;
             damage = 10.0f;
-            speed = 0.5f;
+            //speed = 0.5f;
         }
         if (rand == 4)
         {
             health = 50.0f;
             damage = 5.0f;
-            speed = 1.0f;
+            //speed = 1.0f;
         }
     }
 
@@ -72,11 +78,15 @@ public class Pl_EnemyMove : MonoBehaviour
         }
 
         transform.position += new Vector3(EnemySX, EnemySY);
+
+        forward = (oldPos.x > transform.position.x) ? "left" : (oldPos.x > transform.position.x) ? "right" : forward;
+        varti = (oldPos.y > transform.position.y) ? "down" : (oldPos.y < transform.position.y) ? "up" : varti;
         if (isDamage == true)
         {
             Damage();
         }
         IsDestroy();
+        oldPos = transform.position;
     }
 
     void State1()
@@ -109,30 +119,29 @@ public class Pl_EnemyMove : MonoBehaviour
     {
         playerDamage = playerScript.ReturnAttackP();
         health -= playerDamage;
-        /*
+
         if (forward == "left")
         {
             if (varti == "down")
             {
-                transform.position += new Vector3(3.0f, 3.0f, 0.0f);
+                transform.position += new Vector3(knockBack, knockBack, 0.0f);
             }
             if (varti == "up")
             {
-                transform.position += new Vector3(3.0f, -3.0f, 0.0f);
+                transform.position += new Vector3(knockBack, -knockBack, 0.0f);
             }
         }
-        else
+        if (forward == "right")
         {
             if (varti == "down")
             {
-                transform.position += new Vector3(-3.0f, 3.0f, 0.0f);
+                transform.position += new Vector3(-knockBack, knockBack, 0.0f);
             }
             if (varti == "up")
             {
-                transform.position += new Vector3(-3.0f, -3.0f, 0.0f);
+                transform.position += new Vector3(-knockBack, -knockBack, 0.0f);
             }
         }
-        */
         isDamage = false;
     }
 

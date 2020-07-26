@@ -12,6 +12,8 @@ public class pv_EnemyMove : MonoBehaviour
     private float speed = 5;
     [SerializeField, Header("状態の更新時間"), Range(0, 100)]
     private float updateTime = 3.0f;
+    [SerializeField, Header("ノックバック距離"), Range(0, 100)]
+    private float knockBack = 2.0f;
     [SerializeField]
     private Player playerScript;
     [SerializeField]
@@ -26,6 +28,8 @@ public class pv_EnemyMove : MonoBehaviour
     GameObject attractObj;
 
     Rigidbody2D rb;
+
+    Vector2 oldPos;
 
     Vector2 playerPos, playerBasePos, village1Pos, village2Pos, village3Pos, village4Pos, attractObjPos;
     float pex, pey, pesq;
@@ -69,25 +73,25 @@ public class pv_EnemyMove : MonoBehaviour
         {
             health = 100.0f;
             damage = 5.0f;
-            speed = 0.5f;
+            //speed = 0.5f;
         }
         if(rand == 2)
         {
             health = 200.0f;
             damage = 5.0f;
-            speed = 0.1f;
+            //speed = 0.1f;
         }
         if(rand == 3)
         {
             health = 50.0f;
             damage = 10.0f;
-            speed = 0.5f;
+            //speed = 0.5f;
         }
         if(rand == 4)
         {
             health = 50.0f;
             damage = 5.0f;
-            speed = 1.0f;
+            //speed = 1.0f;
         }
     }
 
@@ -127,9 +131,11 @@ public class pv_EnemyMove : MonoBehaviour
             isSearchPlayer = searchScript.RetrunIsSearchPlayer();
             if (isSearchPlayer == true)
             {
+                gameObject.layer = LayerMask.NameToLayer("AttractEnemy");
                 state = 1;
             }
             else {
+                gameObject.layer = LayerMask.NameToLayer("Enemy");
                 currentTime += Time.deltaTime;
                 if (updateTime < currentTime)
                 {
@@ -255,8 +261,8 @@ public class pv_EnemyMove : MonoBehaviour
 
         transform.position += new Vector3(EnemySX, EnemySY);
 
-        forward = (velocity.x < -1.0f) ? "left" : (velocity.x > 1.0f) ? "right" : forward;
-        varti = (velocity.y < -1.0f) ? "down" : (velocity.y > 1.0f) ? "up" : varti;
+        forward = (oldPos.x > transform.position.x) ? "left" : (oldPos.x > transform.position.x) ? "right" : forward;
+        varti = (oldPos.y > transform.position.y) ? "down" : (oldPos.y < transform.position.y) ? "up" : varti;
         Debug.Log(forward);
         Debug.Log(varti);
         if (isDamage == true)
@@ -264,7 +270,7 @@ public class pv_EnemyMove : MonoBehaviour
             Damage();
         }
         IsDestroy();
-
+        oldPos = transform.position;
         //velocity += new Vector2(EnemySX, EnemySY);
         //rb.velocity = velocity;
     }
@@ -337,31 +343,32 @@ public class pv_EnemyMove : MonoBehaviour
     {
         playerDamage = playerScript.ReturnAttackP();
         health -= playerDamage;
-        /*
+        
         if (forward == "left")
         {
             if (varti == "down")
             {
-                transform.position += new Vector3(3.0f, 3.0f, 0.0f);
+                transform.position += new Vector3(knockBack, knockBack, 0.0f);
             }
             if (varti == "up")
             {
-                transform.position += new Vector3(3.0f, -3.0f, 0.0f);
+                transform.position += new Vector3(knockBack, -knockBack, 0.0f);
             }
         }
-        else
+        if(forward == "right")
         {
             if (varti == "down")
             {
-                transform.position += new Vector3(-3.0f, 3.0f, 0.0f);
+                transform.position += new Vector3(-knockBack, knockBack, 0.0f);
             }
             if (varti == "up")
             {
-                transform.position += new Vector3(-3.0f, -3.0f, 0.0f);
+                transform.position += new Vector3(-knockBack, -knockBack, 0.0f);
             }
         }
-        */
+        
         isDamage = false;
+        
     }
 
     void IsDestroy()

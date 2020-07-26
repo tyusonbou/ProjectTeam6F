@@ -18,6 +18,9 @@ public class Pl_EnemyMove : MonoBehaviour
     GameObject player;
     public GameObject attractObj;
 
+    public GameObject walk1;
+    public GameObject walk2;
+
     Vector2 oldPos;
     Vector2 playerPos, attractObjPos;
 
@@ -79,8 +82,9 @@ public class Pl_EnemyMove : MonoBehaviour
 
         transform.position += new Vector3(EnemySX, EnemySY);
 
-        forward = (oldPos.x > transform.position.x) ? "left" : (oldPos.x > transform.position.x) ? "right" : forward;
+        forward = (oldPos.x > transform.position.x) ? "left" : (oldPos.x < transform.position.x) ? "right" : forward;
         varti = (oldPos.y > transform.position.y) ? "down" : (oldPos.y < transform.position.y) ? "up" : varti;
+        ChangeSprite();
         if (isDamage == true)
         {
             Damage();
@@ -143,6 +147,20 @@ public class Pl_EnemyMove : MonoBehaviour
             }
         }
         isDamage = false;
+    }
+
+    void ChangeSprite()
+    {
+        if (forward == "left")
+        {
+            walk1.SetActive(true);
+            walk2.SetActive(false);
+        }
+        if (forward == "right")
+        {
+            walk1.SetActive(false);
+            walk2.SetActive(true);
+        }
     }
 
     void IsDestroy()

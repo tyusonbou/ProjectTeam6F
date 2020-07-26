@@ -33,7 +33,9 @@ public class EnemyBaseMove : MonoBehaviour
             currentTime += Time.deltaTime;
             if (spawnTime < currentTime)
             {
-                GameObject enemy = Instantiate(pv_enemy, transform.position, Quaternion.identity);
+                Instantiate(pv_enemy, transform.position, Quaternion.identity);
+                Instantiate(pl_enemy, transform.position, Quaternion.identity);
+                Instantiate(pv_enemy, transform.position, Quaternion.identity);
                 Instantiate(pl_enemy, transform.position, Quaternion.identity);
                 currentTime = 0.0f;
             }

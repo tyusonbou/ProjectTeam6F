@@ -10,10 +10,8 @@ public class Base : MonoBehaviour
 {
     Status status;
     GameObject Player;
-    GameObject pb_enemy;
-    GameObject pl_enemy;
-    GameObject enemy;
-    Pl_EnemyMove plen;
+    pv_EnemyMove pv_enemy;
+    Pl_EnemyMove pl_enemy;
     [SerializeField]
     private float HP;//拠点の体力
     [SerializeField]
@@ -30,15 +28,18 @@ public class Base : MonoBehaviour
     private float RecoveryUpPoint;//インスペクタで変更できる値
     [SerializeField]
     private int BaseType;//拠点の種類
+    private float BaseDamege;//ダメージの変数
+    private int firstCase;
     public bool ON;//一回だけ
     public bool Touch;//触れているか
     public bool Baf;//バフを発生しているかどうか
+    private bool zomb;//ゾンビかどうか
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.Find("Player");
-        
         status = Player.GetComponent<Status>();
+        firstCase = BaseType;
         ON = true;
         Touch = false;
         Baf = false;
@@ -47,9 +48,8 @@ public class Base : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemy = GameObject.Find("enemy");
-        pb_enemy = GameObject.Find("pb_Enemy");
-        pl_enemy = GameObject.Find("player_Enemy");
+        //pv_enemy = GameObject.Find("pv_Enemy");
+        //pl_enemy = GameObject.Find("player_Enemy");
         if (Touch == true)
         {
             if (Input.GetButtonDown("A"))
@@ -87,13 +87,10 @@ public class Base : MonoBehaviour
                 }
             }
         }
-        if(HP <= 0)
+        if (HP <= 0)
         {
             HP = 0;
-            if(Baf == false)
-            {
-                BaseType = 4;
-            }
+
             switch (BaseType)
             {
                 //拠点の場合
@@ -107,7 +104,7 @@ public class Base : MonoBehaviour
                         StartCoroutine("AttackDown");
                         ON = true;
                     }
-                        break;
+                    break;
                 //村（速度バフ）の場合
                 case 2:
                     if (ON == false && Baf == true)
@@ -124,17 +121,34 @@ public class Base : MonoBehaviour
                         StopCoroutine("RecoveryUp");
                         ON = true;
                     }
-                        break;
+                    break;
+                case 4:
+                    if (zomb == true)
+                    {
+                        StartCoroutine("Resuscitation");
+                    }
+                    break;
             }
-        }
-        switch(BaseType)
-        {
-            case 4:
-                //ゾンビ村スクリプト起動
-                GetComponent<Renderer>().material.color = Color.grey;
+            if (BaseType != 4 && Baf == false
+                && zomb == false)
+            {
+                BaseType = 4;
                 //Reset();
-                break;
+                switch (BaseType)
+                {
+                    case 4:
+                        Debug.Log("ゾンビ");
+                        zomb = true;
+                        //ゾンビ村スクリプト起動
+                        GetComponent<Renderer>().material.color = Color.grey;
+                        this.GetComponent<EnemyBaseMove>().enabled = true;
+                        Reset();
+                        break;
+                }
+            }
+            
         }
+        
     }
 
     //攻撃力バフ
@@ -180,30 +194,58 @@ public class Base : MonoBehaviour
     //全回復
     IEnumerator RecoveryUp()
     {
+        zomb = false;
         Baf = true;
         GetComponent<Renderer>().material.color = Color.green;
         //ステータスの最大HPを回復
         status.HP = status.HP + status.MaxHP;
-        while(true)
+        while (true)
         {
             RecoveryPoint = status.MaxHP * (RecoveryUpPoint - 1.0f);
             status.HP = status.HP + RecoveryPoint;
             yield return new WaitForSeconds(1.0f);
         }
-        
+    }
+
+    IEnumerator Resuscitation()
+    {
+        Debug.Log("復活");
+        BaseType = firstCase;
+        GetComponent<Renderer>().material.color = Color.white;
+        this.GetComponent<EnemyBaseMove>().enabled = false;
+        Reset();
+
+        yield return null;
     }
 
     void Reset()
     {
         HP += 100;
+        //Start();
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.name == "enemy")
+        if (BaseType != 4)
         {
-<
-
+            if (col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)")
+            {
+                //スクリプトを参照
+                pl_enemy = col.gameObject.GetComponent<Pl_EnemyMove>();
+                //メソッドを参照
+                BaseDamege = pl_enemy.RetrunEnemyAttackP();
+                //なぜか二回呼ばれるので２で割る
+                HP = HP - BaseDamege / 2;
+            }
+            else if (col.gameObject.name == "pv_Enemy" || col.gameObject.name == "pv_Enemy(Clone)")
+            {
+                //スクリプトを参照
+                pv_enemy = col.gameObject.GetComponent<pv_EnemyMove>();
+                //メソッドを参照
+                BaseDamege = pv_enemy.ReturnEnemyAttackP();
+                //なぜかニ回呼ばれるので２で割る
+                HP = HP - BaseDamege / 2;
+            }
         }
         else if(col.gameObject.name == "pb_Enemy")
         {
@@ -216,12 +258,15 @@ public class Base : MonoBehaviour
         {
             //pben = col.gameObject.GetComponent<Pb_EnemyMove>();
             //HP = HP - pben.damege;
-
         }
-        else if(col.gameObject.name == "player_Enemy")
+        if (BaseType == 4 && col.gameObject.tag == "Player")
         {
+
+            HP = HP - 10;
+
             //plen = col.gameObject.GetComponent<Pl_EnemyMove>();
             //HP = HP - plen.damege;
+
         }
     }
 
@@ -235,10 +280,15 @@ public class Base : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player")
         {
             Touch = false;
         }
+    }
+
+    public int ReturnBaseType()
+    {
+        return BaseType;
     }
 
 #if UNITY_EDITOR

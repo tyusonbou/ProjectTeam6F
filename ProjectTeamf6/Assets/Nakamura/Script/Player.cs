@@ -6,18 +6,23 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D rb2d;
 
-    [SerializeField]
-    float WalkSped;　//歩き速度
+    public static float WalkSped;　//歩き速度
     [SerializeField]
     float RunSpeed;　//走り速度
-    [SerializeField]
-    public static float PlayerHP; //プレイヤーHP
-    [SerializeField]
-    public static float PlayerAttack;
+    
+    public float PlayerHP; //プレイヤーHP
+    public float PlayerMaxHP;
 
+    public float PlayerAttack;
+    public float ATKRB;
+
+    public float EnemyP;
     public float EnemyAttack;
 
     private float doAttack;//攻撃コンボ用
+    [SerializeField]
+    List<GameObject> BulletCount = new List<GameObject>();
+    public int BulletLimit;
 
     [SerializeField]
     GameObject attackSword;
@@ -51,6 +56,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     public bool isScream;
 
+    Renderer spriteRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +72,10 @@ public class Player : MonoBehaviour
         attackSword2.SetActive(false);
         attackSword3.SetActive(false);
         isAttack = false;
+
+        PlayerHP = status.HP;
+
+        spriteRenderer = GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -76,7 +87,7 @@ public class Player : MonoBehaviour
         Bullet();
         Scream();
         KnockBack();
-
+        Death();
     }
 
     private void FixedUpdate()
@@ -86,12 +97,12 @@ public class Player : MonoBehaviour
 
     void SetStatus()
     {
-        PlayerHP = status.HP;
+        PlayerMaxHP = status.MaxHP;
         PlayerAttack = status.Attack;
         WalkSped = status.Speed;
-        if (PlayerHP > status.MaxHP)
+        if (PlayerHP >PlayerMaxHP)
         {
-            PlayerHP = status.MaxHP;
+            PlayerHP = PlayerMaxHP;
         }
     }
 
@@ -139,10 +150,10 @@ public class Player : MonoBehaviour
 
         transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped * Time.deltaTime);
 
-        if (Input.GetButton("A"))
-        {
-            transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped * RunSpeed * Time.deltaTime);
-        }
+        //if (Input.GetButton("A"))
+        //{
+        //    transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped * RunSpeed * Time.deltaTime);
+        //}
     }
 
     //攻撃
@@ -154,6 +165,8 @@ public class Player : MonoBehaviour
             isAttack = true;
             doAttack = 1;
             ATimer = 0;
+            //rb2d.AddForce(transform.up * ATKRB);
+            
         }
         if (Input.GetButtonUp("Y") && doAttack == 1)
         {
@@ -166,6 +179,9 @@ public class Player : MonoBehaviour
             attackSword2.SetActive(true);
             doAttack = 3;
             ATimer -= 10;
+            rb2d.velocity = Vector2.zero;
+
+            rb2d.AddForce(transform.up * ATKRB * 1.2f);
         }
         if (Input.GetButtonUp("Y") && doAttack == 3)
         {
@@ -177,7 +193,10 @@ public class Player : MonoBehaviour
             attackSword2.SetActive(false);
             attackSword3.SetActive(true);
             doAttack = 5;
-            ATimer -= 15;
+            ATimer -= 10;
+            rb2d.velocity = Vector2.zero;
+
+            rb2d.AddForce(transform.up * ATKRB * 1.5f);
         }
         if (Input.GetButtonUp("Y") && doAttack == 5)
         {
@@ -194,21 +213,28 @@ public class Player : MonoBehaviour
                 attackSword2.SetActive(false);
                 attackSword3.SetActive(false);
                 isAttack = false;
-              
+                rb2d.velocity = Vector2.zero;
                 doAttack = 0;
             }
         }
 
     }
 
+    //遠距離攻撃
     void Bullet()
     {
-        if (Input.GetButtonDown("X") && !isAttack)
+        if (Input.GetButtonDown("X") && !isAttack && BulletCount.Count < BulletLimit)
         {
-            Instantiate(attackBullet, transform.position , transform.rotation);
+            BulletCount.Add(Instantiate(attackBullet, transform.position, transform.rotation));
         }
+        if(BulletCount.Count == BulletLimit)
+        {
+            BulletCount.Clear();
+        }
+        
     }
 
+    //発煙設置
     void Scream()
     {
         if (Input.GetButtonDown("B") && !isScream)
@@ -229,17 +255,33 @@ public class Player : MonoBehaviour
         }
     }
 
+    //ノックバック
     void KnockBack()
     {
         if (isKnockBack)
         {
             invisibleTimer += Time.deltaTime;
+            float level = Mathf.Abs(Mathf.Sin(Time.time * 10));
+            spriteRenderer.material.color = new Color(1f, 1f, 1f, level);
             if (invisibleTimer > invisibleInterval)
             {
                 invisibleTimer = 0;
                 
                 isKnockBack = false;
             }
+        }
+        else
+        {
+            spriteRenderer.material.color = new Color(1f, 1f, 1f, 1f);
+        }
+    }
+
+    //死亡処理
+    void Death()
+    {
+        if (PlayerHP <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -248,12 +290,12 @@ public class Player : MonoBehaviour
     //    if ((col.gameObject.tag == "Enemy") && (!isKnockBack))
     //    {
     //        isKnockBack = true;
-    //        PlayerHP -= 1;
+    //        PlayerHP -= EnemyP;
 
     //        Vector3 knockBackDirection = (col.gameObject.transform.position - transform.position).normalized;
 
     //        knockBackDirection.x *= -1;
-    //        knockBackDirection.y -= 1;
+    //        knockBackDirection.y *= -1;
     //        knockBackDirection.z += 1;
 
     //        rb2d.velocity = Vector2.zero;
@@ -263,7 +305,7 @@ public class Player : MonoBehaviour
 
     //private void OnTriggerExit2D(Collider2D col)
     //{
-    //    if ((col.gameObject.tag == "Enemy")  && (isKnockBack))
+    //    if ((col.gameObject.tag == "Enemy") && (isKnockBack))
     //    {
     //        rb2d.velocity = Vector2.zero;
     //    }
@@ -274,12 +316,12 @@ public class Player : MonoBehaviour
         if ((col.gameObject.tag == "Enemy") && (!isKnockBack))
         {
             isKnockBack = true;
-            PlayerHP -= 1;
+            PlayerHP -= EnemyP;
 
             Vector3 knockBackDirection = (col.gameObject.transform.position - transform.position).normalized;
 
             knockBackDirection.x *= -1;
-            knockBackDirection.y -= 1;
+            knockBackDirection.y *= -1;
             knockBackDirection.z += 1;
 
             rb2d.velocity = Vector2.zero;
@@ -299,8 +341,16 @@ public class Player : MonoBehaviour
     {
         return PlayerHP;
     }
+    public float ReturnPlayerMaxHP()
+    {
+        return PlayerMaxHP;
+    }
     public float ReturnAttackP()
     {
         return PlayerAttack;
+    }
+    public float ReturnSpeed()
+    {
+        return WalkSped;
     }
 }

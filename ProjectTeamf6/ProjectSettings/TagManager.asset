@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Attack
   - Enemy
-  - ZombieVillage
+  - AttractObject
   layers:
   - Default
   - TransparentFX
@@ -16,10 +16,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - AttractEnemy
+  - Village
+  - PlayerEnemy
+  - Enemy
   - 
   - 
   - 

@@ -151,10 +151,10 @@ public class Player : MonoBehaviour
 
         transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped * Time.deltaTime);
 
-        //if (Input.GetButton("A"))
-        //{
-        //    transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped * RunSpeed * Time.deltaTime);
-        //}
+        if (Input.GetButton("A"))
+        {
+            transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped * RunSpeed * Time.deltaTime);
+        }
     }
 
     //攻撃

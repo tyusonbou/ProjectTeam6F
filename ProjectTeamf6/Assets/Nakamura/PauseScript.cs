@@ -15,6 +15,7 @@ public class PauseScript : MonoBehaviour
     //テキスト格納
     public GameObject retry;
     public GameObject exit;
+    public GameObject clear;
 
     //ポーズした時に表示するUI
     [SerializeField]
@@ -26,6 +27,7 @@ public class PauseScript : MonoBehaviour
         cnt = 0;
         number = 0;
         menu = false;
+        clear.SetActive(false);
     }
     // Update is called once per frame
     void Update()
@@ -53,7 +55,7 @@ public class PauseScript : MonoBehaviour
 
         RedText();
 
-        if (GameObject.Find("Player") == null)
+        if (GameObject.Find("Player") == null || GameObject.Find("enemyBase") == null || GameObject.Find("playerBase") == null)
         {
             retry.GetComponent<Text>().text = "リトライ";
             if (!menu)
@@ -61,7 +63,11 @@ public class PauseScript : MonoBehaviour
                 menu = true;
                 Time.timeScale = 0f;
             }
+        }
 
+        if(GameObject.Find("enemyBase") == null)
+        {
+            clear.SetActive(true);
         }
     }
 
@@ -79,7 +85,7 @@ public class PauseScript : MonoBehaviour
             {
                 if (Input.GetButtonDown("A")) 
                 {
-                    if (GameObject.Find("Player") == null)
+                    if (GameObject.Find("Player") == null || GameObject.Find("enemyBase") == null || GameObject.Find("playerBase") == null)
                     {
                         // 現在のScene名を取得する
                         Scene loadScene = SceneManager.GetActiveScene();

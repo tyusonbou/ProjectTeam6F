@@ -1178,7 +1178,8 @@ PrefabInstance:
         type: 3}
       propertyPath: pb_enemy
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5771540975347047874, guid: d4377145e31560c4a91f05fab210bcf3,
+        type: 3}
     - target: {fileID: 8150447942817126502, guid: 5a1ef7a64e4e85c4d86ecb569fa64306,
         type: 3}
       propertyPath: pv_enemy

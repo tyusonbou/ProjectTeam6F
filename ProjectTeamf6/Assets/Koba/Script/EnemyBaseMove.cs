@@ -11,6 +11,7 @@ public class EnemyBaseMove : MonoBehaviour
 
     public GameObject pv_enemy;
     public GameObject pl_enemy;
+    public GameObject pb_enemy;
 
     float currentTime;
 
@@ -37,6 +38,7 @@ public class EnemyBaseMove : MonoBehaviour
                 Instantiate(pl_enemy, transform.position, Quaternion.identity);
                 Instantiate(pv_enemy, transform.position, Quaternion.identity);
                 Instantiate(pl_enemy, transform.position, Quaternion.identity);
+                Instantiate(pb_enemy, transform.position, Quaternion.identity);
                 currentTime = 0.0f;
             }
         }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 171802498}
   - component: {fileID: 171802500}
   - component: {fileID: 171802499}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Attack2
   m_TagString: Attack
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 1005797791}
   - component: {fileID: 1005797793}
   - component: {fileID: 1005797792}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Attack3
   m_TagString: Attack
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 7930285454129924788}
   - component: {fileID: 7930285454129924787}
   - component: {fileID: 7930285454129924786}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Attack
   m_TagString: Attack
   m_Icon: {fileID: 0}
@@ -328,6 +328,7 @@ GameObject:
   - component: {fileID: 7930285453773344250}
   - component: {fileID: 2072433055}
   - component: {fileID: 1845956372}
+  - component: {fileID: 167107498}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -344,7 +345,7 @@ Transform:
   m_GameObject: {fileID: 7930285455096116974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.31, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1}
   m_Children:
   - {fileID: 7930285455221626623}
   - {fileID: 7930285454129924788}
@@ -418,7 +419,7 @@ MonoBehaviour:
   RunSpeed: 1.5
   PlayerHP: 0
   PlayerMaxHP: 0
-  PlayerAttack: 0
+  PlayerAttack: 5
   ATKRB: 100
   EnemyP: 10
   EnemyAttack: 1000
@@ -429,15 +430,13 @@ MonoBehaviour:
   attackSword3: {fileID: 1005797790}
   attackBullet: {fileID: 1575184292504623714, guid: bbd0069028a7c26488a258c4f92b0532,
     type: 3}
-  hatuentou: {fileID: 0}
+  hatuentou: {fileID: 6179728595026425467, guid: 07d478728af2057478616a6fdb895957,
+    type: 3}
   ATimer: 0
   ALimitTimer: 20
   STimer: 0
   SLimitTimer: 300
-  invisibleTimer: 0
-  invisibleInterval: 2
   isAttack: 0
-  isKnockBack: 0
   isScream: 0
 --- !u!61 &7930285453773344250
 BoxCollider2D:
@@ -499,9 +498,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 50
-  Attack: 5
-  Speed: 4
+  Attack: 40
+  Speed: 7
   MaxHP: 50
+  isKnockBack: 0
+  EnemyP: 10
+  EnemyAttack: 1000
+  invisibleTimer: 0
+  invisibleInterval: 2
+--- !u!61 &167107498
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7930285455096116974}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 2, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.05, y: 1.05}
+  m_EdgeRadius: 0
 --- !u!1 &7930285455221626622
 GameObject:
   m_ObjectHideFlags: 0

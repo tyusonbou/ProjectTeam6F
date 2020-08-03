@@ -667,6 +667,7 @@ MonoBehaviour:
     type: 3}
   pl_enemy: {fileID: 3942048175537981177, guid: 87d2d8737705ee3488946568432617c3,
     type: 3}
+  pb_enemy: {fileID: 0}
 --- !u!61 &304420783
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -723,6 +724,7 @@ MonoBehaviour:
     type: 3}
   pl_enemy: {fileID: 3942048175537981177, guid: 87d2d8737705ee3488946568432617c3,
     type: 3}
+  pb_enemy: {fileID: 0}
 --- !u!61 &343895082
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1110,6 +1112,7 @@ MonoBehaviour:
     type: 3}
   pl_enemy: {fileID: 3942048175537981177, guid: 87d2d8737705ee3488946568432617c3,
     type: 3}
+  pb_enemy: {fileID: 0}
 --- !u!61 &615985366
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1466,6 +1469,7 @@ MonoBehaviour:
     type: 3}
   pl_enemy: {fileID: 3942048175537981177, guid: 87d2d8737705ee3488946568432617c3,
     type: 3}
+  pb_enemy: {fileID: 0}
 --- !u!61 &1021565037
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2156,6 +2160,26 @@ PrefabInstance:
         type: 3}
       propertyPath: LimitScremCount
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7930285455096116975, guid: 9a448d1dcabf7d04691a7c261ab5af2c,
+        type: 3}
+      propertyPath: PlayerMaxMP
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7930285455096116975, guid: 9a448d1dcabf7d04691a7c261ab5af2c,
+        type: 3}
+      propertyPath: LimitChargeTimer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7930285455096116975, guid: 9a448d1dcabf7d04691a7c261ab5af2c,
+        type: 3}
+      propertyPath: PlayerMP
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7930285455096116975, guid: 9a448d1dcabf7d04691a7c261ab5af2c,
+        type: 3}
+      propertyPath: LimitChargeTimerDef
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a448d1dcabf7d04691a7c261ab5af2c, type: 3}

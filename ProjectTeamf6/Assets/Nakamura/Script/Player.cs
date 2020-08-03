@@ -13,13 +13,18 @@ public class Player : MonoBehaviour
     public float PlayerHP; //プレイヤーHP
     public float PlayerMaxHP;
 
-    public float PlayerMP;
+    public float PlayerMP; //プレイヤーMP
+    public float PlayerMaxMP;
 
     public float PlayerAttack;//プレイヤー攻撃力
     public float ATKRB;//攻撃時の前進速度
 
     public float ScremCount;//発煙筒使用回数
     public float LimitScremCount;
+
+    public float ChargeTimer;
+    public float LimitChargeTimer;
+    public float LimitChargeTimerDef;
 
     private float doAttack;//攻撃コンボ用
     [SerializeField]
@@ -84,6 +89,7 @@ public class Player : MonoBehaviour
         Attack();
         Bullet();
         Scream();
+        EXAttack();
         Death();
     }
 
@@ -98,10 +104,14 @@ public class Player : MonoBehaviour
         PlayerMaxHP = status.MaxHP;
         PlayerAttack = status.Attack;
         WalkSped = status.Speed;
-        //if (PlayerHP >PlayerMaxHP)
-        //{
-        //    PlayerHP = PlayerMaxHP;
-        //}
+        if (PlayerMP >= PlayerMaxMP)
+        {
+            PlayerMP = PlayerMaxMP;
+        }
+        if (PlayerMP <= 0)
+        {
+            PlayerMP = 0;
+        }
     }
 
     //向き判定
@@ -283,7 +293,7 @@ public class Player : MonoBehaviour
     //発煙設置
     void Scream()
     {
-        if (Input.GetButtonDown("B") && !isScream && ScremCount < LimitScremCount)
+        if (Input.GetButtonDown("B") && !isScream && !isAttack && ScremCount < LimitScremCount)
         {
             Instantiate(hatuentou, transform.position, Quaternion.identity);
             isScream = true;
@@ -302,7 +312,63 @@ public class Player : MonoBehaviour
         }
     }
 
-   
+    void EXAttack()
+    {
+        if (ChargeTimer >= LimitChargeTimer)
+        {
+            ChargeTimer = LimitChargeTimer;
+        }
+
+        if (Input.GetButtonDown("X"))
+        {
+            ChargeTimer = 0;
+        }
+
+        if(Input.GetButton("X") && !isAttack)
+        {
+            ChargeTimer += Time.deltaTime;
+            if (PlayerMP <= 0)
+            {
+                LimitChargeTimer = 0;
+            }
+            if (PlayerMP >= PlayerMaxMP / 4 && PlayerMP < PlayerMaxMP / 2)
+            {
+                LimitChargeTimer = LimitChargeTimerDef / 4;
+            }
+            if (PlayerMP >= PlayerMaxMP / 2 && PlayerMP < PlayerMaxMP * 3 / 4)
+            {
+                LimitChargeTimer = LimitChargeTimerDef / 2;
+            }
+            if (PlayerMP >= PlayerMaxMP * 3 / 4 && PlayerMP < PlayerMaxMP)
+            {
+                LimitChargeTimer = LimitChargeTimerDef * 3 / 4;
+            }
+            if (PlayerMP >= PlayerMaxMP)
+            {
+                LimitChargeTimer = LimitChargeTimerDef;
+            }
+        }
+        if (Input.GetButtonUp("X"))
+        {
+            
+            if (ChargeTimer >= LimitChargeTimerDef / 4 && ChargeTimer < LimitChargeTimerDef / 2)
+            {
+                PlayerMP -= PlayerMaxMP / 4;
+            }
+            if (ChargeTimer >= LimitChargeTimerDef / 2 && ChargeTimer < LimitChargeTimerDef * 3 / 4)
+            {
+                PlayerMP -= PlayerMaxMP / 2;
+            }
+            if (ChargeTimer >= LimitChargeTimerDef * 3 / 4 && ChargeTimer < LimitChargeTimerDef)
+            {
+                PlayerMP -= PlayerMaxMP * 3 / 4;
+            }
+            if (ChargeTimer >= LimitChargeTimerDef)
+            {  
+                PlayerMP -= PlayerMaxMP;
+            }
+        }
+    }
 
     //死亡処理
     void Death()
@@ -330,6 +396,14 @@ public class Player : MonoBehaviour
     public float ReturnSpeed()
     {
         return WalkSped;
+    }
+    public float ReturnPlayerMP()
+    {
+        return PlayerMP;
+    }
+    public float ReturnPlayerMaxMP()
+    {
+        return PlayerMaxMP;
     }
     public float ReturnScremCount()
     {

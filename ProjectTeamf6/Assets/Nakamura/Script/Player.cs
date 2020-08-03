@@ -13,11 +13,13 @@ public class Player : MonoBehaviour
     public float PlayerHP; //プレイヤーHP
     public float PlayerMaxHP;
 
-    public float PlayerAttack;
-    public float ATKRB;
+    public float PlayerMP;
 
-    public float EnemyP;
-    public float EnemyAttack;
+    public float PlayerAttack;//プレイヤー攻撃力
+    public float ATKRB;//攻撃時の前進速度
+
+    public float ScremCount;//発煙筒使用回数
+    public float LimitScremCount;
 
     private float doAttack;//攻撃コンボ用
     [SerializeField]
@@ -42,29 +44,24 @@ public class Player : MonoBehaviour
     float LR; //左右移動用
     float UD; //上下移動用
 
-    public float ATimer;
+    public float ATimer;//  攻撃時間
     public float ALimitTimer;
-    public float STimer;
+    public float STimer;//　発煙筒クールタイム
     public float SLimitTimer;
-    //public float invisibleTimer;
-    //public float invisibleInterval;
+
 
     [SerializeField]
     bool isAttack;
-    //[SerializeField]
-    //bool isKnockBack;
     [SerializeField]
     public bool isScream;
 
-    //Renderer spriteRenderer;
+  
 
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         status = GetComponent<Status>();
-        //PlayerHP = 10;
-        //PlayerAttack = 5;
         MoveState = "RIGHT";
 
         doAttack = 0;
@@ -73,7 +70,7 @@ public class Player : MonoBehaviour
         attackSword3.SetActive(false);
         isAttack = false;
 
-       
+        ScremCount = 0;
 
         //spriteRenderer = GetComponent<Renderer>();
     }
@@ -83,10 +80,10 @@ public class Player : MonoBehaviour
     {
         SetStatus();
         ChangeState();
+        PlayerRotate();
         Attack();
         Bullet();
         Scream();
-        //KnockBack();
         Death();
     }
 
@@ -119,29 +116,77 @@ public class Player : MonoBehaviour
         {
             LR = 1;
             MoveState = "RIGHT";
-            transform.rotation = Quaternion.Euler(0, 0, 270);
         }
 
         if (Input.GetAxisRaw("Horizontal") < 0)
         {
             LR = -1;
-            MoveState = "LEFT";
-            transform.rotation = Quaternion.Euler(180, 0, 90);
+            MoveState = "LEFT";    
         }
 
         if (Input.GetAxisRaw("Vertical") > 0)
         {
             UD = 1;
-            MoveState = "UP";
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            MoveState = "UP";     
         }
 
         if (Input.GetAxisRaw("Vertical") < 0)
         {
             UD = -1;
-            MoveState = "DOWN";
-            transform.rotation = Quaternion.Euler(180, 0, 0);
+            MoveState = "DOWN";       
         }
+    }
+
+    //向き変更
+    void PlayerRotate()
+    {
+        switch (LR)
+        {
+            case (1):
+                
+                switch (UD)
+                {
+                    case (1):
+                        transform.rotation = Quaternion.Euler(180, 0, 225);
+                        break;
+                    case (-1):
+                        transform.rotation = Quaternion.Euler(0, 0, 225);
+                        break;
+                    case (0):
+                        transform.rotation = Quaternion.Euler(0, 0, 270);
+                        break;
+                }
+                break;
+
+            case (-1):
+                
+                switch (UD)
+                {
+                    case (1):
+                        transform.rotation = Quaternion.Euler(0, 0, 45);
+                        break;
+                    case (-1):
+                        transform.rotation = Quaternion.Euler(180, 0, 45);
+                        break;
+                    case (0):
+                        transform.rotation = Quaternion.Euler(180, 0, 90);
+                        break;
+                }
+                break;
+
+            case (0):
+                switch (UD)
+                {
+                    case (1):
+                        transform.rotation = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case (-1):
+                        transform.rotation = Quaternion.Euler(180, 0, 0);
+                        break;
+                }
+                break;
+        }
+        
     }
 
     //移動
@@ -238,11 +283,12 @@ public class Player : MonoBehaviour
     //発煙設置
     void Scream()
     {
-        if (Input.GetButtonDown("B") && !isScream)
+        if (Input.GetButtonDown("B") && !isScream && ScremCount < LimitScremCount)
         {
             Instantiate(hatuentou, transform.position, Quaternion.identity);
             isScream = true;
             STimer = 0;
+            ScremCount += 1;
         }
 
         if (isScream)
@@ -256,26 +302,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    ////ノックバック
-    //void KnockBack()
-    //{
-    //    if (isKnockBack)
-    //    {
-    //        invisibleTimer += Time.deltaTime;
-    //        float level = Mathf.Abs(Mathf.Sin(Time.time * 10));
-    //        spriteRenderer.material.color = new Color(1f, 1f, 1f, level);
-    //        if (invisibleTimer > invisibleInterval)
-    //        {
-    //            invisibleTimer = 0;
-                
-    //            isKnockBack = false;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        spriteRenderer.material.color = new Color(1f, 1f, 1f, 1f);
-    //    }
-    //}
+   
 
     //死亡処理
     void Death()
@@ -286,57 +313,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    //private void OnTriggerEnter2D(Collider2D col)
-    //{
-    //    if ((col.gameObject.tag == "Enemy") && (!isKnockBack))
-    //    {
-    //        isKnockBack = true;
-    //        PlayerHP -= EnemyP;
-
-    //        Vector3 knockBackDirection = (col.gameObject.transform.position - transform.position).normalized;
-
-    //        knockBackDirection.x *= -1;
-    //        knockBackDirection.y *= -1;
-    //        knockBackDirection.z += 1;
-
-    //        rb2d.velocity = Vector2.zero;
-    //        rb2d.AddForce(knockBackDirection * EnemyAttack);
-    //    }
-    //}
-
-    //private void OnTriggerExit2D(Collider2D col)
-    //{
-    //    if ((col.gameObject.tag == "Enemy") && (isKnockBack))
-    //    {
-    //        rb2d.velocity = Vector2.zero;
-    //    }
-    //}
-
-    //private void OnCollisionEnter2D(Collision2D col)
-    //{
-    //    if ((col.gameObject.tag == "Enemy") && (!isKnockBack))
-    //    {
-    //        isKnockBack = true;
-    //        PlayerHP -= EnemyP;
-
-    //        Vector3 knockBackDirection = (col.gameObject.transform.position - transform.position).normalized;
-
-    //        knockBackDirection.x *= -1;
-    //        knockBackDirection.y *= -1;
-    //        knockBackDirection.z += 1;
-
-    //        rb2d.velocity = Vector2.zero;
-    //        rb2d.AddForce(knockBackDirection * EnemyAttack);
-    //    }
-    //}
-
-    //private void OnCollisionExit2D(Collision2D col)
-    //{
-    //    if ((col.gameObject.tag == "Enemy") && (isKnockBack))
-    //    {
-    //        rb2d.velocity = Vector2.zero;
-    //    }
-    //}
+   
 
     public float ReturnPlayerHP()
     {
@@ -353,5 +330,9 @@ public class Player : MonoBehaviour
     public float ReturnSpeed()
     {
         return WalkSped;
+    }
+    public float ReturnScremCount()
+    {
+        return ScremCount;
     }
 }

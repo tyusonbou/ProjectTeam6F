@@ -23,8 +23,8 @@ public class StatusUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HPText.text = "HP:" + player.ReturnPlayerHP() + "/" + player.ReturnPlayerMaxHP();
-        ATKText.text = "ATK:" + player.ReturnAttackP();
-        SPDText.text = "SPD:" + player.ReturnSpeed();
+        HPText.text = "HP:" + (int)player.ReturnPlayerHP() + "/" + (int)player.ReturnPlayerMaxHP();
+        ATKText.text = "ATK:" + (int)player.ReturnAttackP();
+        SPDText.text = "SPD:" + (int)player.ReturnSpeed();
     }
 }

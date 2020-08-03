@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
     {
         camera = GetComponent<Camera>();
         player = GameObject.Find("Player");
-        CameraSizeState = "M";
+        CameraSizeState = "L";
         cameraSize = SizeM;
     }
 

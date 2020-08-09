@@ -34,19 +34,22 @@ public class pv_EnemyMove : MonoBehaviour
 
     public GameObject walk1;
     public GameObject walk2;
-    
+
     Rigidbody2D rb;
 
     Vector2 oldPos;
 
-    Vector2 playerPos, playerBasePos, village1Pos, village2Pos, village3Pos, village4Pos, attractObjPos;
+    Vector3 playerPos, playerBasePos, village1Pos, village2Pos, village3Pos, village4Pos, attractObjPos;
+    Vector3 targetPosNoma;
+    /*
     float pex, pey, pesq;
     float pbex, pbey, pbesq;
     float pv1ex, pv1ey, pv1esq;
     float pv2ex, pv2ey, pv2esq;
     float pv3ex, pv3ey, pv3esq;
     float pv4ex, pv4ey, pv4esq;
-    float sqrMax;
+    */
+    float sqrMin;
 
     public int village1Judg;
     public int village2Judg;
@@ -158,48 +161,7 @@ public class pv_EnemyMove : MonoBehaviour
                 currentTime += Time.deltaTime;
                 if (updateTime < currentTime)
                 {
-                    //プレイヤーとの距離をだす
-                    {
-                        pex = (playerPos.x - transform.position.x);
-                        pey = (playerPos.y - transform.position.y);
-                        pesq = Mathf.Sqrt((pex * pex) + (pey * pey));
-                    }
-
-                    //プレイヤーの本拠地との距離を出す
-                    {
-                        pbex = (playerBasePos.x - transform.position.x);
-                        pbey = (playerBasePos.y - transform.position.y);
-                        pbesq = Mathf.Sqrt((pbex * pbex) + (pbey * pbey));
-                    }
-
-                    //村1との距離を出す
-                    {
-                        pv1ex = (village1Pos.x - transform.position.x);
-                        pv1ey = (village1Pos.y - transform.position.y);
-                        pv1esq = Mathf.Sqrt((pv1ex * pv1ex) + (pv1ey * pv1ey));
-                    }
-
-                    //村2との距離を出す
-                    {
-                        pv2ex = (village2Pos.x - transform.position.x);
-                        pv2ey = (village2Pos.y - transform.position.y);
-                        pv2esq = Mathf.Sqrt((pv2ex * pv2ex) + (pv2ey * pv2ey));
-                    }
-
-                    //村3との距離を出す
-                    {
-                        pv3ex = (village3Pos.x - transform.position.x);
-                        pv3ey = (village3Pos.y - transform.position.y);
-                        pv3esq = Mathf.Sqrt((pv3ex * pv3ex) + (pv3ey * pv3ey));
-                    }
-
-                    //村4との距離を出す
-                    {
-                        pv4ex = (village4Pos.x - transform.position.x);
-                        pv4ey = (village4Pos.y - transform.position.y);
-                        pv4esq = Mathf.Sqrt((pv4ex * pv4ex) + (pv4ey * pv4ey));
-                    }
-
+                    
                     //一番近い地点を出す
                     {
                         village1Judg = village1Script.ReturnBaseType();
@@ -207,38 +169,43 @@ public class pv_EnemyMove : MonoBehaviour
                         village3Judg = village3Script.ReturnBaseType();
                         village4Judg = village4Script.ReturnBaseType();
 
-                        if (pesq < pbesq)
+                        if ((playerPos - transform.position).sqrMagnitude
+                            < (playerBasePos - transform.position).sqrMagnitude)
                         {
-                            sqrMax = pesq;
+                            sqrMin = (playerPos - transform.position).sqrMagnitude;
                             state = 1;
                         }
                         else
                         {
-                            sqrMax = pbesq;
+                            sqrMin = (playerBasePos - transform.position).sqrMagnitude;
                             state = 2;
                         }
 
-                        if (sqrMax > pv1esq && village1Judg != 4)
+                        if (sqrMin > ((village1Pos - transform.position).sqrMagnitude)
+                            && village1Judg != 4)
                         {
-                            sqrMax = pv1esq;
+                            sqrMin = (village1Pos - transform.position).sqrMagnitude;
                             state = 3;
                         }
 
-                        if (sqrMax > pv2esq && village2Judg != 4)
+                        if (sqrMin > ((village2Pos - transform.position).sqrMagnitude)
+                            && village2Judg != 4)
                         {
-                            sqrMax = pv2esq;
+                            sqrMin = (village2Pos - transform.position).sqrMagnitude;
                             state = 4;
                         }
 
-                        if (sqrMax > pv3esq && village3Judg != 4)
+                        if (sqrMin > ((village3Pos - transform.position).sqrMagnitude)
+                            && village3Judg != 4)
                         {
-                            sqrMax = pv3esq;
+                            sqrMin = (village3Pos - transform.position).sqrMagnitude;
                             state = 5;
                         }
 
-                        if (sqrMax > pv4esq && village4Judg != 4)
+                        if (sqrMin > ((village4Pos - transform.position).sqrMagnitude)
+                            && village4Judg != 4)
                         {
-                            sqrMax = pv4esq;
+                            sqrMin = (village4Pos - transform.position).sqrMagnitude;
                             state = 6;
                         }
                     }
@@ -283,8 +250,9 @@ public class pv_EnemyMove : MonoBehaviour
             State7();
         }
 
-        transform.position += new Vector3(EnemySX, EnemySY);
-        
+        //transform.position += new Vector3(EnemySX, EnemySY);
+        transform.position += targetPosNoma * speed;
+
         forward = (oldPos.x > transform.position.x) ? "left" : (oldPos.x < transform.position.x) ? "right" : forward;
         varti = (oldPos.y > transform.position.y) ? "down" : (oldPos.y < transform.position.y) ? "up" : varti;
         Debug.Log(forward);
@@ -302,73 +270,45 @@ public class pv_EnemyMove : MonoBehaviour
 
     void State1()
     {
-        pex = (playerPos.x - transform.position.x);
-        pey = (playerPos.y - transform.position.y);
-        pesq = Mathf.Sqrt((pex * pex) + (pey * pey));
-        EnemySX = pex / pesq * speed;
-        EnemySY = pey / pesq * speed;
+       
+        targetPosNoma = (playerPos - transform.position).normalized;
     }
 
     void State2()
     {
-        pbex = (playerBasePos.x - transform.position.x);
-        pbey = (playerBasePos.y - transform.position.y);
-        pbesq = Mathf.Sqrt((pbex * pbex) + (pbey * pbey));
-        EnemySX = pbex / pbesq * speed;
-        EnemySY = pbey / pbesq * speed;
-        //transform.position += new Vector3(EnemySX, EnemySY);
+        targetPosNoma = (playerBasePos - transform.position).normalized;
     }
 
     void State3()
     {
-        pv1ex = (village1Pos.x - transform.position.x);
-        pv1ey = (village1Pos.y - transform.position.y);
-        pv1esq = Mathf.Sqrt((pv1ex * pv1ex) + (pv1ey * pv1ey));
-        EnemySX = pv1ex / pv1esq * speed;
-        EnemySY = pv1ey / pv1esq * speed;
+        targetPosNoma = (village1Pos - transform.position).normalized;
     }
     void State4()
     {
-        pv2ex = (village2Pos.x - transform.position.x);
-        pv2ey = (village2Pos.y - transform.position.y);
-        pv2esq = Mathf.Sqrt((pv2ex * pv2ex) + (pv2ey * pv2ey));
-        EnemySX = pv2ex / pv2esq * speed;
-        EnemySY = pv2ey / pv2esq * speed;
+        targetPosNoma = (village2Pos - transform.position).normalized;
     }
 
     void State5()
     {
-        pv3ex = (village3Pos.x - transform.position.x);
-        pv3ey = (village3Pos.y - transform.position.y);
-        pv3esq = Mathf.Sqrt((pv3ex * pv3ex) + (pv3ey * pv3ey));
-        EnemySX = pv3ex / pv3esq * speed;
-        EnemySY = pv3ey / pv3esq * speed;
+        targetPosNoma = (village3Pos - transform.position).normalized;
     }
 
     void State6()
     {
-        pv4ex = (village4Pos.x - transform.position.x);
-        pv4ey = (village4Pos.y - transform.position.y);
-        pv4esq = Mathf.Sqrt((pv4ex * pv4ex) + (pv4ey * pv4ey));
-        EnemySX = pv4ex / pv4esq * speed;
-        EnemySY = pv4ey / pv4esq * speed;
+        targetPosNoma = (village4Pos - transform.position).normalized;
     }
 
     void State7()
     {
         attractObjPos = attractObj.transform.position;
-        float x = (attractObjPos.x - transform.position.x);
-        float y = (attractObjPos.y - transform.position.y);
-        float xysqr = Mathf.Sqrt((x * x) + (y * y));
-        EnemySX = x / xysqr * speed;
-        EnemySY = y / xysqr * speed;
+        targetPosNoma = (attractObjPos - transform.position).normalized;
     }
 
     void Damage()
     {
         playerDamage = playerScript.ReturnAttackP();
         health -= playerDamage;
-        
+
         if (forward == "left")
         {
             if (varti == "down")
@@ -380,7 +320,7 @@ public class pv_EnemyMove : MonoBehaviour
                 transform.position += new Vector3(knockBack, -knockBack, 0.0f);
             }
         }
-        if(forward == "right")
+        if (forward == "right")
         {
             if (varti == "down")
             {
@@ -391,19 +331,19 @@ public class pv_EnemyMove : MonoBehaviour
                 transform.position += new Vector3(-knockBack, -knockBack, 0.0f);
             }
         }
-        
+
         isDamage = false;
-        
+
     }
 
     void ChangeSprite()
     {
-        if(forward == "left")
+        if (forward == "left")
         {
             walk1.SetActive(true);
             walk2.SetActive(false);
         }
-        if(forward == "right")
+        if (forward == "right")
         {
             walk1.SetActive(false);
             walk2.SetActive(true);

@@ -13,7 +13,8 @@ public class Player : MonoBehaviour
     public float PlayerHP; //プレイヤーHP
     public float PlayerMaxHP;
 
-    public float PlayerMP;
+    public float PlayerMP; //プレイヤーMP
+    public float PlayerMaxMP;
 
     public float PlayerAttack;//プレイヤー攻撃力
     public float ATKRB;//攻撃時の前進速度
@@ -21,7 +22,13 @@ public class Player : MonoBehaviour
     public float ScremCount;//発煙筒使用回数
     public float LimitScremCount;
 
+    public float ChargeTimer;
+    public float LimitChargeTimer;
+    public float LimitChargeTimerDef;
+
     private float doAttack;//攻撃コンボ用
+    private float EXdoAttack;
+
     [SerializeField]
     List<GameObject> BulletCount = new List<GameObject>();
     public int BulletLimit;
@@ -36,6 +43,18 @@ public class Player : MonoBehaviour
     GameObject attackBullet;
     [SerializeField]
     GameObject hatuentou;
+    [SerializeField]
+    GameObject ChargeEffect;
+    SpriteRenderer CESpprite;
+
+    [SerializeField]
+    GameObject EXAttack1;
+    [SerializeField]
+    GameObject EXAttack2;
+    [SerializeField]
+    GameObject EXAttack3;
+    [SerializeField]
+    GameObject EXAttack4;
 
     Status status;
 
@@ -70,6 +89,10 @@ public class Player : MonoBehaviour
         attackSword3.SetActive(false);
         isAttack = false;
 
+        EXAttack3.SetActive(false);
+
+        ChargeEffect.SetActive(false);
+
         ScremCount = 0;
 
         //spriteRenderer = GetComponent<Renderer>();
@@ -84,6 +107,7 @@ public class Player : MonoBehaviour
         Attack();
         Bullet();
         Scream();
+        EXAttack();
         Death();
     }
 
@@ -98,10 +122,16 @@ public class Player : MonoBehaviour
         PlayerMaxHP = status.MaxHP;
         PlayerAttack = status.Attack;
         WalkSped = status.Speed;
-        //if (PlayerHP >PlayerMaxHP)
-        //{
-        //    PlayerHP = PlayerMaxHP;
-        //}
+        if (PlayerMP >= PlayerMaxMP)
+        {
+            PlayerMP = PlayerMaxMP;
+        }
+        if (PlayerMP <= 0)
+        {
+            PlayerMP = 0;
+        }
+
+        PlayerMP += 1*Time.deltaTime;//後で消す
     }
 
     //向き判定
@@ -283,7 +313,7 @@ public class Player : MonoBehaviour
     //発煙設置
     void Scream()
     {
-        if (Input.GetButtonDown("B") && !isScream && ScremCount < LimitScremCount)
+        if (Input.GetButtonDown("B") && !isScream && !isAttack && ScremCount < LimitScremCount)
         {
             Instantiate(hatuentou, transform.position, Quaternion.identity);
             isScream = true;
@@ -302,7 +332,78 @@ public class Player : MonoBehaviour
         }
     }
 
-   
+    //範囲攻撃
+    void EXAttack()
+    {
+        LimitChargeTimer = LimitChargeTimerDef * (PlayerMP / PlayerMaxMP); //溜め時間上限＝MP/最大MP
+
+        if (ChargeTimer >= LimitChargeTimer)
+        {
+            ChargeTimer = LimitChargeTimer;
+        }
+
+        if (Input.GetButtonDown("X"))
+        {
+            ChargeTimer = 0;
+            EXdoAttack = 0;
+        }
+
+        if(Input.GetButton("X") && !isAttack)
+        {
+            ChargeTimer += Time.deltaTime;
+            
+            CESpprite = ChargeEffect.GetComponent<SpriteRenderer>();
+
+            
+            if (ChargeTimer >= LimitChargeTimerDef / 4 && ChargeTimer < LimitChargeTimerDef / 2)
+            {
+                ChargeEffect.SetActive(true);
+                
+                CESpprite.color = Color.blue;
+                EXdoAttack = 1;
+            }
+            if (ChargeTimer >= LimitChargeTimerDef / 2 && ChargeTimer < LimitChargeTimerDef * 3 / 4)
+            {
+                CESpprite.color = Color.green;
+                EXdoAttack = 2;
+            }
+            if (ChargeTimer >= LimitChargeTimerDef * 3 / 4 && ChargeTimer < LimitChargeTimerDef)
+            {
+                CESpprite.color = Color.yellow;
+                EXdoAttack = 3;
+            }
+            if (ChargeTimer >= LimitChargeTimerDef)
+            {
+                CESpprite.color = Color.red;
+                EXdoAttack = 4;
+            }
+        }
+        if (Input.GetButtonUp("X"))
+        {
+            ChargeEffect.SetActive(false);
+
+            if (EXdoAttack == 1)
+            {
+                PlayerMP -= PlayerMaxMP / 4;
+                Instantiate(EXAttack1, transform.position, transform.rotation);
+            }
+            if (EXdoAttack == 2)
+            {
+                PlayerMP -= PlayerMaxMP / 2;
+                Instantiate(EXAttack2, transform.position , transform.rotation);
+            }
+            if (EXdoAttack == 3)
+            {
+                PlayerMP -= PlayerMaxMP * 3 / 4;
+                EXAttack3.SetActive(true);
+            }
+            if (EXdoAttack == 4)
+            {  
+                PlayerMP -= PlayerMaxMP;
+                Instantiate(EXAttack4, transform.position , transform.rotation);
+            }
+        }
+    }
 
     //死亡処理
     void Death()
@@ -330,6 +431,14 @@ public class Player : MonoBehaviour
     public float ReturnSpeed()
     {
         return WalkSped;
+    }
+    public float ReturnPlayerMP()
+    {
+        return PlayerMP;
+    }
+    public float ReturnPlayerMaxMP()
+    {
+        return PlayerMaxMP;
     }
     public float ReturnScremCount()
     {

@@ -8,6 +8,8 @@ public class StatusUI : MonoBehaviour
     [SerializeField]
     Text HPText;
     [SerializeField]
+    Text MPText;
+    [SerializeField]
     Text ATKText;
     [SerializeField]
     Text SPDText;
@@ -24,6 +26,7 @@ public class StatusUI : MonoBehaviour
     void Update()
     {
         HPText.text = "HP:" + (int)player.ReturnPlayerHP() + "/" + (int)player.ReturnPlayerMaxHP();
+        MPText.text = "MP:" + (int)player.ReturnPlayerMP() + "/" + (int)player.ReturnPlayerMaxMP();
         ATKText.text = "ATK:" + (int)player.ReturnAttackP();
         SPDText.text = "SPD:" + (int)player.ReturnSpeed();
     }

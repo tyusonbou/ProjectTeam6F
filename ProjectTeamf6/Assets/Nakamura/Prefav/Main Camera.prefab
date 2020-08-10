@@ -90,14 +90,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c2bd929d1bdaf40b55125141c04934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -30
-  maxX: 30
-  minY: -17
-  maxY: 17
+  minX: -45
+  maxX: 45
+  minY: -25
+  maxY: 25
   moveDouble: 5
-  SizeS: 7.5
-  SizeM: 10
-  SizeL: 16.5
+  SizeS: 10
+  SizeM: 15
+  SizeL: 25
 --- !u!81 &5447933936125943283
 AudioListener:
   m_ObjectHideFlags: 0
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   retry: {fileID: 0}
   exit: {fileID: 0}
+  clear: {fileID: 0}
   pauseUI: {fileID: 0}
 --- !u!114 &1248420397
 MonoBehaviour:
@@ -134,5 +135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HPText: {fileID: 0}
+  MPText: {fileID: 0}
   ATKText: {fileID: 0}
   SPDText: {fileID: 0}

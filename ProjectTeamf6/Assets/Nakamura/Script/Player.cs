@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     public float LimitChargeTimerDef;
 
     private float doAttack;//攻撃コンボ用
+    private float EXdoAttack;
+
     [SerializeField]
     List<GameObject> BulletCount = new List<GameObject>();
     public int BulletLimit;
@@ -41,6 +43,18 @@ public class Player : MonoBehaviour
     GameObject attackBullet;
     [SerializeField]
     GameObject hatuentou;
+    [SerializeField]
+    GameObject ChargeEffect;
+    SpriteRenderer CESpprite;
+
+    [SerializeField]
+    GameObject EXAttack1;
+    [SerializeField]
+    GameObject EXAttack2;
+    [SerializeField]
+    GameObject EXAttack3;
+    [SerializeField]
+    GameObject EXAttack4;
 
     Status status;
 
@@ -74,6 +88,10 @@ public class Player : MonoBehaviour
         attackSword2.SetActive(false);
         attackSword3.SetActive(false);
         isAttack = false;
+
+        EXAttack3.SetActive(false);
+
+        ChargeEffect.SetActive(false);
 
         ScremCount = 0;
 
@@ -112,6 +130,8 @@ public class Player : MonoBehaviour
         {
             PlayerMP = 0;
         }
+
+        PlayerMP += 1*Time.deltaTime;//後で消す
     }
 
     //向き判定
@@ -312,8 +332,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    //範囲攻撃
     void EXAttack()
     {
+        LimitChargeTimer = LimitChargeTimerDef * (PlayerMP / PlayerMaxMP); //溜め時間上限＝MP/最大MP
+
         if (ChargeTimer >= LimitChargeTimer)
         {
             ChargeTimer = LimitChargeTimer;
@@ -322,50 +345,62 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("X"))
         {
             ChargeTimer = 0;
+            EXdoAttack = 0;
         }
 
         if(Input.GetButton("X") && !isAttack)
         {
             ChargeTimer += Time.deltaTime;
-            if (PlayerMP <= 0)
+            
+            CESpprite = ChargeEffect.GetComponent<SpriteRenderer>();
+
+            
+            if (ChargeTimer >= LimitChargeTimerDef / 4 && ChargeTimer < LimitChargeTimerDef / 2)
             {
-                LimitChargeTimer = 0;
+                ChargeEffect.SetActive(true);
+                
+                CESpprite.color = Color.blue;
+                EXdoAttack = 1;
             }
-            if (PlayerMP >= PlayerMaxMP / 4 && PlayerMP < PlayerMaxMP / 2)
+            if (ChargeTimer >= LimitChargeTimerDef / 2 && ChargeTimer < LimitChargeTimerDef * 3 / 4)
             {
-                LimitChargeTimer = LimitChargeTimerDef / 4;
+                CESpprite.color = Color.green;
+                EXdoAttack = 2;
             }
-            if (PlayerMP >= PlayerMaxMP / 2 && PlayerMP < PlayerMaxMP * 3 / 4)
+            if (ChargeTimer >= LimitChargeTimerDef * 3 / 4 && ChargeTimer < LimitChargeTimerDef)
             {
-                LimitChargeTimer = LimitChargeTimerDef / 2;
+                CESpprite.color = Color.yellow;
+                EXdoAttack = 3;
             }
-            if (PlayerMP >= PlayerMaxMP * 3 / 4 && PlayerMP < PlayerMaxMP)
+            if (ChargeTimer >= LimitChargeTimerDef)
             {
-                LimitChargeTimer = LimitChargeTimerDef * 3 / 4;
-            }
-            if (PlayerMP >= PlayerMaxMP)
-            {
-                LimitChargeTimer = LimitChargeTimerDef;
+                CESpprite.color = Color.red;
+                EXdoAttack = 4;
             }
         }
         if (Input.GetButtonUp("X"))
         {
-            
-            if (ChargeTimer >= LimitChargeTimerDef / 4 && ChargeTimer < LimitChargeTimerDef / 2)
+            ChargeEffect.SetActive(false);
+
+            if (EXdoAttack == 1)
             {
                 PlayerMP -= PlayerMaxMP / 4;
+                Instantiate(EXAttack1, transform.position, transform.rotation);
             }
-            if (ChargeTimer >= LimitChargeTimerDef / 2 && ChargeTimer < LimitChargeTimerDef * 3 / 4)
+            if (EXdoAttack == 2)
             {
                 PlayerMP -= PlayerMaxMP / 2;
+                Instantiate(EXAttack2, transform.position , transform.rotation);
             }
-            if (ChargeTimer >= LimitChargeTimerDef * 3 / 4 && ChargeTimer < LimitChargeTimerDef)
+            if (EXdoAttack == 3)
             {
                 PlayerMP -= PlayerMaxMP * 3 / 4;
+                EXAttack3.SetActive(true);
             }
-            if (ChargeTimer >= LimitChargeTimerDef)
+            if (EXdoAttack == 4)
             {  
                 PlayerMP -= PlayerMaxMP;
+                Instantiate(EXAttack4, transform.position , transform.rotation);
             }
         }
     }

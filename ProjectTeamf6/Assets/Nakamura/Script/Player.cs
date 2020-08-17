@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     public static float WalkSped;　//歩き速度
     [SerializeField]
-    float RunSpeed;　//走り速度
+    float ChargeWalk;　//走り速度
     
     public float PlayerHP; //プレイヤーHP
     public float PlayerMaxHP;
@@ -224,12 +224,16 @@ public class Player : MonoBehaviour
     {
         if (isAttack) { return; }
 
-        transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped * Time.deltaTime);
+        
 
-        //if (Input.GetButton("A"))
-        //{
-        //    transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped * RunSpeed * Time.deltaTime);
-        //}
+        if (Input.GetButton("X"))
+        {
+            transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped / ChargeWalk * Time.deltaTime);
+        }
+        else
+        {
+            transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped * Time.deltaTime);
+        }
     }
 
     //攻撃
@@ -344,7 +348,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetButtonDown("X"))
         {
-            ChargeTimer = 0;
+            
             EXdoAttack = 0;
         }
 
@@ -381,6 +385,7 @@ public class Player : MonoBehaviour
         if (Input.GetButtonUp("X"))
         {
             ChargeEffect.SetActive(false);
+            ChargeTimer = 0;
 
             if (EXdoAttack == 1)
             {

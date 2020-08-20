@@ -9,6 +9,13 @@ public class Terrain : MonoBehaviour
     GameObject Player;
     public bool Touch;//触れているか
     public bool ON;//一回だけ
+    public Sprite Sand;
+    public Sprite Rock;
+    public Sprite Wood;
+    public Sprite Swamp;
+    SpriteRenderer MainSprite;
+    [SerializeField]
+    private float HP;//岩の耐久値
     [SerializeField]
     private int TerrainType;//地形の種類
     [SerializeField]
@@ -25,6 +32,8 @@ public class Terrain : MonoBehaviour
         Touch = false;
         ON = true;
         bc = this.gameObject.GetComponent<BoxCollider2D>();
+        MainSprite = gameObject.GetComponent<SpriteRenderer>();
+
         switch (TerrainType)
         {
             //何もなし
@@ -34,24 +43,36 @@ public class Terrain : MonoBehaviour
             //砂地 HPが徐々に減る
             case 1:
                 bc.isTrigger = true;
+                MainSprite.sprite = Sand;
                 break;
             //岩 何回か攻撃を当てると壊れる
             case 2:
                 bc.isTrigger = false;
+                MainSprite.sprite = Rock;
+                HP = 100;
                 break;
             //木 壊せない
             case 3:
                 bc.isTrigger = false;
+                MainSprite.sprite = Wood;
                 break;
             //沼 移動速度が遅くなる
             case 4:
                 bc.isTrigger = true;
+                MainSprite.sprite = Swamp;
                 break;
         }
     }
     // Update is called once per frame
     void Update()
     {
+        if(HP <= 0)
+        {
+            if(TerrainType == 2)
+            {
+                Destroy(this.gameObject);
+            }
+        }
         if (Touch == true)
         {
             switch (TerrainType)
@@ -139,6 +160,16 @@ public class Terrain : MonoBehaviour
         //速度の値を計算
         status.Speed = status.Speed + SpeedDownPoint;
         yield return null;
+    }
+    void OnColisionEnter2D(Collision2D col)
+    {
+        if(TerrainType == 2)
+        {
+            if(col.gameObject.tag == "Player")
+            {
+                HP = HP - 10;
+            }
+        }
     }
     void OnTriggerStay2D(Collider2D col)
     {

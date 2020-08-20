@@ -3,7 +3,11 @@ guid: c32917cb56c763647a12d1da76fab180
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Sand: {fileID: -1743226805721588428, guid: 981d1a2bb77716645b5baab2257c25a9, type: 3}
+  - Rock: {fileID: -5788188039977525098, guid: 981d1a2bb77716645b5baab2257c25a9, type: 3}
+  - Wood: {fileID: -7053521920528591511, guid: 981d1a2bb77716645b5baab2257c25a9, type: 3}
+  - Swamp: {fileID: 3102025333482892523, guid: 981d1a2bb77716645b5baab2257c25a9, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

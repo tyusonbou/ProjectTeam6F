@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Pl_EnemyMove : MonoBehaviour
 {
-    [SerializeField, Header("体力"), Range(0, 100)]
+    [SerializeField, Header("体力")]
     private float health = 5;
-    [SerializeField, Header("攻撃力"), Range(0, 100)]
+    [SerializeField, Header("攻撃力")]
     private float damage = 5;
-    [SerializeField, Header("スピード"), Range(0, 100)]
+    [SerializeField, Header("スピード")]
     private float speed = 5;
     [SerializeField, Header("ノックバック距離"), Range(0, 100)]
     private float knockBack = 2.0f;
@@ -43,27 +43,27 @@ public class Pl_EnemyMove : MonoBehaviour
         int rand = Random.Range(1, 5);
         if (rand == 1)
         {
-            health = 100.0f;
-            damage = 5.0f;
-            //speed = 0.5f;
+            health = CSVReader.csvIntDatas[0, 1];
+            damage = CSVReader.csvIntDatas[0, 2];
+            speed = CSVReader.csvIntDatas[0, 3];
         }
         if (rand == 2)
         {
-            health = 200.0f;
-            damage = 5.0f;
-            //speed = 0.1f;
+            health = CSVReader.csvIntDatas[1, 1];
+            damage = CSVReader.csvIntDatas[1, 2];
+            speed = CSVReader.csvIntDatas[1, 3];
         }
         if (rand == 3)
         {
-            health = 50.0f;
-            damage = 10.0f;
-            //speed = 0.5f;
+            health = CSVReader.csvIntDatas[2, 1];
+            damage = CSVReader.csvIntDatas[2, 2];
+            speed = CSVReader.csvIntDatas[2, 3];
         }
         if (rand == 4)
         {
-            health = 50.0f;
-            damage = 5.0f;
-            //speed = 1.0f;
+            health = CSVReader.csvIntDatas[3, 1];
+            damage = CSVReader.csvIntDatas[3, 2];
+            speed = CSVReader.csvIntDatas[3, 3];
         }
     }
 

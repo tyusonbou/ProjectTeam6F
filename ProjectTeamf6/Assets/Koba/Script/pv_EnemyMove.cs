@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class pv_EnemyMove : MonoBehaviour
 {
-    [SerializeField, Header("体力"), Range(0, 100)]
+    [SerializeField, Header("体力")]
     private float health = 5;
-    [SerializeField, Header("攻撃力"), Range(0, 100)]
+    [SerializeField, Header("攻撃力")]
     private float damage = 5;
-    [SerializeField, Header("スピード"), Range(0, 100)]
+    [SerializeField, Header("スピード")]
     private float speed = 5;
     [SerializeField, Header("状態の更新時間"), Range(0, 100)]
     private float updateTime = 3.0f;
@@ -73,6 +74,19 @@ public class pv_EnemyMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //CSVの読み込み
+        {
+            /*
+            string path = @"C:\Users\yuta\Documents\GitHub\ProjectTeam6F\ProjectTeamf6\Assets\Koba\CSV\zombie_parameter.csv";
+            //var csv = Resources.Load(path) as TextAsset;
+            //var sr = new StringReader(csv.text);
+            Debug.Log(path);
+            //var cr = new CsvReader(sr);
+            //cr.Configuration.RegisterClassMap<>
+        */
+        
+        }
+
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
         playerBase = GameObject.Find("playerBase");
@@ -93,27 +107,27 @@ public class pv_EnemyMove : MonoBehaviour
 
         if (rand == 1)
         {
-            health = 100.0f;
-            damage = 5.0f;
-            //speed = 0.5f;
+            health = CSVReader.csvIntDatas[0, 1];
+            damage = CSVReader.csvIntDatas[0, 2];
+            speed = CSVReader.csvIntDatas[0, 3];
         }
         if (rand == 2)
         {
-            health = 200.0f;
-            damage = 5.0f;
-            //speed = 0.1f;
+            health = CSVReader.csvIntDatas[1, 1];
+            damage = CSVReader.csvIntDatas[1, 2];
+            speed = CSVReader.csvIntDatas[1, 3];
         }
         if (rand == 3)
         {
-            health = 50.0f;
-            damage = 10.0f;
-            //speed = 0.5f;
+            health = CSVReader.csvIntDatas[2, 1];
+            damage = CSVReader.csvIntDatas[2, 2];
+            speed = CSVReader.csvIntDatas[2, 3];
         }
         if (rand == 4)
         {
-            health = 50.0f;
-            damage = 5.0f;
-            //speed = 1.0f;
+            health = CSVReader.csvIntDatas[3, 1];
+            damage = CSVReader.csvIntDatas[3, 2];
+            speed = CSVReader.csvIntDatas[3, 3];
         }
     }
 
@@ -121,7 +135,7 @@ public class pv_EnemyMove : MonoBehaviour
     void Update()
     {
         var velocity = rb.velocity;
-
+        //Debug.Log(CSVReader.csvIntDatas[0][1]);
         //velocity = Vector2.zero;
         playerPos = player.transform.position;
         if (playerBase != null)
@@ -161,7 +175,7 @@ public class pv_EnemyMove : MonoBehaviour
                 currentTime += Time.deltaTime;
                 if (updateTime < currentTime)
                 {
-                    
+
                     //一番近い地点を出す
                     {
                         village1Judg = village1Script.ReturnBaseType();
@@ -270,7 +284,7 @@ public class pv_EnemyMove : MonoBehaviour
 
     void State1()
     {
-       
+
         targetPosNoma = (playerPos - transform.position).normalized;
     }
 
@@ -383,3 +397,16 @@ public class pv_EnemyMove : MonoBehaviour
         return damage;
     }
 }
+
+/*
+public class ZombieMapper : CsvHelper.Configuration.ClassMap<ZombieParameter>
+{
+    public ZombieParameter()
+    {
+        Map(x => x.Name).Index(0);
+        Map(x => x.Hp).Index(0);
+        Map(x => x.Atk).Index(0);
+        Map(x => x.Speed).Index(0);
+    }
+}
+*/

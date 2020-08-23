@@ -93,8 +93,6 @@ public class Player : MonoBehaviour
 
         ChargeEffect.SetActive(false);
 
-        ScremCount = 0;
-
         //spriteRenderer = GetComponent<Renderer>();
     }
 
@@ -317,12 +315,12 @@ public class Player : MonoBehaviour
     //発煙設置
     void Scream()
     {
-        if (Input.GetButtonDown("B") && !isScream && !isAttack && ScremCount < LimitScremCount)
+        if (Input.GetButtonDown("B") && !isScream && !isAttack && ScremCount > 0)
         {
             Instantiate(hatuentou, transform.position, Quaternion.identity);
             isScream = true;
             STimer = 0;
-            ScremCount += 1;
+            ScremCount -= 1;
         }
 
         if (isScream)

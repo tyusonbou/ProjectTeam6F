@@ -22,7 +22,8 @@ public class Pl_EnemyMove : MonoBehaviour
     public GameObject walk2;
 
     Vector2 oldPos;
-    Vector2 playerPos, attractObjPos;
+    Vector3 playerPos, attractObjPos;
+    Vector3 targetPosNoma;
 
     string forward;
     string varti;
@@ -70,6 +71,9 @@ public class Pl_EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var velocity = rb.velocity;
+        velocity = Vector3.zero;
+
         if (attractObj == null)
         {
             attractObj = GameObject.Find("attractObject(Clone)");
@@ -80,10 +84,21 @@ public class Pl_EnemyMove : MonoBehaviour
             State7();
         }
 
-        transform.position += new Vector3(EnemySX, EnemySY);
-
+        //transform.position += targetPosNoma * speed;
+        Vector2 nomaVec2 = targetPosNoma;
+        velocity += nomaVec2 * speed;
+        rb.velocity = velocity;
+        /*
         forward = (oldPos.x > transform.position.x) ? "left" : (oldPos.x < transform.position.x) ? "right" : forward;
         varti = (oldPos.y > transform.position.y) ? "down" : (oldPos.y < transform.position.y) ? "up" : varti;
+        */
+
+        //Debug.Log(velocity);
+        forward = (velocity.x < 0) ? "left" : (velocity.x > 0) ? "right" : forward;
+        varti = (velocity.y < 0) ? "down" : (velocity.y > 0) ? "up" : varti;
+        Debug.Log(forward);
+        Debug.Log(varti);
+
         ChangeSprite();
         if (isDamage == true)
         {
@@ -96,27 +111,23 @@ public class Pl_EnemyMove : MonoBehaviour
     void State1()
     {
         playerPos = player.transform.position;
+        targetPosNoma = (playerPos - transform.position).normalized;
+
         //var velocity = rb.velocity;
-
-        //プレイヤーとの距離をだす
-        float x = (playerPos.x - transform.position.x);
-        float y = (playerPos.y - transform.position.y);
-        float xysq = Mathf.Sqrt((x * x) + (y * y));
-
-        EnemySX = x / xysq * speed;
-        EnemySY = y / xysq * speed;
-
     }
 
     void State7()
     {
         attractObjPos = attractObj.transform.position;
+        targetPosNoma = (attractObjPos - transform.position).normalized;
+        /*
         float x = (attractObjPos.x - transform.position.x);
         float y = (attractObjPos.y - transform.position.y);
         float xysq = Mathf.Sqrt((x * x) + (y * y));
 
         EnemySX = x / xysq * speed;
         EnemySY = y / xysq * speed;
+    */
     }
 
     void Damage()

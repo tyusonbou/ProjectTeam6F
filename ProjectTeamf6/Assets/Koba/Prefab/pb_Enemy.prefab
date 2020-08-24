@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -536466959822535023, guid: 7e6accb7cc7fec54d82986a44eb09108,
+  m_Sprite: {fileID: -5207690251266893271, guid: ed2fef7a9e934ea40ade950936a19f97,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -152,7 +152,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7827895057889966104, guid: 7e6accb7cc7fec54d82986a44eb09108,
+  m_Sprite: {fileID: -2895410822267759731, guid: ed2fef7a9e934ea40ade950936a19f97,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -314,7 +314,7 @@ MonoBehaviour:
   damage: 5
   speed: 0.1
   updateTime: 3
-  knockBack: 2
+  knockBack: 1
   playerScript: {fileID: 0}
   searchScript: {fileID: 2533001653025879736}
   walk1: {fileID: 4030852653299911693}

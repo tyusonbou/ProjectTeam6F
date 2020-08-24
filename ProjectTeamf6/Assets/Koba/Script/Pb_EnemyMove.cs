@@ -7,7 +7,7 @@ public class Pb_EnemyMove : MonoBehaviour
     [SerializeField, Header("体力")]
     private float health = 5;
     [SerializeField, Header("攻撃力")]
-    private float damage = 5;
+    private float atk = 5;
     [SerializeField, Header("スピード")]
     private float speed = 5;
     [SerializeField, Header("状態の更新時間"), Range(0, 100)]
@@ -28,9 +28,8 @@ public class Pb_EnemyMove : MonoBehaviour
 
     Rigidbody2D rb;
 
-    Vector2 oldPos;
-
-    Vector2 playerPos, playerBasePos, attractObjPos;
+    Vector3 playerPos, playerBasePos, attractObjPos;
+    Vector3 targetPosNoma;
     float pex, pey, pesq;
     float pbex, pbey, pbesq;
     float sqrMax;
@@ -65,25 +64,25 @@ public class Pb_EnemyMove : MonoBehaviour
         if (rand == 1)
         {
             health = CSVReader.csvIntDatas[0, 1];
-            damage = CSVReader.csvIntDatas[0, 2];
+            atk = CSVReader.csvIntDatas[0, 2];
             speed = CSVReader.csvIntDatas[0, 3];
         }
         if (rand == 2)
         {
             health = CSVReader.csvIntDatas[1, 1];
-            damage = CSVReader.csvIntDatas[1, 2];
+            atk = CSVReader.csvIntDatas[1, 2];
             speed = CSVReader.csvIntDatas[1, 3];
         }
         if (rand == 3)
         {
             health = CSVReader.csvIntDatas[2, 1];
-            damage = CSVReader.csvIntDatas[2, 2];
+            atk = CSVReader.csvIntDatas[2, 2];
             speed = CSVReader.csvIntDatas[2, 3];
         }
         if (rand == 4)
         {
             health = CSVReader.csvIntDatas[3, 1];
-            damage = CSVReader.csvIntDatas[3, 2];
+            atk = CSVReader.csvIntDatas[3, 2];
             speed = CSVReader.csvIntDatas[3, 3];
         }
     }
@@ -92,8 +91,8 @@ public class Pb_EnemyMove : MonoBehaviour
     void Update()
     {
         var velocity = rb.velocity;
+        velocity = Vector2.zero;
 
-        //velocity = Vector2.zero;
         playerPos = player.transform.position;
         if (playerBase != null)
         {
@@ -142,79 +141,75 @@ public class Pb_EnemyMove : MonoBehaviour
             State7();
         }
 
-        transform.position += new Vector3(EnemySX, EnemySY);
+        //transform.position += new Vector3(EnemySX, EnemySY);
+        //transform.position += targetPosNoma * speed;
+        Vector2 nomaVec2 = targetPosNoma;
+        velocity += nomaVec2 * speed;
+        rb.velocity = velocity;
 
+        /*
         forward = (oldPos.x > transform.position.x) ? "left" : (oldPos.x < transform.position.x) ? "right" : forward;
         varti = (oldPos.y > transform.position.y) ? "down" : (oldPos.y < transform.position.y) ? "up" : varti;
-        Debug.Log(forward);
-        Debug.Log(varti);
+        */
+
+        forward = (velocity.x < 0) ? "left" : (velocity.x > 0) ? "right" : forward;
+        varti = (velocity.y < 0) ? "down" : (velocity.y > 0) ? "up" : varti;
+        //Debug.Log(forward);
+        //Debug.Log(varti);
+
         ChangeSprite();
         if (isDamage == true)
         {
-            Damage();
+            HitDamage();
         }
         IsDestroy();
-        oldPos = transform.position;
+
         //velocity += new Vector2(EnemySX, EnemySY);
         //rb.velocity = velocity;
     }
 
     void State1()
     {
+        /*
         pex = (playerPos.x - transform.position.x);
         pey = (playerPos.y - transform.position.y);
         pesq = Mathf.Sqrt((pex * pex) + (pey * pey));
         EnemySX = pex / pesq * speed;
         EnemySY = pey / pesq * speed;
+    */
+        targetPosNoma = (playerPos - transform.position).normalized;
     }
 
     void State2()
     {
+        /*
         pbex = (playerBasePos.x - transform.position.x);
         pbey = (playerBasePos.y - transform.position.y);
         pbesq = Mathf.Sqrt((pbex * pbex) + (pbey * pbey));
         EnemySX = pbex / pbesq * speed;
         EnemySY = pbey / pbesq * speed;
         //transform.position += new Vector3(EnemySX, EnemySY);
+    */
+        targetPosNoma = (playerBasePos - transform.position).normalized;
     }
 
     void State7()
     {
         attractObjPos = attractObj.transform.position;
+        targetPosNoma = (attractObjPos - transform.position).normalized;
+        /*
         float x = (attractObjPos.x - transform.position.x);
         float y = (attractObjPos.y - transform.position.y);
         float xysqr = Mathf.Sqrt((x * x) + (y * y));
         EnemySX = x / xysqr * speed;
         EnemySY = y / xysqr * speed;
+    */
     }
 
-    void Damage()
+    void HitDamage()
     {
         playerDamage = playerScript.ReturnAttackP();
         health -= playerDamage;
-
-        if (forward == "left")
-        {
-            if (varti == "down")
-            {
-                transform.position += new Vector3(knockBack, knockBack, 0.0f);
-            }
-            if (varti == "up")
-            {
-                transform.position += new Vector3(knockBack, -knockBack, 0.0f);
-            }
-        }
-        if (forward == "right")
-        {
-            if (varti == "down")
-            {
-                transform.position += new Vector3(-knockBack, knockBack, 0.0f);
-            }
-            if (varti == "up")
-            {
-                transform.position += new Vector3(-knockBack, -knockBack, 0.0f);
-            }
-        }
 
         isDamage = false;
 
@@ -264,6 +259,6 @@ public class Pb_EnemyMove : MonoBehaviour
 
     public float ReturnEnemyAttackP()
     {
-        return damage;
+        return atk;
     }
 }

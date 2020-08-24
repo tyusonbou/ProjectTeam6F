@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7827895057889966104, guid: 7e6accb7cc7fec54d82986a44eb09108,
+  m_Sprite: {fileID: -630214311586595800, guid: 16fa22edd1cfc53488af51d0fc932cf0,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   health: 5
   damage: 5
   speed: 0.1
-  knockBack: 2
+  knockBack: 1
   playerScript: {fileID: 0}
   attractObj: {fileID: 0}
   walk1: {fileID: 2782222941854517754}
@@ -305,7 +305,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -536466959822535023, guid: 7e6accb7cc7fec54d82986a44eb09108,
+  m_Sprite: {fileID: 8006822450198945970, guid: 16fa22edd1cfc53488af51d0fc932cf0,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

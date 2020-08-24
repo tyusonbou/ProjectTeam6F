@@ -84,7 +84,7 @@ public class pv_EnemyMove : MonoBehaviour
             //var cr = new CsvReader(sr);
             //cr.Configuration.RegisterClassMap<>
         */
-        
+
         }
 
         rb = GetComponent<Rigidbody2D>();
@@ -135,8 +135,8 @@ public class pv_EnemyMove : MonoBehaviour
     void Update()
     {
         var velocity = rb.velocity;
-        //Debug.Log(CSVReader.csvIntDatas[0][1]);
-        //velocity = Vector2.zero;
+        velocity = Vector3.zero;
+
         playerPos = player.transform.position;
         if (playerBase != null)
         {
@@ -233,7 +233,7 @@ public class pv_EnemyMove : MonoBehaviour
             state = 7;
         }
 
-        Debug.Log(state);
+        //Debug.Log(state);
 
         if (state == 1)
         {
@@ -264,13 +264,22 @@ public class pv_EnemyMove : MonoBehaviour
             State7();
         }
 
-        //transform.position += new Vector3(EnemySX, EnemySY);
-        transform.position += targetPosNoma * speed;
-
+        //transform.position += targetPosNoma * speed;
+        Vector2 nomaVec2 = targetPosNoma;
+        //Debug.Log(targetPosNoma);
+        //Debug.Log(nomaVec2);
+        velocity += nomaVec2 * speed;
+        rb.velocity = velocity;
+        /*
         forward = (oldPos.x > transform.position.x) ? "left" : (oldPos.x < transform.position.x) ? "right" : forward;
         varti = (oldPos.y > transform.position.y) ? "down" : (oldPos.y < transform.position.y) ? "up" : varti;
-        Debug.Log(forward);
-        Debug.Log(varti);
+        */
+
+        forward = (velocity.x < 0) ? "left" : (velocity.x > 0) ? "right" : forward;
+        varti = (velocity.y < 0) ? "down" : (velocity.y > 0) ? "up" : varti;
+
+        //Debug.Log(forward);
+        //Debug.Log(varti);
         ChangeSprite();
         if (isDamage == true)
         {
@@ -278,8 +287,6 @@ public class pv_EnemyMove : MonoBehaviour
         }
         IsDestroy();
         oldPos = transform.position;
-        //velocity += new Vector2(EnemySX, EnemySY);
-        //rb.velocity = velocity;
     }
 
     void State1()

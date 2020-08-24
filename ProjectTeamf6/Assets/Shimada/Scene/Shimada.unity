@@ -243,10 +243,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee625525a7dc2894780354544c7e44d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 20
+  HP: 1000
   Attack: 100
   Speed: 100
   MaxHP: 1000
+  isKnockBack: 0
+  EnemyP: 0
+  EnemyAttack: 0
+  invisibleTimer: 0
+  invisibleInterval: 0
 --- !u!212 &142487315
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -309,7 +314,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &142487317
 BoxCollider2D:
@@ -370,26 +375,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b711f99db0e20464fb9c7c21001bf4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RunSpeed: 100
+  ChargeWalk: 0
   PlayerHP: 100
   PlayerMaxHP: 1000
+  PlayerMP: 0
+  PlayerMaxMP: 0
   PlayerAttack: 100
   ATKRB: 0
-  EnemyP: 0
-  EnemyAttack: 0
+  ScremCount: 0
+  LimitScremCount: 0
+  ChargeTimer: 0
+  LimitChargeTimer: 0
+  LimitChargeTimerDef: 0
+  BulletCount: []
+  BulletLimit: 0
   attackSword: {fileID: 0}
   attackSword2: {fileID: 0}
   attackSword3: {fileID: 0}
   attackBullet: {fileID: 0}
   hatuentou: {fileID: 0}
+  ChargeEffect: {fileID: 0}
+  EXAttack1: {fileID: 0}
+  EXAttack2: {fileID: 0}
+  EXAttack3: {fileID: 0}
+  EXAttack4: {fileID: 0}
   ATimer: 0
   ALimitTimer: 0
   STimer: 0
   SLimitTimer: 0
-  invisibleTimer: 0
-  invisibleInterval: 0
   isAttack: 0
-  isKnockBack: 0
   isScream: 0
 --- !u!1 &221431595 stripped
 GameObject:
@@ -807,6 +821,7 @@ MonoBehaviour:
   maxSpawn: 3
   pv_enemy: {fileID: 0}
   pl_enemy: {fileID: 221431595}
+  pb_enemy: {fileID: 0}
 --- !u!1 &1056638700 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4962574305367549969, guid: 3bea6035f1ef7d341a4ddf5d98fbf28d,
@@ -829,6 +844,7 @@ MonoBehaviour:
   maxSpawn: 3
   pv_enemy: {fileID: 0}
   pl_enemy: {fileID: 221431595}
+  pb_enemy: {fileID: 0}
 --- !u!1 &1092484163 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3889363092191256165, guid: 944ffa99984db0945884e235cb4521a2,
@@ -1045,6 +1061,7 @@ MonoBehaviour:
   maxSpawn: 3
   pv_enemy: {fileID: 0}
   pl_enemy: {fileID: 221431595}
+  pb_enemy: {fileID: 0}
 --- !u!1001 &1785628779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1174,7 +1191,7 @@ PrefabInstance:
     - target: {fileID: 4542465354173030224, guid: 3c972da9ad1f1ee458c38bb5a8191ed2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4542465354173030224, guid: 3c972da9ad1f1ee458c38bb5a8191ed2,
         type: 3}
@@ -1190,6 +1207,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4542465354173030225, guid: 3c972da9ad1f1ee458c38bb5a8191ed2,
+        type: 3}
+      propertyPath: TerrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4542465354173030225, guid: 3c972da9ad1f1ee458c38bb5a8191ed2,
+        type: 3}
+      propertyPath: RecoveryDownPoint
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4542465354173030225, guid: 3c972da9ad1f1ee458c38bb5a8191ed2,
+        type: 3}
+      propertyPath: SpeedDownPoint
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4542465354173030231, guid: 3c972da9ad1f1ee458c38bb5a8191ed2,
         type: 3}

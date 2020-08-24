@@ -8,11 +8,11 @@ public class CameraController : MonoBehaviour
 
     GameObject player;
 
-    public float minX;
-    public float maxX;
+    //public float minX;
+    public float X;
 
-    public float minY;
-    public float maxY;
+    //public float minY;
+    public float Y;
 
     public float moveDouble;
 
@@ -23,25 +23,26 @@ public class CameraController : MonoBehaviour
 
     string CameraSizeState;
 
+
     // Start is called before the first frame update
     void Start()
     {
         camera = GetComponent<Camera>();
         player = GameObject.Find("Player");
         CameraSizeState = "L";
-        cameraSize = SizeM;
+        cameraSize = SizeL;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        CameraSizeChange();
     }
 
     private void FixedUpdate()
     {
         CameraFollow();
-        CameraSizeChange();
+        
     }
 
     void CameraFollow()
@@ -50,24 +51,24 @@ public class CameraController : MonoBehaviour
 
         //transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);
         transform.position = new Vector3(
-            playerPos.x + (Input.GetAxis("RSX") * cameraSize), playerPos.y + (Input.GetAxisRaw("RSY") * cameraSize * 4 / 5), transform.position.z);
+            playerPos.x + (Input.GetAxis("RSX") * cameraSize), playerPos.y + (Input.GetAxisRaw("RSY")/* * cameraSize * 4 / 5*/), transform.position.z);
 
-        if (transform.position.x <= minX + cameraSize + (cameraSize*4 / 5))
+        if (transform.position.x <= -X + cameraSize/* + (cameraSize*4 / 5)*/)
         {
-            transform.position = new Vector3(minX + cameraSize + (cameraSize*4 / 5), transform.position.y, transform.position.z);
+            transform.position = new Vector3(-X + cameraSize /*+ (cameraSize*4 / 5)*/, transform.position.y, transform.position.z);
         }
-        else if (transform.position.x >= maxX - cameraSize - (cameraSize*4 / 5)) 
+        else if (transform.position.x >= X - cameraSize /*- (cameraSize*4 / 5)*/) 
         {
-            transform.position = new Vector3(maxX - cameraSize - (cameraSize*4 / 5), transform.position.y, transform.position.z);
+            transform.position = new Vector3(X - cameraSize /*- (cameraSize*4 / 5)*/, transform.position.y, transform.position.z);
         }
 
-        if (transform.position.y <= minY + cameraSize)
+        if (transform.position.y <= -Y + cameraSize)
         {
-            transform.position = new Vector3(transform.position.x, minY + cameraSize, transform.position.z);
+            transform.position = new Vector3(transform.position.x, -Y + cameraSize, transform.position.z);
         }
-        else if (transform.position.y >= maxY - cameraSize) 
+        else if (transform.position.y >= Y - cameraSize) 
         {
-            transform.position = new Vector3(transform.position.x, maxY - cameraSize, transform.position.z);
+            transform.position = new Vector3(transform.position.x, Y - cameraSize, transform.position.z);
         }
     }
 

@@ -50,7 +50,7 @@ public class PauseScript : MonoBehaviour
         cnt++;
         if (cnt > 15)
             cnt = 15;
-        Debug.Log(number);
+        //Debug.Log(number);
         GameOverSelect();
 
         RedText();

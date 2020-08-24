@@ -60,11 +60,11 @@ public class StatusUI : MonoBehaviour
             ATKUPImage[1].SetActive(true);
         }
 
-        if (player.ReturnSpeed() > 8)
+        if (player.ReturnSpeed() > 10)
         {
             SPDUPImage[0].SetActive(true);
         }
-        if (player.ReturnSpeed() > 12)
+        if (player.ReturnSpeed() > 18)
         {
             SPDUPImage[1].SetActive(true);
         }

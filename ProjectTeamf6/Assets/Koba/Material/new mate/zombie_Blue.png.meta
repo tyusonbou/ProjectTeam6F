@@ -1,0 +1,611 @@
+fileFormatVersion: 2
+guid: ed2fef7a9e934ea40ade950936a19f97
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7338606355928099194
+    second: zombie_Blue_0
+  - first:
+      213: 7863476672423743424
+    second: zombie_Blue_1
+  - first:
+      213: 4111664802009050730
+    second: zombie_Blue_2
+  - first:
+      213: 6829778732965602041
+    second: zombie_Blue_3
+  - first:
+      213: 807546291268140995
+    second: zombie_Blue_4
+  - first:
+      213: -2895410822267759731
+    second: zombie_Blue_5
+  - first:
+      213: 8057980820847519266
+    second: zombie_Blue_6
+  - first:
+      213: -2435009894686045183
+    second: zombie_Blue_7
+  - first:
+      213: 4722334087901428269
+    second: zombie_Blue_8
+  - first:
+      213: 8643360257223228362
+    second: zombie_Blue_9
+  - first:
+      213: -5207690251266893271
+    second: zombie_Blue_10
+  - first:
+      213: 3142129215034457964
+    second: zombie_Blue_11
+  - first:
+      213: 5354483024144026926
+    second: zombie_Blue_12
+  - first:
+      213: -2135266708779013942
+    second: zombie_Blue_13
+  - first:
+      213: 8462443510342799117
+    second: zombie_Blue_14
+  - first:
+      213: 2444441349660117047
+    second: zombie_Blue_15
+  - first:
+      213: 7350932100783818211
+    second: zombie_Blue_16
+  - first:
+      213: -588032034077772129
+    second: zombie_Blue_17
+  - first:
+      213: 5233941969608248082
+    second: zombie_Blue_18
+  - first:
+      213: -2110842445860247357
+    second: zombie_Blue_19
+  - first:
+      213: -3121844019977496160
+    second: zombie_Blue_20
+  - first:
+      213: 7254496802400379841
+    second: zombie_Blue_21
+  - first:
+      213: 1218978310121430290
+    second: zombie_Blue_22
+  - first:
+      213: 1991062265523569161
+    second: zombie_Blue_23
+  - first:
+      213: 1227904372499036523
+    second: zombie_Blue_24
+  - first:
+      213: -2312186048174182872
+    second: zombie_Blue_25
+  - first:
+      213: 5360542546410407857
+    second: zombie_Blue_26
+  - first:
+      213: 5201205510741771705
+    second: zombie_Blue_27
+  - first:
+      213: 743706710366865435
+    second: zombie_Blue_28
+  - first:
+      213: -207090555183110965
+    second: zombie_Blue_29
+  - first:
+      213: -2011272664432136108
+    second: zombie_Blue_30
+  - first:
+      213: 5913477036748246293
+    second: zombie_Blue_31
+  - first:
+      213: -77242590680138540
+    second: zombie_Blue_32
+  - first:
+      213: -779909785787634360
+    second: zombie_Blue_33
+  - first:
+      213: -2673199630510219373
+    second: zombie_Blue_34
+  - first:
+      213: -8091881652891723686
+    second: zombie_Blue_35
+  - first:
+      213: 7943969704578129663
+    second: zombie_Blue_36
+  - first:
+      213: -3073289390023888207
+    second: zombie_Blue_37
+  - first:
+      213: 7833642512528654279
+    second: zombie_Blue_38
+  - first:
+      213: 138690122161147299
+    second: zombie_Blue_39
+  - first:
+      213: 6123496020474442175
+    second: zombie_Blue_40
+  - first:
+      213: 2880320518576464182
+    second: zombie_Blue_41
+  - first:
+      213: -1341972028199353905
+    second: zombie_Blue_42
+  - first:
+      213: -2991738730199634964
+    second: zombie_Blue_43
+  - first:
+      213: -7404040606537009533
+    second: zombie_Blue_44
+  - first:
+      213: 1880418970402349108
+    second: zombie_Blue_45
+  - first:
+      213: -6822835962474520852
+    second: zombie_Blue_46
+  - first:
+      213: 744869140364922843
+    second: zombie_Blue_47
+  - first:
+      213: 1199203473489500504
+    second: zombie_Blue_48
+  - first:
+      213: -2972700791707426882
+    second: zombie_Blue_0
+  - first:
+      213: 3173592373665522580
+    second: zombie_Blue_1
+  - first:
+      213: 2379851667683310084
+    second: zombie_Blue_2
+  - first:
+      213: -3651486863748149662
+    second: zombie_Blue_3
+  - first:
+      213: -4973911335042465128
+    second: zombie_Blue_4
+  - first:
+      213: -7148226372804985122
+    second: zombie_Blue_5
+  - first:
+      213: -1337298763857170583
+    second: zombie_Blue_6
+  - first:
+      213: 8092810967652516134
+    second: zombie_Blue_7
+  - first:
+      213: -3941553891089083896
+    second: zombie_Blue_8
+  - first:
+      213: 3425455967039619159
+    second: zombie_Blue_9
+  - first:
+      213: -5260191449505584964
+    second: zombie_Blue_10
+  - first:
+      213: 4760466170114716951
+    second: zombie_Blue_11
+  - first:
+      213: -5502338824045189314
+    second: zombie_Blue_12
+  - first:
+      213: -3402238834367550454
+    second: zombie_Blue_13
+  - first:
+      213: -6990438022345071666
+    second: zombie_Blue_14
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: zombie_Blue_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 337
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebf91c64168deb6d0800000000000000
+      internalID: -2972700791707426882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_1
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 337
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 493e83e037dda0c20800000000000000
+      internalID: 3173592373665522580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_2
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 337
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40a72669b7ee60120800000000000000
+      internalID: 2379851667683310084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_3
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 337
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26e49483b00535dc0800000000000000
+      internalID: -3651486863748149662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_4
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 337
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89241826efd19fab0800000000000000
+      internalID: -4973911335042465128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ede31e2acf56ccc90800000000000000
+      internalID: -7148226372804985122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_6
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 224
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96f69bd0cd5f07de0800000000000000
+      internalID: -1337298763857170583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_7
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 224
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 621405192b07f4070800000000000000
+      internalID: 8092810967652516134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_8
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 224
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 802939a8e99cc49c0800000000000000
+      internalID: -3941553891089083896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_9
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 224
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 750832d9d0aa98f20800000000000000
+      internalID: 3425455967039619159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 111
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb82ca11fbb0007b0800000000000000
+      internalID: -5260191449505584964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_11
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 111
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 715b3fa72c2901240800000000000000
+      internalID: 4760466170114716951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_12
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 111
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3722fefdf3c3a3b0800000000000000
+      internalID: -5502338824045189314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_13
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 111
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0cab745ec1d8c0d0800000000000000
+      internalID: -3402238834367550454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zombie_Blue_14
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 111
+        width: 76
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec3ecb5d7a9fcfe90800000000000000
+      internalID: -6990438022345071666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1258,6 +1258,11 @@ PrefabInstance:
     - target: {fileID: 8150447942817126502, guid: 5a1ef7a64e4e85c4d86ecb569fa64306,
         type: 3}
       propertyPath: maxSpawn
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150447942817126502, guid: 5a1ef7a64e4e85c4d86ecb569fa64306,
+        type: 3}
+      propertyPath: spawnTime
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8487553865798989999, guid: 5a1ef7a64e4e85c4d86ecb569fa64306,

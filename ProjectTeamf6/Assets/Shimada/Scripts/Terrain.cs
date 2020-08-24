@@ -2,17 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class Terrain : MonoBehaviour
 {
     BoxCollider2D bc;
     Status status;
     GameObject Player;
-    public bool Touch;//触れているか
+    pv_EnemyMove pv_enemy;
+    Pl_EnemyMove pl_enemy;
+    public bool PlayerTouch;//プレイヤーが触れているか
+    public bool pv_EnemyTouch;//pv_Enemyが触れているか
+    public bool player_EnemyTouch;//player_Enemyが触れているか
+    public bool Touch;//何かのオブジェクトが触れているか
     public bool ON;//一回だけ
-    public Sprite Sand;
-    public Sprite Rock;
-    public Sprite Wood;
-    public Sprite Swamp;
+    public Sprite Sand;//砂地
+    public Sprite Rock;//岩
+    public Sprite Wood;//木
+    public Sprite Swamp;//沼
     SpriteRenderer MainSprite;
     [SerializeField]
     private float HP;//岩の耐久値
@@ -21,7 +30,7 @@ public class Terrain : MonoBehaviour
     [SerializeField]
     private float RecoveryPoint;//回復量
     [SerializeField]
-    private float RecoveryUpPoint;//インスペクタで変更できる値
+    private float RecoveryDownPoint;//インスペクタで変更できる値
     [SerializeField]
     private float SpeedDownPoint;//インスペクタで変更できる値
     // Start is called before the first frame update
@@ -30,6 +39,9 @@ public class Terrain : MonoBehaviour
         Player = GameObject.Find("Player");
         status = Player.GetComponent<Status>();
         Touch = false;
+        PlayerTouch = false;
+        pv_EnemyTouch = false;
+        player_EnemyTouch = false;
         ON = true;
         bc = this.gameObject.GetComponent<BoxCollider2D>();
         MainSprite = gameObject.GetComponent<SpriteRenderer>();
@@ -77,9 +89,6 @@ public class Terrain : MonoBehaviour
         {
             switch (TerrainType)
             {
-                //何もなし
-                case 0:
-                    break;
                 //砂地 HPが徐々に減る
                 case 1:
                     if (ON == true)
@@ -88,13 +97,6 @@ public class Terrain : MonoBehaviour
                         ON = false;
                     }
                         break;
-                //岩 何回か攻撃を当てると壊れる
-                case 2:
-                   break;
-                //木 壊せない
-                case 3:
-                    bc.isTrigger = false;
-                    break;
                 //沼 移動速度が遅くなる
                 case 4:
                     if (ON == true)
@@ -109,25 +111,13 @@ public class Terrain : MonoBehaviour
         {
             switch (TerrainType)
             {
-                //何もなし
-                case 0:
-
-                    break;
-                //砂地 HPが徐々に減る
+               //砂地 HPが徐々に減る
                 case 1:
                     if (ON == false)
                     {
                         StopCoroutine("RecoveryDown");
                         ON = true;
                     }
-                    break;
-                //岩 何回か攻撃を当てると壊れる
-                case 2:
-
-                    break;
-                //木 壊せない
-                case 3:
-
                     break;
                 //沼 移動速度が遅くなる
                 case 4:
@@ -144,22 +134,66 @@ public class Terrain : MonoBehaviour
     {
         while (true)
         {
-            RecoveryPoint = status.MaxHP * (RecoveryUpPoint - 1.0f);
-            status.HP = status.HP - RecoveryPoint;
-            yield return new WaitForSeconds(1.0f);
+            //プレイヤーが触れていたら
+            if (PlayerTouch == true)
+            {
+                Player.GetComponent<SpriteRenderer>().material.color = Color.red;
+                //体力を減らす
+                RecoveryPoint = status.MaxHP * (RecoveryDownPoint - 1.0f);
+                status.HP = status.HP - RecoveryPoint;
+                
+                yield return new WaitForSeconds(1f);
+                Player.GetComponent<SpriteRenderer>().material.color = Color.white;
+            }
+            //pv_Enemyが触れていたら
+            if(pv_EnemyTouch == true)
+            {
+                
+            }
+            //player_Enemyが触れていたら
+            if(player_EnemyTouch == true)
+            {
+
+            }
         }
     }
     IEnumerator SpeedDown()
     {
-        //速度の値を計算
-        status.Speed = status.Speed - SpeedDownPoint;
-        yield return null;
+        //プレイヤーが触れていたら
+        if (PlayerTouch == true)
+        {
+            //速度を減らす
+            status.Speed = status.Speed - SpeedDownPoint;
+            yield return null;
+        }
+        //pv_Enemyが触れていたら
+        if(pv_EnemyTouch == true)
+        {
+            
+        }
+        //player_Enemyが触れていたら
+        if(player_EnemyTouch == true)
+        {
+
+        }
     }
     IEnumerator SpeedReset()
     {
-        //速度の値を計算
-        status.Speed = status.Speed + SpeedDownPoint;
-        yield return null;
+
+        if (PlayerTouch == false)
+        {
+            //速度を戻す
+            status.Speed = status.Speed + SpeedDownPoint;
+            yield return null;
+        }
+        if(pv_EnemyTouch == false)
+        {
+
+        }
+        if(player_EnemyTouch == false)
+        {
+
+        }
     }
     void OnColisionEnter2D(Collision2D col)
     {
@@ -173,20 +207,76 @@ public class Terrain : MonoBehaviour
     }
     void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Player"||
-            col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)"||
-            col.gameObject.name == "pv_Enemy" || col.gameObject.name == "pv_Enemy(Clone)")
+        if (col.gameObject.tag == "Player")
         {
             Touch = true;
+            PlayerTouch = true;
+        }
+        else if (col.gameObject.name == "pv_Enemy" || col.gameObject.name == "pv_Enemy(Clone)")
+        {
+            Touch = true;
+            pv_EnemyTouch = true;
+            //スクリプトを参照
+            pv_enemy = col.gameObject.GetComponent<pv_EnemyMove>();
+        }
+        else if (col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)")
+        {
+            Touch = true;
+            player_EnemyTouch = true;
+            //スクリプトを参照
+            pl_enemy = col.gameObject.GetComponent<Pl_EnemyMove>();
         }
     }
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Player" ||
-            col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)" ||
-            col.gameObject.name == "pv_Enemy" || col.gameObject.name == "pv_Enemy(Clone)")
+        if (col.gameObject.tag == "Player")
         {
             Touch = false;
+            PlayerTouch = false;
+        }
+        else if (col.gameObject.name == "pv_Enemy" || col.gameObject.name == "pv_Enemy(Clone)")
+        {
+            Touch = false;
+            pv_EnemyTouch = false;
+        }
+        else if (col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)")
+        {
+            Touch = false;
+            player_EnemyTouch = false;
         }
     }
+
+#if UNITY_EDITOR
+    /**
+     * Inspector拡張クラス
+     */
+    [CustomEditor(typeof(Terrain))]               //!< 拡張するときのお決まりとして書いてね
+    public class BaseEditor : Editor           //!< Editorを継承するよ！
+    {
+        bool folding = false;
+
+        public override void OnInspectorGUI()
+        {
+            //値の変更をする
+            Undo.RecordObject(target, "te");
+            // target は処理コードのインスタンスだよ！ 処理コードの型でキャストして使ってね！
+            Terrain te = target as Terrain;
+
+            //拠点の種類
+            te.TerrainType = EditorGUILayout.IntField("地形の種類", te.TerrainType);
+
+            // -- 拠点の体力 --
+            te.HP = EditorGUILayout.FloatField("岩の耐久値", te.HP);
+
+            // -- 速度 --
+            te.SpeedDownPoint = EditorGUILayout.FloatField("速度減少値", te.SpeedDownPoint);
+
+            // -- 回復量 --
+            te.RecoveryDownPoint = EditorGUILayout.FloatField("ダメージ量倍率", te.RecoveryDownPoint);
+
+            //値の変更を保存
+            EditorUtility.SetDirty(te);
+        }
+    }
+#endif
 }

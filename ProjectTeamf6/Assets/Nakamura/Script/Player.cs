@@ -222,16 +222,9 @@ public class Player : MonoBehaviour
     {
         if (isAttack) { return; }
 
-        
+        transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped * Time.deltaTime);
 
-        if (Input.GetButton("X"))
-        {
-            transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped / ChargeWalk * Time.deltaTime);
-        }
-        else
-        {
-            transform.position += new Vector3(LR, UD, 0).normalized * (WalkSped * Time.deltaTime);
-        }
+
     }
 
     //攻撃
@@ -352,6 +345,8 @@ public class Player : MonoBehaviour
 
         if(Input.GetButton("X") && !isAttack)
         {
+            WalkSped = WalkSped / ChargeWalk;
+
             ChargeTimer += Time.deltaTime;
             
             CESpprite = ChargeEffect.GetComponent<SpriteRenderer>();
@@ -384,6 +379,7 @@ public class Player : MonoBehaviour
         {
             ChargeEffect.SetActive(false);
             ChargeTimer = 0;
+            WalkSped = WalkSped * ChargeWalk;
 
             if (EXdoAttack == 1)
             {

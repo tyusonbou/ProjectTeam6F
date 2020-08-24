@@ -52,7 +52,7 @@ public class Base : MonoBehaviour
         //pl_enemy = GameObject.Find("player_Enemy");
         if (Touch == true)
         {
-            if (Input.GetButtonDown("A"))
+            if (Input.GetButtonDown("Y"))
             {
                 switch (BaseType)
                 {
@@ -259,7 +259,7 @@ public class Base : MonoBehaviour
             //pben = col.gameObject.GetComponent<Pb_EnemyMove>();
             //HP = HP - pben.damege;
         }
-        if (BaseType == 4 && col.gameObject.tag == "Player")
+        if (BaseType == 4 && col.gameObject.tag == "Attack")
         {
 
             HP = HP - 10;

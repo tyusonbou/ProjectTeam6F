@@ -165,7 +165,7 @@ public class Terrain : MonoBehaviour
     {
         if(TerrainType == 2)
         {
-            if(col.gameObject.tag == "Player")
+            if(col.gameObject.tag == "Attack")
             {
                 HP = HP - 10;
             }

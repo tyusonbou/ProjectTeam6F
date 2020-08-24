@@ -96,6 +96,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnTime: 3
   maxSpawn: 3
-  pv_enemy: {fileID: 0}
-  pl_enemy: {fileID: 0}
-  pb_enemy: {fileID: 0}
+  pv_enemy: {fileID: 3889363092191256165, guid: 944ffa99984db0945884e235cb4521a2,
+    type: 3}
+  pl_enemy: {fileID: 3942048175537981177, guid: 87d2d8737705ee3488946568432617c3,
+    type: 3}
+  pb_enemy: {fileID: 5771540975347047874, guid: d4377145e31560c4a91f05fab210bcf3,
+    type: 3}

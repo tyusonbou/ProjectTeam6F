@@ -262,7 +262,7 @@ public class Base : MonoBehaviour
         if (BaseType == 4 && col.gameObject.tag == "Attack")
         {
 
-            HP = HP - 10;
+            HP = HP - status.Attack;
 
             //plen = col.gameObject.GetComponent<Pl_EnemyMove>();
             //HP = HP - plen.damege;

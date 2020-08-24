@@ -72,6 +72,7 @@ public class Terrain : MonoBehaviour
             case 4:
                 bc.isTrigger = true;
                 MainSprite.sprite = Swamp;
+                //MainSprite.color = new Color(10,0,10);
                 break;
         }
     }
@@ -188,20 +189,20 @@ public class Terrain : MonoBehaviour
         }
         if(pv_EnemyTouch == false)
         {
-
+            
         }
         if(player_EnemyTouch == false)
         {
 
         }
     }
-    void OnColisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
         if(TerrainType == 2)
         {
             if(col.gameObject.tag == "Attack")
             {
-                HP = HP - 10;
+                HP = HP - status.Attack;
             }
         }
     }

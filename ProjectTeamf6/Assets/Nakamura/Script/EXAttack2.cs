@@ -12,7 +12,7 @@ public class EXAttack2 : MonoBehaviour
     public float timer;
     public float limitTimer;
 
-    [Range(-1f, 1f)]
+    [Range(0, 1f)]
     public float BoomTime;
     [SerializeField]
     AnimationCurve curve;
@@ -26,11 +26,15 @@ public class EXAttack2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.x < 20)
+        if (timer < limitTimer / 2)
         {
-            transform.position += transform.up * speed * curve.Evaluate(BoomTime);
+            transform.position += transform.up * speed * curve.Evaluate(timer/limitTimer);
         }
-        
+        else 
+        {
+            transform.position -= transform.up * speed * curve.Evaluate(timer / limitTimer);
+        }
+
 
         timer += Time.timeScale;
         if (timer > limitTimer)

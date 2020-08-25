@@ -12,6 +12,8 @@ public class Pl_EnemyMove : MonoBehaviour
     private float speed = 5;
     [SerializeField, Header("ノックバック距離"), Range(0, 100)]
     private float knockBack = 2.0f;
+    [SerializeField, Header("注意を引くエリア"), Range(0, 100)]
+    private float attractSeachArea = 4.0f;
     [SerializeField]
     private Player playerScript;
 
@@ -31,6 +33,8 @@ public class Pl_EnemyMove : MonoBehaviour
     float EnemySX, EnemySY;
 
     float playerDamage;
+
+    bool inAttractArea;
 
     bool isDamage;
     Rigidbody2D rb;
@@ -74,9 +78,20 @@ public class Pl_EnemyMove : MonoBehaviour
         var velocity = rb.velocity;
         velocity = Vector3.zero;
 
-        if (attractObj == null)
+        attractObj = GameObject.Find("attractObject(Clone)");
+        if (attractObj != null)
         {
-            attractObj = GameObject.Find("attractObject(Clone)");
+            attractObjPos = attractObj.transform.position;
+            if ((attractObjPos - transform.position).magnitude < attractSeachArea)
+            {
+                inAttractArea = true;
+            }
+        }
+        else
+            inAttractArea = false;
+
+        if (inAttractArea != true)
+        {
             State1();
         }
         else
@@ -194,5 +209,11 @@ public class Pl_EnemyMove : MonoBehaviour
     public float RetrunEnemyAttackP()
     {
         return damage;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attractSeachArea);
     }
 }

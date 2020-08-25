@@ -15,6 +15,8 @@ public class pv_EnemyMove : MonoBehaviour
     private float updateTime = 3.0f;
     [SerializeField, Header("ノックバック距離"), Range(0, 100)]
     private float knockBack = 2.0f;
+    [SerializeField, Header("注意を引くエリア"), Range(0, 100)]
+    private float attractSeachArea = 4.0f;
     [SerializeField]
     private Player playerScript;
     [SerializeField]
@@ -67,6 +69,7 @@ public class pv_EnemyMove : MonoBehaviour
     float playerDamage;
     float currentTime;
 
+    bool inAttractArea;
     //public bool isAttract;
     bool isDamage;
     public bool isSearchPlayer;
@@ -102,6 +105,8 @@ public class pv_EnemyMove : MonoBehaviour
         village4Script = village4.GetComponent<Base>();
 
         currentTime = 3.0f;
+
+        inAttractArea = false;
 
         int rand = Random.Range(1, 5);
 
@@ -160,11 +165,24 @@ public class pv_EnemyMove : MonoBehaviour
             village4Pos = village4.transform.position;
         }
 
-        if (attractObj == null)
+        attractObj = GameObject.Find("attractObject(Clone)");
+        //Debug.Log(attractObjPos);
+        if (attractObj != null)
+        {
+            attractObjPos = attractObj.transform.position;
+            if ((attractObjPos - transform.position).magnitude < attractSeachArea)
+            {
+                inAttractArea = true;
+            }
+        }
+        else
+            inAttractArea = false;
+
+        if (inAttractArea != true)
         {
             gameObject.layer = LayerMask.NameToLayer("Enemy");
-            attractObj = GameObject.Find("attractObject(Clone)");
             isSearchPlayer = searchScript.RetrunIsSearchPlayer();
+
             if (isSearchPlayer == true)
             {
                 gameObject.layer = LayerMask.NameToLayer("AttractEnemy");
@@ -321,7 +339,7 @@ public class pv_EnemyMove : MonoBehaviour
 
     void State7()
     {
-        attractObjPos = attractObj.transform.position;
+        //attractObjPos = attractObj.transform.position;
         targetPosNoma = (attractObjPos - transform.position).normalized;
     }
 
@@ -402,6 +420,12 @@ public class pv_EnemyMove : MonoBehaviour
     public float ReturnEnemyAttackP()
     {
         return damage;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attractSeachArea);
     }
 }
 

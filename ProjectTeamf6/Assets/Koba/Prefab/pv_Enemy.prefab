@@ -175,6 +175,7 @@ MonoBehaviour:
   speed: 0.1
   updateTime: 3
   knockBack: 2
+  attractSeachArea: 4
   playerScript: {fileID: 0}
   searchScript: {fileID: 5099883772282320159}
   walk1: {fileID: 5913540709849157546}

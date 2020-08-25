@@ -311,10 +311,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
-  damage: 5
+  atk: 5
   speed: 0.1
   updateTime: 3
   knockBack: 1
+  attractSeachArea: 4
   playerScript: {fileID: 0}
   searchScript: {fileID: 2533001653025879736}
   walk1: {fileID: 4030852653299911693}

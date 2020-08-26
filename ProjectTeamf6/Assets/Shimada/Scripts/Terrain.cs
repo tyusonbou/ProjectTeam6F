@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -8,7 +9,7 @@ using UnityEditor;
 
 public class Terrain : MonoBehaviour
 {
-    BoxCollider2D bc;
+    TilemapCollider2D bc;
     Status status;
     GameObject Player;
     pv_EnemyMove pv_enemy;
@@ -22,7 +23,7 @@ public class Terrain : MonoBehaviour
     public Sprite Rock;//岩
     public Sprite Wood;//木
     public Sprite Swamp;//沼
-    SpriteRenderer MainSprite;
+    //SpriteRenderer MainSprite;
     [SerializeField]
     private float HP;//岩の耐久値
     [SerializeField]
@@ -43,8 +44,8 @@ public class Terrain : MonoBehaviour
         pv_EnemyTouch = false;
         player_EnemyTouch = false;
         ON = true;
-        bc = this.gameObject.GetComponent<BoxCollider2D>();
-        MainSprite = gameObject.GetComponent<SpriteRenderer>();
+        bc = this.gameObject.GetComponent<TilemapCollider2D>();
+        //MainSprite = gameObject.GetComponent<SpriteRenderer>();
 
         switch (TerrainType)
         {
@@ -55,23 +56,23 @@ public class Terrain : MonoBehaviour
             //砂地 HPが徐々に減る
             case 1:
                 bc.isTrigger = true;
-                MainSprite.sprite = Sand;
+                //MainSprite.sprite = Sand;
                 break;
             //岩 何回か攻撃を当てると壊れる
             case 2:
                 bc.isTrigger = false;
-                MainSprite.sprite = Rock;
+                //MainSprite.sprite = Rock;
                 HP = 100;
                 break;
             //木 壊せない
             case 3:
                 bc.isTrigger = false;
-                MainSprite.sprite = Wood;
+                //MainSprite.sprite = Wood;
                 break;
             //沼 移動速度が遅くなる
             case 4:
                 bc.isTrigger = true;
-                MainSprite.sprite = Swamp;
+                //MainSprite.sprite = Swamp;
                 //MainSprite.color = new Color(10,0,10);
                 break;
         }

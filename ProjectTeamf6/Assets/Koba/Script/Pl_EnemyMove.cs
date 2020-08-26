@@ -133,7 +133,10 @@ public class Pl_EnemyMove : MonoBehaviour
 
     void State7()
     {
-        attractObjPos = attractObj.transform.position;
+        if (attractObj != null)
+        {
+            attractObjPos = attractObj.transform.position;
+        }
         targetPosNoma = (attractObjPos - transform.position).normalized;
         /*
         float x = (attractObjPos.x - transform.position.x);
@@ -203,6 +206,10 @@ public class Pl_EnemyMove : MonoBehaviour
         if (other.gameObject.CompareTag("Attack"))
         {
             isDamage = true;
+        }
+        if (other.gameObject.CompareTag("SpecialAttack"))
+        {
+            health -= 200;
         }
     }
 

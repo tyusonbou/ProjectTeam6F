@@ -103,7 +103,7 @@ public class Pb_EnemyMove : MonoBehaviour
         }
         attractObj = GameObject.Find("attractObject(Clone)");
 
-        if(attractObj != null)
+        if (attractObj != null)
         {
             attractObjPos = attractObj.transform.position;
             if ((attractObjPos - transform.position).magnitude < attractSeachArea)
@@ -113,7 +113,7 @@ public class Pb_EnemyMove : MonoBehaviour
             else
                 inAttractArea = false;
         }
-        
+
         if (inAttractArea != true)
         {
             gameObject.layer = LayerMask.NameToLayer("Enemy");
@@ -139,7 +139,7 @@ public class Pb_EnemyMove : MonoBehaviour
             state = 7;
         }
 
-        Debug.Log(state);
+        //Debug.Log(state);
 
         if (state == 1)
         {
@@ -209,7 +209,10 @@ public class Pb_EnemyMove : MonoBehaviour
 
     void State7()
     {
-        attractObjPos = attractObj.transform.position;
+        if (attractObj != null)
+        {
+            attractObjPos = attractObj.transform.position;
+        }
         targetPosNoma = (attractObjPos - transform.position).normalized;
         /*
         float x = (attractObjPos.x - transform.position.x);
@@ -225,6 +228,28 @@ public class Pb_EnemyMove : MonoBehaviour
         playerDamage = playerScript.ReturnAttackP();
         health -= playerDamage;
 
+        if (forward == "left")
+        {
+            if (varti == "down")
+            {
+                transform.position += new Vector3(knockBack, knockBack, 0.0f);
+            }
+            if (varti == "up")
+            {
+                transform.position += new Vector3(knockBack, -knockBack, 0.0f);
+            }
+        }
+        if (forward == "right")
+        {
+            if (varti == "down")
+            {
+                transform.position += new Vector3(-knockBack, knockBack, 0.0f);
+            }
+            if (varti == "up")
+            {
+                transform.position += new Vector3(-knockBack, -knockBack, 0.0f);
+            }
+        }
         isDamage = false;
 
     }
@@ -257,6 +282,10 @@ public class Pb_EnemyMove : MonoBehaviour
         if (other.gameObject.CompareTag("Attack"))
         {
             isDamage = true;
+        }
+        if (other.gameObject.CompareTag("SpecialAttack"))
+        {
+            health -= 200;
         }
     }
 

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8895733607954474899}
   - component: {fileID: 8484736851810303750}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: zomb_Green 1_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 202883868022668439}
   - component: {fileID: 2981361336873332866}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: zomb_Green 1_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 1351176716978500808}
   - component: {fileID: 5771540975347047872}
   - component: {fileID: 3770729462596991466}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: pb_Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -296,7 +296,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &3770729462596991466
 MonoBehaviour:
@@ -315,7 +315,7 @@ MonoBehaviour:
   speed: 0.1
   updateTime: 3
   knockBack: 1
-  attractSeachArea: 4
+  attractSeachArea: 8
   playerScript: {fileID: 0}
   searchScript: {fileID: 2533001653025879736}
   walk1: {fileID: 4030852653299911693}
@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 2041763835289684578}
   - component: {fileID: 4157186729593477276}
   - component: {fileID: 2533001653025879736}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: SearchArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}

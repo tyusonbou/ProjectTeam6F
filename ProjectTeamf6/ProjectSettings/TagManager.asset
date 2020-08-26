@@ -7,6 +7,8 @@ TagManager:
   - Attack
   - Enemy
   - AttractObject
+  - Village
+  - SpecialAttack
   layers:
   - Default
   - TransparentFX
@@ -22,7 +24,7 @@ TagManager:
   - Enemy
   - SearchArea
   - AttackArea
-  - 
+  - EnemyVillage
   - 
   - 
   - 

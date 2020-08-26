@@ -45,7 +45,7 @@ public class pv_EnemyMove : MonoBehaviour
     Vector3 playerPos, playerBasePos, village1Pos, village2Pos, village3Pos, village4Pos, attractObjPos;
     Vector3 targetPosNoma;
 
-    Vector3 relayPoint1, relayPoint2, relayPoint3, relayPoint4, relayPoint5;
+    Vector3 relayPoint1;//relayPoint2, relayPoint3, relayPoint4, relayPoint5;
     /*
     float pex, pey, pesq;
     float pbex, pbey, pbesq;
@@ -58,6 +58,7 @@ public class pv_EnemyMove : MonoBehaviour
     Vector3 startPos;
     float startPosMagni;
     int curTime;
+    int rps;
 
     public int village1Judg;
     public int village2Judg;
@@ -117,6 +118,7 @@ public class pv_EnemyMove : MonoBehaviour
 
         oldState = 0;
 
+        isRelayPointMove = false;
         inAttractArea = false;
 
         int rand = Random.Range(1, 5);
@@ -146,11 +148,7 @@ public class pv_EnemyMove : MonoBehaviour
             speed = CSVReader.csvIntDatas[3, 3];
         }
 
-        relayPoint1 = new Vector3(1, 1, 0);
-        relayPoint2 = new Vector3(-3.4f, 2.5f, 0);
-        relayPoint3 = new Vector3(-7.3f, 0.2f, 0);
-        relayPoint4 = new Vector3(3.2f, 0.1f, 0);
-        relayPoint5 = new Vector3(1.0f, -4.0f, 0);
+
     }
 
     // Update is called once per frame
@@ -184,6 +182,7 @@ public class pv_EnemyMove : MonoBehaviour
 
         attractObj = GameObject.Find("attractObject(Clone)");
         //Debug.Log(attractObjPos);
+
         if (attractObj != null)
         {
             attractObjPos = attractObj.transform.position;
@@ -209,67 +208,67 @@ public class pv_EnemyMove : MonoBehaviour
                 gameObject.layer = LayerMask.NameToLayer("Enemy");
                 currentTime += Time.deltaTime;
 
-                if (isRelayPointMove == false)
+                if (updateTime < currentTime)
                 {
-                    if (updateTime < currentTime)
+                    //一番近い地点を出す
                     {
+                        village1Judg = village1Script.ReturnBaseType();
+                        village2Judg = village2Script.ReturnBaseType();
+                        village3Judg = village3Script.ReturnBaseType();
+                        village4Judg = village4Script.ReturnBaseType();
 
-                        //一番近い地点を出す
+                        if ((playerPos - transform.position).sqrMagnitude
+                           < (playerBasePos - transform.position).sqrMagnitude)
                         {
-                            village1Judg = village1Script.ReturnBaseType();
-                            village2Judg = village2Script.ReturnBaseType();
-                            village3Judg = village3Script.ReturnBaseType();
-                            village4Judg = village4Script.ReturnBaseType();
-
-                            if ((playerPos - transform.position).sqrMagnitude
-                                < (playerBasePos - transform.position).sqrMagnitude)
-                            {
-                                sqrMin = (playerPos - transform.position).sqrMagnitude;
-                                state = 1;
-                            }
-                            else
-                            {
-                                sqrMin = (playerBasePos - transform.position).sqrMagnitude;
-                                state = 2;
-                            }
-
-                            if (sqrMin > ((village1Pos - transform.position).sqrMagnitude)
-                                && village1Judg != 4)
-                            {
-                                sqrMin = (village1Pos - transform.position).sqrMagnitude;
-                                state = 3;
-                            }
-
-                            if (sqrMin > ((village2Pos - transform.position).sqrMagnitude)
-                                && village2Judg != 4)
-                            {
-                                sqrMin = (village2Pos - transform.position).sqrMagnitude;
-                                state = 4;
-                            }
-
-                            if (sqrMin > ((village3Pos - transform.position).sqrMagnitude)
-                                && village3Judg != 4)
-                            {
-                                sqrMin = (village3Pos - transform.position).sqrMagnitude;
-                                state = 5;
-                            }
-
-                            if (sqrMin > ((village4Pos - transform.position).sqrMagnitude)
-                                && village4Judg != 4)
-                            {
-                                sqrMin = (village4Pos - transform.position).sqrMagnitude;
-                                state = 6;
-                            }
-
-                            if (state != oldState)
-                            {
-                                isRelayPointMove = true;
-                            }
-
+                            sqrMin = (playerPos - transform.position).sqrMagnitude;
+                            state = 1;
                         }
-                        currentTime = 0.0f;
+                        else
+                        {
+                            sqrMin = (playerBasePos - transform.position).sqrMagnitude;
+                            state = 2;
+                        }
+                        
+                        if (sqrMin > ((village1Pos - transform.position).sqrMagnitude)
+                            && village1Judg != 4)
+                        {
+                            sqrMin = (village1Pos - transform.position).sqrMagnitude;
+                            state = 3;
+                        }
+                        
+                        if (sqrMin > ((village2Pos - transform.position).sqrMagnitude)
+                            && village2Judg != 4)
+                        {
+                            sqrMin = (village2Pos - transform.position).sqrMagnitude;
+                            state = 4;
+                        }
+                        
+                        if (sqrMin > ((village3Pos - transform.position).sqrMagnitude)
+                            && village3Judg != 4)
+                        {
+                            sqrMin = (village3Pos - transform.position).sqrMagnitude;
+                            state = 5;
+                        }
+                        
+                        if (sqrMin > ((village4Pos - transform.position).sqrMagnitude)
+                              && village4Judg != 4)
+                        {
+                            sqrMin = (village4Pos - transform.position).sqrMagnitude;
+                            state = 6;
+                        }
+                        
+                        /*
+                        if (state != oldState)
+                        {
+                            isRelayPointMove = true;
+                        }
+                        */
                     }
+                    currentTime = 0.0f;
                 }
+                //}
+                // else
+                //  relayPointState();
             }
         }
         else
@@ -371,10 +370,10 @@ public class pv_EnemyMove : MonoBehaviour
         targetPosNoma = (attractObjPos - transform.position).normalized;
     }
 
+    /*
     void relayPointState()
     {
-
-        int rps = 0;
+        
         float sqrMagMin;
 
         if ((relayPoint1 - transform.position).sqrMagnitude < (relayPoint2 - transform.position).sqrMagnitude)
@@ -482,6 +481,7 @@ public class pv_EnemyMove : MonoBehaviour
             }
         }
     }
+    */
 
     void Damage()
     {
@@ -544,6 +544,20 @@ public class pv_EnemyMove : MonoBehaviour
         {
             isDamage = true;
         }
+
+        if (other.gameObject.CompareTag("SpecialAttack"))
+        {
+            health -= 200;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Village"))
+        {
+            transform.position += new Vector3(1.0f, 1.0f, 0.0f);
+            //Debug.Log("当たりました");
+        }
     }
 
     /*
@@ -566,24 +580,5 @@ public class pv_EnemyMove : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attractSeachArea);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(relayPoint1, 1);
-        Gizmos.DrawWireSphere(relayPoint2, 1);
-        Gizmos.DrawWireSphere(relayPoint3, 1);
-        Gizmos.DrawWireSphere(relayPoint4, 1);
-        Gizmos.DrawWireSphere(relayPoint5, 1);
     }
 }
-
-/*
-public class ZombieMapper : CsvHelper.Configuration.ClassMap<ZombieParameter>
-{
-    public ZombieParameter()
-    {
-        Map(x => x.Name).Index(0);
-        Map(x => x.Hp).Index(0);
-        Map(x => x.Atk).Index(0);
-        Map(x => x.Speed).Index(0);
-    }
-}
-*/

@@ -13,6 +13,8 @@ public class EnemyBaseMove : MonoBehaviour
     public GameObject pl_enemy;
     public GameObject pb_enemy;
 
+    int rand;
+
     float currentTime;
 
     // Start is called before the first frame update
@@ -34,11 +36,15 @@ public class EnemyBaseMove : MonoBehaviour
             currentTime += Time.deltaTime;
             if (spawnTime < currentTime)
             {
+                rand = Random.Range(1, 5);
                 Instantiate(pv_enemy, transform.position, Quaternion.identity);
                 Instantiate(pl_enemy, transform.position, Quaternion.identity);
-                Instantiate(pv_enemy, transform.position, Quaternion.identity);
-                Instantiate(pl_enemy, transform.position, Quaternion.identity);
-                Instantiate(pb_enemy, transform.position, Quaternion.identity);
+                //Instantiate(pv_enemy, transform.position, Quaternion.identity);
+                //Instantiate(pl_enemy, transform.position, Quaternion.identity);
+                if (rand == 2)
+                {
+                    Instantiate(pb_enemy, transform.position, Quaternion.identity);
+                }
                 currentTime = 0.0f;
             }
         }

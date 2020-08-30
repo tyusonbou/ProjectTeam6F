@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HatsuenUI : MonoBehaviour
 {
     [SerializeField]
     GameObject[] ScreamImage;
+    [SerializeField]
+    Slider HaSlider;
 
     Player player;
 
@@ -13,8 +16,10 @@ public class HatsuenUI : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
+        //HaSlider = GameObject.Find("HatuenSlider").GetComponent<Slider>();
+       
 
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             ScreamImage[i].SetActive(true);
         }
@@ -35,5 +40,8 @@ public class HatsuenUI : MonoBehaviour
         {
             ScreamImage[0].SetActive(false);
         }
+
+        //HaSlider.value = player.STimer;
+        //HaSlider.maxValue = player.SLimitTimer;
     }
 }

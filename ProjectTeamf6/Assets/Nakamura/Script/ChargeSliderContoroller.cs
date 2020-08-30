@@ -11,6 +11,7 @@ public class ChargeSliderContoroller : MonoBehaviour
     [SerializeField]
     Slider MPSlider;
     Image Guage;
+    Image Huti;
 
 
     // Start is called before the first frame update
@@ -20,6 +21,9 @@ public class ChargeSliderContoroller : MonoBehaviour
         playerPos = GameObject.Find("Player");
         MPSlider = GameObject.Find("MPGuageP").GetComponent<Slider>();
         Guage = GetComponentInChildren<Image>();
+        Huti = GameObject.Find("FillP").GetComponent<Image>();
+
+        Huti.color = Color.clear;
     }
 
     // Update is called once per frame
@@ -49,6 +53,15 @@ public class ChargeSliderContoroller : MonoBehaviour
         else if (MPSlider.value >= MPSlider.maxValue)
         {
             Guage.color = Color.red;
+        }
+
+        if (Input.GetButton("X"))
+        {
+            Huti.color = Color.white;
+        }
+        if (Input.GetButtonUp("X"))
+        {
+            Huti.color = Color.clear;
         }
     }
 }

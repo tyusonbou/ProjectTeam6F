@@ -34,9 +34,4 @@ public class ZombieVillageStatus : MonoBehaviour
             HP -= player.GetComponent<Player>().ReturnAttackP();
         }
     }
-
-    public float ReturnHP()
-    {
-        return HP;
-    }
 }

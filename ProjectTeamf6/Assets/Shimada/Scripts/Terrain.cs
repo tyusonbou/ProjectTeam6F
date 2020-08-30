@@ -214,20 +214,20 @@ public class Terrain : MonoBehaviour
             Touch = true;
             PlayerTouch = true;
         }
-        //else if (col.gameObject.name == "pv_Enemy" || col.gameObject.name == "pv_Enemy(Clone)")
-        //{
-        //    Touch = true;
-        //    pv_EnemyTouch = true;
-        //    //スクリプトを参照
-        //    pv_enemy = col.gameObject.GetComponent<pv_EnemyMove>();
-        //}
-        //else if (col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)")
-        //{
-        //    Touch = true;
-        //    player_EnemyTouch = true;
-        //    //スクリプトを参照
-        //    pl_enemy = col.gameObject.GetComponent<Pl_EnemyMove>();
-        //}
+        else if (col.gameObject.name == "pv_Enemy" || col.gameObject.name == "pv_Enemy(Clone)")
+        {
+            Touch = true;
+            pv_EnemyTouch = true;
+            //スクリプトを参照
+            pv_enemy = col.gameObject.GetComponent<pv_EnemyMove>();
+        }
+        else if (col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)")
+        {
+            Touch = true;
+            player_EnemyTouch = true;
+            //スクリプトを参照
+            pl_enemy = col.gameObject.GetComponent<Pl_EnemyMove>();
+        }
     }
     void OnTriggerExit2D(Collider2D col)
     {
@@ -236,16 +236,16 @@ public class Terrain : MonoBehaviour
             Touch = false;
             PlayerTouch = false;
         }
-        //else if (col.gameObject.name == "pv_Enemy" || col.gameObject.name == "pv_Enemy(Clone)")
-        //{
-        //    Touch = false;
-        //    pv_EnemyTouch = false;
-        //}
-        //else if (col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)")
-        //{
-        //    Touch = false;
-        //    player_EnemyTouch = false;
-        //}
+        else if (col.gameObject.name == "pv_Enemy" || col.gameObject.name == "pv_Enemy(Clone)")
+        {
+            Touch = false;
+            pv_EnemyTouch = false;
+        }
+        else if (col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)")
+        {
+            Touch = false;
+            player_EnemyTouch = false;
+        }
     }
 
 #if UNITY_EDITOR

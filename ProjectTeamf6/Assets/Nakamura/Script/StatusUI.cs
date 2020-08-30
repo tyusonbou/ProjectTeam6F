@@ -18,6 +18,10 @@ public class StatusUI : MonoBehaviour
     Slider HPSlider;
     [SerializeField]
     Slider MPSlider;
+    [SerializeField]
+    Slider PbSlider;
+    [SerializeField]
+    Slider EbSlider;
 
     [SerializeField]
     GameObject[] ATKUPImage;
@@ -25,15 +29,22 @@ public class StatusUI : MonoBehaviour
     GameObject[] SPDUPImage;
 
     Player player;
+    Base PlayerBase;
+    ZombieVillageStatus EnemyBase;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
+        PlayerBase = GameObject.Find("playerBase").GetComponent<Base>();
+        EnemyBase = GameObject.Find("enemyBase").GetComponent<ZombieVillageStatus>();
+
         HPSlider = GameObject.Find("HPGuage").GetComponent<Slider>();
         MPSlider = GameObject.Find("MPGuage").GetComponent<Slider>();
+        //PbSlider = GameObject.Find("PbGuage").GetComponent<Slider>();
+        //EbSlider = GameObject.Find("EbGuage").GetComponent<Slider>();
 
-        for(int i=0; i < 2; i++)
+        for (int i=0; i < 2; i++)
         {
             ATKUPImage[i].SetActive(false);
         }
@@ -74,5 +85,11 @@ public class StatusUI : MonoBehaviour
 
         HPSlider.maxValue = player.ReturnPlayerMaxHP();
         MPSlider.maxValue = player.ReturnPlayerMaxMP();
+
+        //PbSlider.value=
+        //EbSlider.value=
+
+        //PbSlider.maxValue=
+        //EbSlider.maxValue=
     }
 }

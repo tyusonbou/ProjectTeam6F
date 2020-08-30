@@ -339,13 +339,13 @@ public class Player : MonoBehaviour
 
         if (Input.GetButtonDown("X"))
         {
-            
+            WalkSped = WalkSped / ChargeWalk;
             EXdoAttack = 0;
         }
 
         if(Input.GetButton("X") && !isAttack)
         {
-            WalkSped = WalkSped / ChargeWalk;
+            
 
             ChargeTimer += Time.deltaTime;
             

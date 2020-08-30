@@ -6,27 +6,25 @@ using UnityEngine.UI;
 public class StatusUI : MonoBehaviour
 {
     [SerializeField]
-    Text HPText;
+    Text HPText;  //プレイヤーHPテキスト
     [SerializeField]
-    Text MPText;
+    Text MPText;  //プレイヤーMPテキスト
     [SerializeField]
-    Text ATKText;
+    Text ATKText; //プレイヤーATKテキスト
     [SerializeField]
-    Text SPDText;
+    Text SPDText; //プレイヤーSPDテキスト
+
+    Slider HPSlider; //プレイヤーHPゲージ
+    Slider MPSlider; //プレイヤーMPゲージ
+    Slider PbSlider; //プレイヤー本拠地ゲージ
+    Slider EbSlider; //エネミー本拠地ゲージ
+
+
 
     [SerializeField]
-    Slider HPSlider;
+    GameObject[] ATKUPImage;  //ATKアップ表示
     [SerializeField]
-    Slider MPSlider;
-    [SerializeField]
-    Slider PbSlider;
-    [SerializeField]
-    Slider EbSlider;
-
-    [SerializeField]
-    GameObject[] ATKUPImage;
-    [SerializeField]
-    GameObject[] SPDUPImage;
+    GameObject[] SPDUPImage;　//SPDアップ表示
 
     Player player;
     Base PlayerBase;
@@ -41,8 +39,11 @@ public class StatusUI : MonoBehaviour
 
         HPSlider = GameObject.Find("HPGuage").GetComponent<Slider>();
         MPSlider = GameObject.Find("MPGuage").GetComponent<Slider>();
-        //PbSlider = GameObject.Find("PbGuage").GetComponent<Slider>();
-        //EbSlider = GameObject.Find("EbGuage").GetComponent<Slider>();
+        PbSlider = GameObject.Find("PbGuage").GetComponent<Slider>();
+        EbSlider = GameObject.Find("EbGuage").GetComponent<Slider>();
+
+        PbSlider.maxValue = PlayerBase.ReturnHP();
+        EbSlider.maxValue = EnemyBase.ReturnHP();
 
         for (int i=0; i < 2; i++)
         {
@@ -64,7 +65,7 @@ public class StatusUI : MonoBehaviour
 
         if (player.ReturnAttackP() > 50)
         {
-            ATKUPImage[0].SetActive(true);
+            ATKUPImage[0].SetActive(true); //一定以上で表示
         }
         if (player.ReturnAttackP() > 70)
         {
@@ -82,14 +83,12 @@ public class StatusUI : MonoBehaviour
 
         HPSlider.value = player.ReturnPlayerHP();
         MPSlider.value = player.ReturnPlayerMP();
-
         HPSlider.maxValue = player.ReturnPlayerMaxHP();
         MPSlider.maxValue = player.ReturnPlayerMaxMP();
 
-        //PbSlider.value=
-        //EbSlider.value=
+        PbSlider.value = PlayerBase.ReturnHP();
+        EbSlider.value = EnemyBase.ReturnHP();
 
-        //PbSlider.maxValue=
-        //EbSlider.maxValue=
+       
     }
 }

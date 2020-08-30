@@ -90,14 +90,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c2bd929d1bdaf40b55125141c04934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -45
-  maxX: 45
-  minY: -25
-  maxY: 25
+  X: 40
+  Y: 40
   moveDouble: 5
-  SizeS: 10
-  SizeM: 15
-  SizeL: 25
+  SizeS: 15
+  SizeM: 25
+  SizeL: 40
 --- !u!81 &5447933936125943283
 AudioListener:
   m_ObjectHideFlags: 0
@@ -138,3 +136,13 @@ MonoBehaviour:
   MPText: {fileID: 0}
   ATKText: {fileID: 0}
   SPDText: {fileID: 0}
+  HPSlider: {fileID: 0}
+  MPSlider: {fileID: 0}
+  PbSlider: {fileID: 0}
+  EbSlider: {fileID: 0}
+  ATKUPImage:
+  - {fileID: 0}
+  - {fileID: 0}
+  SPDUPImage:
+  - {fileID: 0}
+  - {fileID: 0}

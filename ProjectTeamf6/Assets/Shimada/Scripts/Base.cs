@@ -290,6 +290,10 @@ public class Base : MonoBehaviour
     {
         return BaseType;
     }
+    public float ReturnHP()
+    {
+        return HP;
+    }
 
 #if UNITY_EDITOR
     /**

@@ -286,9 +286,16 @@ public class Base : MonoBehaviour
         }
     }
 
+    //int型のBaseTypeを渡す
     public int ReturnBaseType()
     {
         return BaseType;
+    }
+
+    //float型のHPを渡す
+    public float ReturnHP()
+    {
+        return HP;
     }
 
 #if UNITY_EDITOR

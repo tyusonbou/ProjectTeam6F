@@ -12,8 +12,8 @@ public class Terrain : MonoBehaviour
     TilemapCollider2D bc;
     Status status;
     GameObject Player;
-    pv_EnemyMove pv_enemy;
-    Pl_EnemyMove pl_enemy;
+    //pv_EnemyMove pv_enemy;
+    //Pl_EnemyMove pl_enemy;
     public bool PlayerTouch;//プレイヤーが触れているか
     public bool pv_EnemyTouch;//pv_Enemyが触れているか
     public bool player_EnemyTouch;//player_Enemyが触れているか
@@ -23,6 +23,7 @@ public class Terrain : MonoBehaviour
     public Sprite Rock;//岩
     public Sprite Wood;//木
     public Sprite Swamp;//沼
+    private bool CoroutineON;
     //SpriteRenderer MainSprite;
     [SerializeField]
     private float HP;//岩の耐久値
@@ -44,6 +45,7 @@ public class Terrain : MonoBehaviour
         pv_EnemyTouch = false;
         player_EnemyTouch = false;
         ON = true;
+        CoroutineON = false;
         bc = this.gameObject.GetComponent<TilemapCollider2D>();
         //MainSprite = gameObject.GetComponent<SpriteRenderer>();
 
@@ -96,14 +98,16 @@ public class Terrain : MonoBehaviour
                     if (ON == true)
                     {
                         StartCoroutine("RecoveryDown");
+                        CoroutineON = true;
                         ON = false;
                     }
                         break;
                 //沼 移動速度が遅くなる
                 case 4:
-                    if (ON == true)
+                    if (ON == true && CoroutineON == true)
                     {
                         StartCoroutine("SpeedDown");
+                        CoroutineON = false;
                         ON = false;
                     }
                     break;
@@ -214,19 +218,19 @@ public class Terrain : MonoBehaviour
             Touch = true;
             PlayerTouch = true;
         }
-        else if (col.gameObject.name == "pv_Enemy" || col.gameObject.name == "pv_Enemy(Clone)")
+        else if (col.gameObject.name == "pv_Enemy(Clone)")
         {
-            Touch = true;
-            pv_EnemyTouch = true;
+            //Touch = true;
+            //pv_EnemyTouch = true;
             //スクリプトを参照
-            pv_enemy = col.gameObject.GetComponent<pv_EnemyMove>();
+            //pv_enemy = col.gameObject.GetComponent<pv_EnemyMove>();
         }
-        else if (col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)")
+        else if (col.gameObject.name == "player_Enemy(Clone)")
         {
-            Touch = true;
-            player_EnemyTouch = true;
+            //Touch = true;
+            //player_EnemyTouch = true;
             //スクリプトを参照
-            pl_enemy = col.gameObject.GetComponent<Pl_EnemyMove>();
+            //pl_enemy = col.gameObject.GetComponent<Pl_EnemyMove>();
         }
     }
     void OnTriggerExit2D(Collider2D col)
@@ -236,16 +240,16 @@ public class Terrain : MonoBehaviour
             Touch = false;
             PlayerTouch = false;
         }
-        else if (col.gameObject.name == "pv_Enemy" || col.gameObject.name == "pv_Enemy(Clone)")
-        {
-            Touch = false;
-            pv_EnemyTouch = false;
-        }
-        else if (col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)")
-        {
-            Touch = false;
-            player_EnemyTouch = false;
-        }
+        //else if (col.gameObject.name == "pv_Enemy(Clone)")
+        //{
+        //    Touch = false;
+        //    pv_EnemyTouch = false;
+        //}
+        //else if (col.gameObject.name == "player_Enemy(Clone)")
+        //{
+        //    Touch = false;
+        //    player_EnemyTouch = false;
+        //}
     }
 
 #if UNITY_EDITOR

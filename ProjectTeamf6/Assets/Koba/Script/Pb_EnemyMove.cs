@@ -21,12 +21,20 @@ public class Pb_EnemyMove : MonoBehaviour
     [SerializeField]
     private SearchAreaMove searchScript;
 
+    public Sprite defZombie_r;
+    public Sprite defZombie_l;
+    public Sprite hpZombie_r;
+    public Sprite hpZombie_l;
+    public Sprite atkZombie_r;
+    public Sprite atkZombie_l;
+    public Sprite speedZombie_r;
+    public Sprite speedZombie_l;
+    SpriteRenderer mainSpriteRender;
+    int spriteNum;
+
     GameObject player;
     GameObject playerBase;
     GameObject attractObj;
-
-    public GameObject walk1;
-    public GameObject walk2;
 
     Rigidbody2D rb;
 
@@ -60,6 +68,8 @@ public class Pb_EnemyMove : MonoBehaviour
 
         playerScript = player.GetComponent<Player>();
 
+        mainSpriteRender = gameObject.GetComponent<SpriteRenderer>();
+
         currentTime = 3.0f;
 
         int rand = Random.Range(1, 5);
@@ -69,24 +79,28 @@ public class Pb_EnemyMove : MonoBehaviour
             health = CSVReader.csvIntDatas[0, 1];
             atk = CSVReader.csvIntDatas[0, 2];
             speed = CSVReader.csvIntDatas[0, 3];
+            spriteNum = 1;
         }
         if (rand == 2)
         {
             health = CSVReader.csvIntDatas[1, 1];
             atk = CSVReader.csvIntDatas[1, 2];
             speed = CSVReader.csvIntDatas[1, 3];
+            spriteNum = 2;
         }
         if (rand == 3)
         {
             health = CSVReader.csvIntDatas[2, 1];
             atk = CSVReader.csvIntDatas[2, 2];
             speed = CSVReader.csvIntDatas[2, 3];
+            spriteNum = 3;
         }
         if (rand == 4)
         {
             health = CSVReader.csvIntDatas[3, 1];
             atk = CSVReader.csvIntDatas[3, 2];
             speed = CSVReader.csvIntDatas[3, 3];
+            spriteNum = 4;
         }
     }
 
@@ -256,15 +270,49 @@ public class Pb_EnemyMove : MonoBehaviour
 
     void ChangeSprite()
     {
-        if (forward == "left")
+        if (spriteNum == 1)
         {
-            walk1.SetActive(true);
-            walk2.SetActive(false);
+            if (forward == "left")
+            {
+                mainSpriteRender.sprite = defZombie_l;
+            }
+            if (forward == "right")
+            {
+                mainSpriteRender.sprite = defZombie_r;
+            }
         }
-        if (forward == "right")
+        if (spriteNum == 2)
         {
-            walk1.SetActive(false);
-            walk2.SetActive(true);
+            if (forward == "left")
+            {
+                mainSpriteRender.sprite = hpZombie_l;
+            }
+            if (forward == "right")
+            {
+                mainSpriteRender.sprite = hpZombie_r;
+            }
+        }
+        if (spriteNum == 3)
+        {
+            if (forward == "left")
+            {
+                mainSpriteRender.sprite = atkZombie_l;
+            }
+            if (forward == "right")
+            {
+                mainSpriteRender.sprite = atkZombie_r;
+            }
+        }
+        if (spriteNum == 4)
+        {
+            if (forward == "left")
+            {
+                mainSpriteRender.sprite = speedZombie_l;
+            }
+            if (forward == "right")
+            {
+                mainSpriteRender.sprite = speedZombie_r;
+            }
         }
     }
 

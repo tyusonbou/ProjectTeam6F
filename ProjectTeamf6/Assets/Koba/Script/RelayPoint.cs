@@ -5,7 +5,8 @@ using UnityEngine;
 public class RelayPoint : MonoBehaviour
 {
 
-    public  Vector3 relayPoint1, relayPoint2, relayPoint3, relayPoint4, relayPoint5;
+    public  Vector3 relayPoint1, relayPoint2, relayPoint3, relayPoint4, relayPoint5,relayPoint6,relayPoint7;
+    public float radius;
 
     // Start is called before the first frame update
     void Start()
@@ -22,10 +23,12 @@ public class RelayPoint : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(relayPoint1, 2);
-        Gizmos.DrawWireSphere(relayPoint2, 2);
-        Gizmos.DrawWireSphere(relayPoint3, 2);
-        Gizmos.DrawWireSphere(relayPoint4, 2);
-        Gizmos.DrawWireSphere(relayPoint5, 2);
+        Gizmos.DrawWireSphere(relayPoint1, radius);
+        Gizmos.DrawWireSphere(relayPoint2, radius);
+        Gizmos.DrawWireSphere(relayPoint3, radius);
+        Gizmos.DrawWireSphere(relayPoint4, radius);
+        Gizmos.DrawWireSphere(relayPoint5, radius);
+        Gizmos.DrawWireSphere(relayPoint6, radius);
+        Gizmos.DrawWireSphere(relayPoint7, radius);
     }
 }

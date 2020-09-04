@@ -298,6 +298,11 @@ public class Base : MonoBehaviour
         return HP;
     }
 
+    public bool ReturnBaf()
+    {
+        return Baf;
+    }
+
 #if UNITY_EDITOR
     /**
      * Inspector拡張クラス

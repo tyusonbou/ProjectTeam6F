@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += transform.up * speed;
+        transform.position += transform.right * speed;
 
         timer += Time.timeScale;
         if (timer > limitTimer)

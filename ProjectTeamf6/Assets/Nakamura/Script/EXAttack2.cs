@@ -28,11 +28,11 @@ public class EXAttack2 : MonoBehaviour
     {
         if (timer < limitTimer / 2)
         {
-            transform.position += transform.up * speed * curve.Evaluate(timer/limitTimer);
+            transform.position += transform.right * speed * curve.Evaluate(timer/limitTimer);
         }
         else 
         {
-            transform.position -= transform.up * speed * curve.Evaluate(timer / limitTimer);
+            transform.position -= transform.right * speed * curve.Evaluate(timer / limitTimer);
         }
 
 

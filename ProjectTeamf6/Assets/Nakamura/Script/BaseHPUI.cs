@@ -6,26 +6,26 @@ using UnityEngine.UI;
 public class BaseHPUI : MonoBehaviour
 {
     [SerializeField]
-    GameObject BaseHP;
+    GameObject BaseHP; //ゲームオブジェクト
     [SerializeField]
-    Slider BHPSlider;
-    Image Guage;
-    Image Huti;
+    Slider BHPSlider; //スライダー
+    [SerializeField]
+    Image Guage;　//ゲージ色
+    [SerializeField]
+    GameObject Button;　//ボタン
 
     Base PlayerBase;
 
     // Start is called before the first frame update
     void Start()
     {
-        BaseHP = GameObject.Find("BaseHPGuage");
-        PlayerBase = GameObject.Find("playerBase").GetComponent<Base>();
+        //BaseHP = GetComponentInChildren<GameObject>();
+        PlayerBase = GetComponentInParent<Base>();
         BHPSlider = BaseHP.GetComponent<Slider>();
         Guage = GetComponentInChildren<Image>();
-        Huti = GameObject.Find("FillB").GetComponent<Image>();
+        //Button = GameObject.Find("Button");
 
-        BaseHP.SetActive(false);
-        //Guage.color = Color.clear;
-        //Huti.color = Color.clear;
+        Button.SetActive(false);      
 
         BHPSlider.maxValue = PlayerBase.ReturnHP();
     }
@@ -34,25 +34,43 @@ public class BaseHPUI : MonoBehaviour
     void Update()
     {
         BHPSlider.value = PlayerBase.ReturnHP();
+
+        if (PlayerBase.ReturnBaseType() == 1)　//攻撃アップ赤
+        {
+            Guage.color = new Color32(255, 0, 0, 150);
+        }
+        if (PlayerBase.ReturnBaseType() == 2)　//速さアップ青
+        {
+            Guage.color = new Color32(0, 0, 255, 150);
+        }
+        if (PlayerBase.ReturnBaseType() == 3)  //HP回復緑
+        {
+            Guage.color = new Color32(0, 255, 0, 150);
+        }
+        if (PlayerBase.ReturnBaseType() == 4)  //ゾンビ村灰
+        {
+            Guage.color = new Color32(53, 53, 53, 150);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject)
+        if (col.gameObject.tag == "Player") 　//プレイヤー近づいたらボタン表示
         {
-            BaseHP.SetActive(true);
-            //Guage.color = new Color(0, 0, 255, 100);
-            //Huti.color = Color.white;
+            if(PlayerBase.ReturnBaseType() == 0　|| PlayerBase.ReturnBaseType() == 4) //プレイヤー拠点またはゾンビ村はボタン非表示
+            {
+                return;
+            }
+
+            Button.SetActive(true);
         }
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject)
+        if (col.gameObject.tag == "Player")
         {
-            BaseHP.SetActive(false);
-            //Guage.color = Color.clear;
-            //Huti.color = Color.clear;
+            Button.SetActive(false);
         }
     }
 }

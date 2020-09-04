@@ -24,13 +24,13 @@ public class StatusUI : MonoBehaviour
     GameObject[] UPImage;  //バフ表示
 
     Player player;
-    
+    Base HPBase;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
-       
+        HPBase = GameObject.Find("village1").GetComponent<Base>();
 
         HPSlider = GameObject.Find("HPGuage").GetComponent<Slider>();
         MPSlider = GameObject.Find("MPGuage").GetComponent<Slider>();
@@ -80,7 +80,16 @@ public class StatusUI : MonoBehaviour
         {
             UPImage[2].SetActive(false);
         }
-        
+
+        //if (HPBase.ReturnBaf() == true) //HP回復バフを表示
+        //{
+        //    UPImage[3].SetActive(true);
+        //}
+        //else
+        //{
+        //    UPImage[3].SetActive(false);
+        //}
+
 
         HPSlider.value = player.ReturnPlayerHP();
         MPSlider.value = player.ReturnPlayerMP();

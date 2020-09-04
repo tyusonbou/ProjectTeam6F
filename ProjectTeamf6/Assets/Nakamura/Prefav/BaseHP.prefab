@@ -462,9 +462,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e315c6b6fc22746b99a223253499fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseHP: {fileID: 0}
+  BaseHP: {fileID: 5791773028218369663}
   BHPSlider: {fileID: 0}
   Guage: {fileID: 0}
+  YButton: {fileID: 2569765127902988930}
 --- !u!61 &5791773029931229723
 BoxCollider2D:
   m_ObjectHideFlags: 0

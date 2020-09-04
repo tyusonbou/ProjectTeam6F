@@ -29,7 +29,6 @@ public class Terrain : MonoBehaviour
     private float HP;//岩の耐久値
     [SerializeField]
     private int TerrainType;//地形の種類
-    [SerializeField]
     private float RecoveryPoint;//回復量
     [SerializeField]
     private float RecoveryDownPoint;//インスペクタで変更できる値
@@ -104,10 +103,10 @@ public class Terrain : MonoBehaviour
                         break;
                 //沼 移動速度が遅くなる
                 case 4:
-                    if (ON == true && CoroutineON == true)
+                    if (ON == true && CoroutineON == false)
                     {
                         StartCoroutine("SpeedDown");
-                        CoroutineON = false;
+                        CoroutineON = true;
                         ON = false;
                     }
                     break;
@@ -122,6 +121,7 @@ public class Terrain : MonoBehaviour
                     if (ON == false)
                     {
                         StopCoroutine("RecoveryDown");
+                        CoroutineON = false;
                         ON = true;
                     }
                     break;
@@ -130,6 +130,7 @@ public class Terrain : MonoBehaviour
                     if (ON == false)
                     {
                         StartCoroutine("SpeedReset");
+                        CoroutineON = false;
                         ON = true;
                     }
                     break;

@@ -12,7 +12,7 @@ public class BaseHPUI : MonoBehaviour
     [SerializeField]
     Image Guage;　//ゲージ色
     [SerializeField]
-    GameObject Button;　//ボタン
+    GameObject YButton;　//ボタン
 
     Base PlayerBase;
 
@@ -25,7 +25,7 @@ public class BaseHPUI : MonoBehaviour
         Guage = GetComponentInChildren<Image>();
         //Button = GameObject.Find("Button");
 
-        Button.SetActive(false);      
+        YButton.SetActive(false);      
 
         BHPSlider.maxValue = PlayerBase.ReturnHP();
     }
@@ -62,7 +62,15 @@ public class BaseHPUI : MonoBehaviour
                 return;
             }
 
-            Button.SetActive(true);
+            //if (PlayerBase.ReturnBaf() == false)　//バフを受けてないとき表示
+            //{
+            //    YButton.SetActive(true);
+            //}
+
+            //if (PlayerBase.ReturnBaf() == true)　//バフを受けてるとき非表示
+            //{
+            //    YButton.SetActive(false);
+            //}
         }
     }
 
@@ -70,7 +78,7 @@ public class BaseHPUI : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            Button.SetActive(false);
+            YButton.SetActive(false);
         }
     }
 }

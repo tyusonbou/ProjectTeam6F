@@ -16,7 +16,7 @@ public class HatsuenUI : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
-        //HaSlider = GameObject.Find("HatuenSlider").GetComponent<Slider>();
+        HaSlider = GameObject.Find("HatuenSlider").GetComponent<Slider>();
        
 
         for (int i = 0; i < 3; i++)
@@ -41,7 +41,7 @@ public class HatsuenUI : MonoBehaviour
             ScreamImage[0].SetActive(false);
         }
 
-        //HaSlider.value = player.STimer;
-        //HaSlider.maxValue = player.SLimitTimer;
+        HaSlider.value = player.STimer;
+        HaSlider.maxValue = player.SLimitTimer;
     }
 }

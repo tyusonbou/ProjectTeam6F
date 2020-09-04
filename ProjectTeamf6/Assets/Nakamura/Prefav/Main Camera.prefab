@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5447933936125943283}
   - component: {fileID: 1248420392}
   - component: {fileID: 1248420397}
+  - component: {fileID: 72936858}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -90,14 +91,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c2bd929d1bdaf40b55125141c04934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -45
-  maxX: 45
-  minY: -25
-  maxY: 25
+  X: 40
+  Y: 40
   moveDouble: 5
-  SizeS: 10
-  SizeM: 15
-  SizeL: 25
+  SizeS: 15
+  SizeM: 25
+  SizeL: 40
 --- !u!81 &5447933936125943283
 AudioListener:
   m_ObjectHideFlags: 0
@@ -138,3 +137,49 @@ MonoBehaviour:
   MPText: {fileID: 0}
   ATKText: {fileID: 0}
   SPDText: {fileID: 0}
+  UPImage:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &72936858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5447933936125943282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c773ad71f2fc7d4195399e1b6e1b6d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PbSlider: {fileID: 0}
+  EbSlider: {fileID: 0}
+  PlayerBase: {fileID: 0}
+  EnemyBase: {fileID: 0}
+  ViSlider:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Villeges:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Spawners:
+  - {fileID: 0}
+  - {fileID: 0}
+  Guages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  BaseType: 000000000000000000000000000000000000000000000000

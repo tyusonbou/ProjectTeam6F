@@ -175,13 +175,13 @@ public class Player : MonoBehaviour
                 switch (UD)
                 {
                     case (1):
-                        transform.rotation = Quaternion.Euler(180, 0, 225);
+                        transform.rotation = Quaternion.Euler(0, 0, 45);
                         break;
                     case (-1):
-                        transform.rotation = Quaternion.Euler(0, 0, 225);
+                        transform.rotation = Quaternion.Euler(0, 0, -45);
                         break;
                     case (0):
-                        transform.rotation = Quaternion.Euler(0, 0, 270);
+                        transform.rotation = Quaternion.Euler(0, 0, 0);
                         break;
                 }
                 break;
@@ -191,13 +191,13 @@ public class Player : MonoBehaviour
                 switch (UD)
                 {
                     case (1):
-                        transform.rotation = Quaternion.Euler(0, 0, 45);
+                        transform.rotation = Quaternion.Euler(0, 180, 45);
                         break;
                     case (-1):
-                        transform.rotation = Quaternion.Euler(180, 0, 45);
+                        transform.rotation = Quaternion.Euler(0, 180, -45);
                         break;
                     case (0):
-                        transform.rotation = Quaternion.Euler(180, 0, 90);
+                        transform.rotation = Quaternion.Euler(0, 180, 0);
                         break;
                 }
                 break;
@@ -206,10 +206,10 @@ public class Player : MonoBehaviour
                 switch (UD)
                 {
                     case (1):
-                        transform.rotation = Quaternion.Euler(0, 0, 0);
+                        transform.rotation = Quaternion.Euler(0, 0, 90);
                         break;
                     case (-1):
-                        transform.rotation = Quaternion.Euler(180, 0, 0);
+                        transform.rotation = Quaternion.Euler(180, 0, 90);
                         break;
                 }
                 break;
@@ -252,7 +252,7 @@ public class Player : MonoBehaviour
             ATimer -= 5;
             rb2d.velocity = Vector2.zero;
 
-            rb2d.AddForce(transform.up * ATKRB * 1.2f);
+            rb2d.AddForce(transform.right * ATKRB * 1.2f);
         }
         if (Input.GetButtonUp("Y") && doAttack == 3)
         {
@@ -267,7 +267,7 @@ public class Player : MonoBehaviour
             ATimer -= 5;
             rb2d.velocity = Vector2.zero;
 
-            rb2d.AddForce(transform.up * ATKRB * 1.5f);
+            rb2d.AddForce(transform.right * ATKRB * 1.5f);
         }
         if (Input.GetButtonUp("Y") && doAttack == 5)
         {

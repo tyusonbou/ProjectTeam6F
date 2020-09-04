@@ -6,52 +6,45 @@ using UnityEngine.UI;
 public class StatusUI : MonoBehaviour
 {
     [SerializeField]
-    Text HPText;
+    Text HPText;  //プレイヤーHPテキスト
     [SerializeField]
-    Text MPText;
+    Text MPText;  //プレイヤーMPテキスト
     [SerializeField]
-    Text ATKText;
+    Text ATKText; //プレイヤーATKテキスト
     [SerializeField]
-    Text SPDText;
+    Text SPDText; //プレイヤーSPDテキスト
+
+    Slider HPSlider; //プレイヤーHPゲージ
+    Slider MPSlider; //プレイヤーMPゲージ
+    
+
+
 
     [SerializeField]
-    Slider HPSlider;
-    [SerializeField]
-    Slider MPSlider;
-    [SerializeField]
-    Slider PbSlider;
-    [SerializeField]
-    Slider EbSlider;
-
-    [SerializeField]
-    GameObject[] ATKUPImage;
-    [SerializeField]
-    GameObject[] SPDUPImage;
+    GameObject[] UPImage;  //バフ表示
 
     Player player;
-    Base PlayerBase;
-    ZombieVillageStatus EnemyBase;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
-        PlayerBase = GameObject.Find("playerBase").GetComponent<Base>();
-        EnemyBase = GameObject.Find("enemyBase").GetComponent<ZombieVillageStatus>();
+       
 
         HPSlider = GameObject.Find("HPGuage").GetComponent<Slider>();
         MPSlider = GameObject.Find("MPGuage").GetComponent<Slider>();
-        //PbSlider = GameObject.Find("PbGuage").GetComponent<Slider>();
-        //EbSlider = GameObject.Find("EbGuage").GetComponent<Slider>();
+        
+        for(int i = 0; i < 4; i++)
+        {
+            UPImage[i] = GameObject.Find("Bafu" + i);
+        }
 
-        for (int i=0; i < 2; i++)
+        for (int i=0; i < 4; i++)
         {
-            ATKUPImage[i].SetActive(false);
+            UPImage[i].SetActive(false);
         }
-        for (int i = 0; i < 2; i++)
-        {
-            SPDUPImage[i].SetActive(false);
-        }
+        
     }
 
     // Update is called once per frame
@@ -64,32 +57,34 @@ public class StatusUI : MonoBehaviour
 
         if (player.ReturnAttackP() > 50)
         {
-            ATKUPImage[0].SetActive(true);
+            UPImage[0].SetActive(true); //一定以上で攻撃表示
+        }
+        else
+        {
+            UPImage[0].SetActive(false);
         }
         if (player.ReturnAttackP() > 70)
         {
-            ATKUPImage[1].SetActive(true);
+            UPImage[1].SetActive(true);
+        }
+        else
+        {
+            UPImage[1].SetActive(false);
         }
 
-        if (player.ReturnSpeed() > 10)
+        if (player.ReturnSpeed() > 10) //一定以上で速さ表示
         {
-            SPDUPImage[0].SetActive(true);
+            UPImage[2].SetActive(true);
         }
-        if (player.ReturnSpeed() > 18)
+        else
         {
-            SPDUPImage[1].SetActive(true);
+            UPImage[2].SetActive(false);
         }
+        
 
         HPSlider.value = player.ReturnPlayerHP();
         MPSlider.value = player.ReturnPlayerMP();
-
         HPSlider.maxValue = player.ReturnPlayerMaxHP();
         MPSlider.maxValue = player.ReturnPlayerMaxMP();
-
-        //PbSlider.value=
-        //EbSlider.value=
-
-        //PbSlider.maxValue=
-        //EbSlider.maxValue=
     }
 }

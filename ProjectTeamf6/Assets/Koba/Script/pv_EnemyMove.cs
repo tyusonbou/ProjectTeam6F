@@ -536,41 +536,41 @@ public class pv_EnemyMove : MonoBehaviour
     void Dijkstra(Vector3 tagepos)
     {
         int dijkState = 0;
-
+        float dijkSqrMin = 0;
         if ((relayPoint1 - transform.position).sqrMagnitude
                            < (relayPoint2 - transform.position).sqrMagnitude)
         {
-            sqrMin = (relayPoint1 - transform.position).sqrMagnitude;
+            dijkSqrMin = (relayPoint1 - transform.position).sqrMagnitude;
             dijkState = 1;
         }
         else
         {
-            sqrMin = (relayPoint2 - transform.position).sqrMagnitude;
-            state = 2;
+            dijkSqrMin = (relayPoint2 - transform.position).sqrMagnitude;
+            dijkState = 2;
         }
 
         if (sqrMin > ((relayPoint3 - transform.position).sqrMagnitude))
         {
-            sqrMin = (relayPoint3 - transform.position).sqrMagnitude;
-            state = 3;
+            dijkSqrMin = (relayPoint3 - transform.position).sqrMagnitude;
+            dijkState = 3;
         }
 
         if (sqrMin > ((relayPoint4 - transform.position).sqrMagnitude))
         {
-            sqrMin = (relayPoint4 - transform.position).sqrMagnitude;
-            state = 4;
+            dijkSqrMin = (relayPoint4 - transform.position).sqrMagnitude;
+            dijkState = 4;
         }
 
         if (sqrMin > ((relayPoint5 - transform.position).sqrMagnitude))
         {
-            sqrMin = (relayPoint5 - transform.position).sqrMagnitude;
-            state = 5;
+            dijkSqrMin = (relayPoint5 - transform.position).sqrMagnitude;
+            dijkState = 5;
         }
 
         if (sqrMin > ((relayPoint6 - transform.position).sqrMagnitude))
         {
-            sqrMin = (relayPoint6 - transform.position).sqrMagnitude;
-            state = 6;
+            dijkSqrMin = (relayPoint6 - transform.position).sqrMagnitude;
+            dijkState = 6;
         }
 
         

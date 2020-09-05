@@ -17,12 +17,17 @@ public class Status : MonoBehaviour
     public float invisibleTimer;
     public float invisibleInterval;
     Renderer spriteRenderer;
+    [SerializeField]
+    AudioSource audioSource;
+    [SerializeField]
+    AudioClip audioClip;
 
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<Renderer>();
+        audioSource.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -73,6 +78,8 @@ public class Status : MonoBehaviour
 
             rb2d.velocity = Vector2.zero;
             rb2d.AddForce(knockBackDirection * EnemyAttack);
+
+            audioSource.PlayOneShot(audioClip);
         }
     }
 

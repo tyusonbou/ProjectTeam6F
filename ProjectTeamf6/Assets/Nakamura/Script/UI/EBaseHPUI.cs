@@ -15,7 +15,7 @@ public class EBaseHPUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //BaseHP = GetComponentInChildren<GameObject>();
+       
         EnemyBase = GetComponentInParent<ZombieVillageStatus>();
         BHPSlider = BaseHP.GetComponent<Slider>();
 

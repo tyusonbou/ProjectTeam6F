@@ -22,12 +22,12 @@ public class Player : MonoBehaviour
     public float ScremCount;//発煙筒使用回数
     public float LimitScremCount;
 
-    public float ChargeTimer;
-    public float LimitChargeTimer;
-    public float LimitChargeTimerDef;
+    public float ChargeTimer; //チャージ時間
+    public float LimitChargeTimer; //チャージ超過させない用
+    public float LimitChargeTimerDef; //チャージ時間リミット
 
     private float doAttack;//攻撃コンボ用
-    private float EXdoAttack;
+    private float EXdoAttack;//チャージ段階用
 
     [SerializeField]
     List<GameObject> BulletCount = new List<GameObject>();
@@ -74,7 +74,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     public bool isScream;
 
-  
+    Base ATKBase1;
+    Base ATKBase2;
 
     // Start is called before the first frame update
     void Start()
@@ -93,12 +94,16 @@ public class Player : MonoBehaviour
 
         ChargeEffect.SetActive(false);
 
-        //spriteRenderer = GetComponent<Renderer>();
+        ATKBase1 = GameObject.Find("playerVillage2").GetComponent<Base>();
+        ATKBase2 = GameObject.Find("village2").GetComponent<Base>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f)) { return; }
+        if (CountDown.isCountDown) { return; }
+
         SetStatus();
         ChangeState();
         PlayerRotate();
@@ -111,6 +116,9 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f)) { return; }
+        if (CountDown.isCountDown) { return; }
+
         Move();
     }
 
@@ -118,6 +126,10 @@ public class Player : MonoBehaviour
     {
         PlayerHP = status.HP;
         PlayerMaxHP = status.MaxHP;
+        if (PlayerHP <= 0)
+        {
+            PlayerHP = 0;
+        }
         PlayerAttack = status.Attack;
         WalkSped = status.Speed;
         if (PlayerMP >= PlayerMaxMP)
@@ -129,7 +141,7 @@ public class Player : MonoBehaviour
             PlayerMP = 0;
         }
 
-        PlayerMP += 1*Time.deltaTime;//後で消す
+        PlayerMP += 1*Time.deltaTime;
     }
 
     //向き判定
@@ -239,9 +251,12 @@ public class Player : MonoBehaviour
             //rb2d.AddForce(transform.up * ATKRB);
             
         }
-        if (Input.GetButtonUp("Y") && doAttack == 1)
-        {
-            doAttack = 2;
+        if (Input.GetButtonUp("Y") && doAttack == 1 )
+        {   //攻撃アップが1つ以上でコンボ2
+            if(ATKBase1.ReturnBaf() == true || ATKBase2.ReturnBaf() == true)
+            {
+                doAttack = 2;
+            }
         }
 
         if(Input.GetButtonDown("Y") && doAttack == 2)
@@ -255,8 +270,11 @@ public class Player : MonoBehaviour
             rb2d.AddForce(transform.right * ATKRB * 1.2f);
         }
         if (Input.GetButtonUp("Y") && doAttack == 3)
-        {
-            doAttack = 4;
+        {   //攻撃アップが2つでコンボ3
+            if (ATKBase1.ReturnBaf() == true && ATKBase2.ReturnBaf() == true)
+            {
+                doAttack = 4;
+            }
         }
 
         if (Input.GetButtonDown("Y") && doAttack == 4)
@@ -331,7 +349,6 @@ public class Player : MonoBehaviour
     void EXAttack()
     {
         LimitChargeTimer = LimitChargeTimerDef * (PlayerMP / PlayerMaxMP); //溜め時間上限＝MP/最大MP
-
         if (ChargeTimer >= LimitChargeTimer)
         {
             ChargeTimer = LimitChargeTimer;
@@ -345,35 +362,56 @@ public class Player : MonoBehaviour
 
         if(Input.GetButton("X") && !isAttack)
         {
-            
-
             ChargeTimer += Time.deltaTime;
             
             CESpprite = ChargeEffect.GetComponent<SpriteRenderer>();
 
             
-            if (ChargeTimer >= LimitChargeTimerDef / 4 && ChargeTimer < LimitChargeTimerDef / 2)
+            if (ATKBase1.ReturnBaf() == true && ATKBase2.ReturnBaf() == true)//攻撃アップが2つでチャージ段階３，４
             {
-                ChargeEffect.SetActive(true);
-                
-                CESpprite.color = Color.blue;
-                EXdoAttack = 1;
+
+                if (ChargeTimer >= LimitChargeTimerDef * 3 / 4 && ChargeTimer < LimitChargeTimerDef)
+                {
+                    CESpprite.color = Color.yellow;
+                    EXdoAttack = 3;
+                }
+                if (ChargeTimer >= LimitChargeTimerDef)
+                {
+                    CESpprite.color = Color.red;
+                    EXdoAttack = 4;
+                }
             }
-            if (ChargeTimer >= LimitChargeTimerDef / 2 && ChargeTimer < LimitChargeTimerDef * 3 / 4)
+            else if (ATKBase1.ReturnBaf() == true || ATKBase2.ReturnBaf() == true)//攻撃アップが1つ以上でチャージ段階１，２
             {
-                CESpprite.color = Color.green;
-                EXdoAttack = 2;
+                if (ChargeTimer >= LimitChargeTimerDef / 2)
+                {
+                    ChargeTimer = LimitChargeTimerDef / 2;
+                }
+
+                if (ChargeTimer >= LimitChargeTimerDef / 4 && ChargeTimer < LimitChargeTimerDef / 2)
+                {
+                    ChargeEffect.SetActive(true);
+
+                    CESpprite.color = Color.blue;
+                    EXdoAttack = 1;
+                }
+                if (ChargeTimer >= LimitChargeTimerDef / 2 && ChargeTimer < LimitChargeTimerDef * 3 / 4)
+                {
+                    CESpprite.color = Color.green;
+                    EXdoAttack = 2;
+                }
             }
-            if (ChargeTimer >= LimitChargeTimerDef * 3 / 4 && ChargeTimer < LimitChargeTimerDef)
+            else
             {
-                CESpprite.color = Color.yellow;
-                EXdoAttack = 3;
+                if (ChargeTimer >= 0)
+                {
+                    ChargeTimer = 0;
+                }
             }
-            if (ChargeTimer >= LimitChargeTimerDef)
-            {
-                CESpprite.color = Color.red;
-                EXdoAttack = 4;
-            }
+
+            
+
+            
         }
         if (Input.GetButtonUp("X"))
         {

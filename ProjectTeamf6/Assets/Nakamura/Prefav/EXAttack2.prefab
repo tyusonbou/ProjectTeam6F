@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5767454538112875175}
   m_Layer: 13
   m_Name: EXAttack2
-  m_TagString: Attack
+  m_TagString: SpecialAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

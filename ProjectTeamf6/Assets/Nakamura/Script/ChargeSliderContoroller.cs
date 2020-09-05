@@ -6,30 +6,30 @@ using UnityEngine.UI;
 public class ChargeSliderContoroller : MonoBehaviour
 {
     Player player;
-    GameObject playerPos;
+    //GameObject playerPos;
 
     [SerializeField]
     Slider MPSlider;
     Image Guage;
-    Image Huti;
+    //Image Huti;
 
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
-        playerPos = GameObject.Find("Player");
+        //playerPos = GameObject.Find("Player");
         MPSlider = GameObject.Find("MPGuageP").GetComponent<Slider>();
         Guage = GetComponentInChildren<Image>();
-        Huti = GameObject.Find("FillP").GetComponent<Image>();
+        //Huti = GameObject.Find("FillP").GetComponent<Image>();
 
-        Huti.color = Color.clear;
+        //Huti.color = Color.clear;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(playerPos.transform.position.x, playerPos.transform.position.y + 1f, playerPos.transform.position.z);
+        //transform.position = new Vector3(playerPos.transform.position.x, playerPos.transform.position.y + 1f, playerPos.transform.position.z);
 
         MPSlider.value = player.ChargeTimer;
         MPSlider.maxValue = player.LimitChargeTimerDef;
@@ -55,13 +55,13 @@ public class ChargeSliderContoroller : MonoBehaviour
             Guage.color = Color.red;
         }
 
-        if (Input.GetButton("X"))
-        {
-            Huti.color = Color.white;
-        }
-        if (Input.GetButtonUp("X"))
-        {
-            Huti.color = Color.clear;
-        }
+        //if (Input.GetButton("X"))
+        //{
+        //    Huti.color = Color.white;
+        //}
+        //if (Input.GetButtonUp("X"))
+        //{
+        //    Huti.color = Color.clear;
+        //}
     }
 }

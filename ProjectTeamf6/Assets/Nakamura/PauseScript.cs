@@ -28,10 +28,14 @@ public class PauseScript : MonoBehaviour
         number = 0;
         menu = false;
         clear.SetActive(false);
+        Time.timeScale = 1f;
     }
     // Update is called once per frame
     void Update()
     {
+        //if (CountDown.isCountDown) { return; }
+       
+
         if (Input.GetButtonDown("START")) 
         {
             if (!menu)

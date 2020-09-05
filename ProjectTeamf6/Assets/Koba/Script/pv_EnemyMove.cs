@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using System.IO;
 
 public class pv_EnemyMove : MonoBehaviour
@@ -8,7 +9,7 @@ public class pv_EnemyMove : MonoBehaviour
     [SerializeField, Header("体力")]
     private float health = 5;
     [SerializeField, Header("攻撃力")]
-    private float damage = 5;
+    private float atk = 5;
     [SerializeField, Header("スピード")]
     private float speed = 5;
     [SerializeField, Header("状態の更新時間"), Range(0, 100)]
@@ -50,6 +51,8 @@ public class pv_EnemyMove : MonoBehaviour
     //public GameObject walk2;
 
     Rigidbody2D rb;
+
+    NavMeshAgent navMeshAge;
 
     Vector2 oldPos;
 
@@ -113,6 +116,11 @@ public class pv_EnemyMove : MonoBehaviour
         }
 
         rb = GetComponent<Rigidbody2D>();
+
+        navMeshAge = GetComponent<NavMeshAgent>();
+        navMeshAge.updateRotation = false;
+        navMeshAge.updateUpAxis = false;
+
         player = GameObject.Find("Player");
         playerBase = GameObject.Find("playerBase");
         village1 = GameObject.Find("village1");
@@ -140,29 +148,33 @@ public class pv_EnemyMove : MonoBehaviour
         if (rand == 1)
         {
             health = CSVReader.csvIntDatas[0, 1];
-            damage = CSVReader.csvIntDatas[0, 2];
-            speed = CSVReader.csvIntDatas[0, 3];
+            atk = CSVReader.csvIntDatas[0, 2];
+            //speed = CSVReader.csvIntDatas[0, 3];
+            navMeshAge.speed = CSVReader.csvIntDatas[0, 3];
             spriteNum = 1;
         }
         if (rand == 2)
         {
             health = CSVReader.csvIntDatas[1, 1];
-            damage = CSVReader.csvIntDatas[1, 2];
-            speed = CSVReader.csvIntDatas[1, 3];
+            atk = CSVReader.csvIntDatas[1, 2];
+            //speed = CSVReader.csvIntDatas[1, 3];
+            navMeshAge.speed = CSVReader.csvIntDatas[1, 3];
             spriteNum = 2;
         }
         if (rand == 3)
         {
             health = CSVReader.csvIntDatas[2, 1];
-            damage = CSVReader.csvIntDatas[2, 2];
-            speed = CSVReader.csvIntDatas[2, 3];
+            atk = CSVReader.csvIntDatas[2, 2];
+            //speed = CSVReader.csvIntDatas[2, 3];
+            navMeshAge.speed = CSVReader.csvIntDatas[2, 3];
             spriteNum = 3;
         }
         if (rand == 4)
         {
             health = CSVReader.csvIntDatas[3, 1];
-            damage = CSVReader.csvIntDatas[3, 2];
-            speed = CSVReader.csvIntDatas[3, 3];
+            atk = CSVReader.csvIntDatas[3, 2];
+            //speed = CSVReader.csvIntDatas[3, 3];
+            navMeshAge.speed = CSVReader.csvIntDatas[3, 3];
             spriteNum = 4;
         }
 
@@ -274,19 +286,9 @@ public class pv_EnemyMove : MonoBehaviour
                             sqrMin = (village4Pos - transform.position).sqrMagnitude;
                             state = 6;
                         }
-                        
-                        /*
-                        if (state != oldState)
-                        {
-                            isRelayPointMove = true;
-                        }
-                        */
                     }
                     currentTime = 0.0f;
                 }
-                //}
-                // else
-                //  relayPointState();
             }
         }
         else
@@ -338,15 +340,15 @@ public class pv_EnemyMove : MonoBehaviour
         varti = (oldPos.y > transform.position.y) ? "down" : (oldPos.y < transform.position.y) ? "up" : varti;
         */
 
-        forward = (velocity.x < 0) ? "left" : (velocity.x > 0) ? "right" : forward;
-        varti = (velocity.y < 0) ? "down" : (velocity.y > 0) ? "up" : varti;
+        forward = (navMeshAge.velocity.x < 0) ? "left" : (navMeshAge.velocity.x > 0) ? "right" : forward;
+        varti = (navMeshAge.velocity.y < 0) ? "down" : (navMeshAge.velocity.y > 0) ? "up" : varti;
 
         //Debug.Log(forward);
         //Debug.Log(varti);
         ChangeSprite();
         if (isDamage == true)
         {
-            Damage();
+            HitDamage();
         }
         IsDestroy();
         oldPos = transform.position;
@@ -354,38 +356,65 @@ public class pv_EnemyMove : MonoBehaviour
 
     void State1()
     {
-
-        targetPosNoma = (playerPos - transform.position).normalized;
+        if (navMeshAge.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            navMeshAge.SetDestination(playerPos);
+        }
+        //targetPosNoma = (playerPos - transform.position).normalized;
     }
 
     void State2()
     {
-        targetPosNoma = (playerBasePos - transform.position).normalized;
+        if (navMeshAge.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            navMeshAge.SetDestination(playerBasePos);
+        }
+        //targetPosNoma = (playerBasePos - transform.position).normalized;
     }
 
     void State3()
     {
-        targetPosNoma = (village1Pos - transform.position).normalized;
+        if (navMeshAge.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            navMeshAge.SetDestination(village1Pos);
+        }
+        //targetPosNoma = (village1Pos - transform.position).normalized;
     }
     void State4()
     {
-        targetPosNoma = (village2Pos - transform.position).normalized;
+        if (navMeshAge.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            navMeshAge.SetDestination(village2Pos);
+        }
+        //targetPosNoma = (village2Pos - transform.position).normalized;
     }
 
     void State5()
     {
-        targetPosNoma = (village3Pos - transform.position).normalized;
+        if (navMeshAge.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            navMeshAge.SetDestination(village3Pos);
+        }
+        //targetPosNoma = (village3Pos - transform.position).normalized;
     }
 
     void State6()
     {
-        targetPosNoma = (village4Pos - transform.position).normalized;
+        if (navMeshAge.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            navMeshAge.SetDestination(village4Pos);
+        }
+        //targetPosNoma = (village4Pos - transform.position).normalized;
     }
 
     void State7()
     {
+        if (navMeshAge.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            navMeshAge.SetDestination(attractObjPos);
+        }
         //attractObjPos = attractObj.transform.position;
-        targetPosNoma = (attractObjPos - transform.position).normalized;
+        //targetPosNoma = (attractObjPos - transform.position).normalized;
     }
 
     /*
@@ -501,7 +530,7 @@ public class pv_EnemyMove : MonoBehaviour
     }
     */
 
-    void Damage()
+    void HitDamage()
     {
         playerDamage = playerScript.ReturnAttackP();
         health -= playerDamage;
@@ -533,6 +562,7 @@ public class pv_EnemyMove : MonoBehaviour
 
     }
 
+    /*
     void Dijkstra(Vector3 tagepos)
     {
         int dijkState = 0;
@@ -575,7 +605,7 @@ public class pv_EnemyMove : MonoBehaviour
 
         
     }
-    
+    */
     void ChangeSprite()
     {
         if(spriteNum == 1)
@@ -669,7 +699,7 @@ public class pv_EnemyMove : MonoBehaviour
 
     public float ReturnEnemyAttackP()
     {
-        return damage;
+        return atk;
     }
 
     void OnDrawGizmos()

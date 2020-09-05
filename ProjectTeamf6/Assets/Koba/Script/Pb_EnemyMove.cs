@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Pb_EnemyMove : MonoBehaviour
 {
@@ -38,6 +39,8 @@ public class Pb_EnemyMove : MonoBehaviour
 
     Rigidbody2D rb;
 
+    NavMeshAgent navMeshAge;
+
     Vector3 playerPos, playerBasePos, attractObjPos;
     Vector3 targetPosNoma;
     float pex, pey, pesq;
@@ -63,6 +66,11 @@ public class Pb_EnemyMove : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        navMeshAge = GetComponent<NavMeshAgent>();
+        navMeshAge.updateRotation = false;
+        navMeshAge.updateUpAxis = false;
+
         player = GameObject.Find("Player");
         playerBase = GameObject.Find("playerBase");
 
@@ -78,28 +86,32 @@ public class Pb_EnemyMove : MonoBehaviour
         {
             health = CSVReader.csvIntDatas[0, 1];
             atk = CSVReader.csvIntDatas[0, 2];
-            speed = CSVReader.csvIntDatas[0, 3];
+            //speed = CSVReader.csvIntDatas[0, 3];
+            navMeshAge.speed = CSVReader.csvIntDatas[0, 3];
             spriteNum = 1;
         }
         if (rand == 2)
         {
             health = CSVReader.csvIntDatas[1, 1];
             atk = CSVReader.csvIntDatas[1, 2];
-            speed = CSVReader.csvIntDatas[1, 3];
+            //speed = CSVReader.csvIntDatas[1, 3];
+            navMeshAge.speed = CSVReader.csvIntDatas[1, 3];
             spriteNum = 2;
         }
         if (rand == 3)
         {
             health = CSVReader.csvIntDatas[2, 1];
             atk = CSVReader.csvIntDatas[2, 2];
-            speed = CSVReader.csvIntDatas[2, 3];
+            //speed = CSVReader.csvIntDatas[2, 3];
+            navMeshAge.speed = CSVReader.csvIntDatas[2, 3];
             spriteNum = 3;
         }
         if (rand == 4)
         {
-            health = CSVReader.csvIntDatas[3, 1];
+             health = CSVReader.csvIntDatas[3, 1];
             atk = CSVReader.csvIntDatas[3, 2];
-            speed = CSVReader.csvIntDatas[3, 3];
+            //speed = CSVReader.csvIntDatas[3, 3];
+            navMeshAge.speed = CSVReader.csvIntDatas[3, 3];
             spriteNum = 4;
         }
     }
@@ -180,8 +192,8 @@ public class Pb_EnemyMove : MonoBehaviour
         varti = (oldPos.y > transform.position.y) ? "down" : (oldPos.y < transform.position.y) ? "up" : varti;
         */
 
-        forward = (velocity.x < 0) ? "left" : (velocity.x > 0) ? "right" : forward;
-        varti = (velocity.y < 0) ? "down" : (velocity.y > 0) ? "up" : varti;
+        forward = (navMeshAge.velocity.x < 0) ? "left" : (navMeshAge.velocity.x > 0) ? "right" : forward;
+        varti = (navMeshAge.velocity.y < 0) ? "down" : (navMeshAge.velocity.y > 0) ? "up" : varti;
         //Debug.Log(forward);
         //Debug.Log(varti);
 
@@ -205,7 +217,13 @@ public class Pb_EnemyMove : MonoBehaviour
         EnemySX = pex / pesq * speed;
         EnemySY = pey / pesq * speed;
     */
-        targetPosNoma = (playerPos - transform.position).normalized;
+        //targetPosNoma = (playerPos - transform.position).normalized;
+
+
+        if (navMeshAge.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            navMeshAge.SetDestination(playerPos);
+        }
     }
 
     void State2()
@@ -218,7 +236,12 @@ public class Pb_EnemyMove : MonoBehaviour
         EnemySY = pbey / pbesq * speed;
         //transform.position += new Vector3(EnemySX, EnemySY);
     */
-        targetPosNoma = (playerBasePos - transform.position).normalized;
+        //targetPosNoma = (playerBasePos - transform.position).normalized;
+
+        if (navMeshAge.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            navMeshAge.SetDestination(playerBasePos);
+        }
     }
 
     void State7()
@@ -226,8 +249,13 @@ public class Pb_EnemyMove : MonoBehaviour
         if (attractObj != null)
         {
             attractObjPos = attractObj.transform.position;
+
+            if (navMeshAge.pathStatus != NavMeshPathStatus.PathInvalid)
+            {
+                navMeshAge.SetDestination(attractObjPos);
+            }
         }
-        targetPosNoma = (attractObjPos - transform.position).normalized;
+        //targetPosNoma = (attractObjPos - transform.position).normalized;
         /*
         float x = (attractObjPos.x - transform.position.x);
         float y = (attractObjPos.y - transform.position.y);

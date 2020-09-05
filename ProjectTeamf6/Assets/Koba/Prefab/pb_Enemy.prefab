@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5771540975347047872}
   - component: {fileID: 3770729462596991466}
   - component: {fileID: 3891145201195851529}
+  - component: {fileID: -4439763607743142640}
   m_Layer: 8
   m_Name: pb_Enemy
   m_TagString: Enemy
@@ -153,22 +154,10 @@ MonoBehaviour:
   attractSeachArea: 8
   playerScript: {fileID: 0}
   searchScript: {fileID: 2533001653025879736}
-  defZombie_r: {fileID: 7672111943210415622, guid: 73e09e14821b4c74ca073d09757e6e03,
-    type: 3}
-  defZombie_l: {fileID: 3746084299382162275, guid: 316c7262149cf614d9ba121dae38e054,
-    type: 3}
-  hpZombie_r: {fileID: 4212688777505170765, guid: 73e09e14821b4c74ca073d09757e6e03,
-    type: 3}
-  hpZombie_l: {fileID: -5434341622386930965, guid: 316c7262149cf614d9ba121dae38e054,
-    type: 3}
-  atkZombie_r: {fileID: 3217551044938820247, guid: 73e09e14821b4c74ca073d09757e6e03,
-    type: 3}
-  atkZombie_l: {fileID: 5743815730864724673, guid: 316c7262149cf614d9ba121dae38e054,
-    type: 3}
-  speedZombie_r: {fileID: 913530637980347808, guid: 73e09e14821b4c74ca073d09757e6e03,
-    type: 3}
-  speedZombie_l: {fileID: 2572644941049704072, guid: 316c7262149cf614d9ba121dae38e054,
-    type: 3}
+  defZombieAnima: {fileID: 9100000, guid: e74ff13d0c5b11a41b6dfa504cdbc710, type: 2}
+  hpZombieAnima: {fileID: 9100000, guid: d53b0729fa277714496ae3bfa6a4c57d, type: 2}
+  atkZombieAnima: {fileID: 9100000, guid: eee8623ac73ee0047a9a1baf8da4dd2b, type: 2}
+  speedZombieAnima: {fileID: 9100000, guid: 568e258db35dd45468bfcecde39713b0, type: 2}
   isSearchPlayer: 0
 --- !u!195 &3891145201195851529
 NavMeshAgent:
@@ -192,6 +181,25 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
+--- !u!95 &-4439763607743142640
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5771540975347047874}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8852118483273135831
 GameObject:
   m_ObjectHideFlags: 0

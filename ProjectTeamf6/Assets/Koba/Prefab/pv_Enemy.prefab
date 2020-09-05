@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 8584198168029640559}
   - component: {fileID: 3889363092191256167}
   - component: {fileID: 8984613317821579765}
+  - component: {fileID: 1040139306020114619}
   m_Layer: 11
   m_Name: pv_Enemy
   m_TagString: Enemy
@@ -170,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
-  damage: 5
+  atk: 5
   speed: 0.1
   updateTime: 3
   knockBack: 2
@@ -193,6 +194,10 @@ MonoBehaviour:
     type: 3}
   speedZombie_l: {fileID: 2572644941049704072, guid: 316c7262149cf614d9ba121dae38e054,
     type: 3}
+  defZombieAnima: {fileID: 9100000, guid: e74ff13d0c5b11a41b6dfa504cdbc710, type: 2}
+  hpZombieAnima: {fileID: 9100000, guid: d53b0729fa277714496ae3bfa6a4c57d, type: 2}
+  atkZombieAnima: {fileID: 9100000, guid: eee8623ac73ee0047a9a1baf8da4dd2b, type: 2}
+  speedZombieAnima: {fileID: 9100000, guid: 568e258db35dd45468bfcecde39713b0, type: 2}
   village1Judg: 0
   village2Judg: 0
   village3Judg: 0
@@ -267,3 +272,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
+--- !u!95 &1040139306020114619
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3889363092191256165}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d53b0729fa277714496ae3bfa6a4c57d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -22,14 +22,6 @@ public class Pb_EnemyMove : MonoBehaviour
     [SerializeField]
     private SearchAreaMove searchScript;
 
-    public Sprite defZombie_r;
-    public Sprite defZombie_l;
-    public Sprite hpZombie_r;
-    public Sprite hpZombie_l;
-    public Sprite atkZombie_r;
-    public Sprite atkZombie_l;
-    public Sprite speedZombie_r;
-    public Sprite speedZombie_l;
     SpriteRenderer mainSpriteRender;
     int spriteNum;
 
@@ -40,6 +32,12 @@ public class Pb_EnemyMove : MonoBehaviour
     Rigidbody2D rb;
 
     NavMeshAgent navMeshAge;
+
+    Animator anima;
+    public RuntimeAnimatorController defZombieAnima;
+    public RuntimeAnimatorController hpZombieAnima;
+    public RuntimeAnimatorController atkZombieAnima;
+    public RuntimeAnimatorController speedZombieAnima;
 
     Vector3 playerPos, playerBasePos, attractObjPos;
     Vector3 targetPosNoma;
@@ -71,6 +69,8 @@ public class Pb_EnemyMove : MonoBehaviour
         navMeshAge.updateRotation = false;
         navMeshAge.updateUpAxis = false;
 
+        anima = GetComponent<Animator>();
+
         player = GameObject.Find("Player");
         playerBase = GameObject.Find("playerBase");
 
@@ -88,7 +88,8 @@ public class Pb_EnemyMove : MonoBehaviour
             atk = CSVReader.csvIntDatas[0, 2];
             //speed = CSVReader.csvIntDatas[0, 3];
             navMeshAge.speed = CSVReader.csvIntDatas[0, 3];
-            spriteNum = 1;
+            //spriteNum = 1;
+            anima.runtimeAnimatorController = defZombieAnima;
         }
         if (rand == 2)
         {
@@ -96,7 +97,8 @@ public class Pb_EnemyMove : MonoBehaviour
             atk = CSVReader.csvIntDatas[1, 2];
             //speed = CSVReader.csvIntDatas[1, 3];
             navMeshAge.speed = CSVReader.csvIntDatas[1, 3];
-            spriteNum = 2;
+            //spriteNum = 2;
+            anima.runtimeAnimatorController = hpZombieAnima;
         }
         if (rand == 3)
         {
@@ -104,7 +106,8 @@ public class Pb_EnemyMove : MonoBehaviour
             atk = CSVReader.csvIntDatas[2, 2];
             //speed = CSVReader.csvIntDatas[2, 3];
             navMeshAge.speed = CSVReader.csvIntDatas[2, 3];
-            spriteNum = 3;
+            //spriteNum = 3;
+            anima.runtimeAnimatorController = atkZombieAnima;
         }
         if (rand == 4)
         {
@@ -112,7 +115,8 @@ public class Pb_EnemyMove : MonoBehaviour
             atk = CSVReader.csvIntDatas[3, 2];
             //speed = CSVReader.csvIntDatas[3, 3];
             navMeshAge.speed = CSVReader.csvIntDatas[3, 3];
-            spriteNum = 4;
+            //spriteNum = 4;
+            anima.runtimeAnimatorController = speedZombieAnima;
         }
     }
 
@@ -198,6 +202,7 @@ public class Pb_EnemyMove : MonoBehaviour
         //Debug.Log(varti);
 
         ChangeSprite();
+
         if (isDamage == true)
         {
             HitDamage();
@@ -293,54 +298,19 @@ public class Pb_EnemyMove : MonoBehaviour
             }
         }
         isDamage = false;
-
     }
 
     void ChangeSprite()
     {
-        if (spriteNum == 1)
+        if (forward == "left")
         {
-            if (forward == "left")
-            {
-                mainSpriteRender.sprite = defZombie_l;
-            }
-            if (forward == "right")
-            {
-                mainSpriteRender.sprite = defZombie_r;
-            }
+            //mainSpriteRender.sprite = defZombie_l;
+            mainSpriteRender.flipX = true;
         }
-        if (spriteNum == 2)
+        if (forward == "right")
         {
-            if (forward == "left")
-            {
-                mainSpriteRender.sprite = hpZombie_l;
-            }
-            if (forward == "right")
-            {
-                mainSpriteRender.sprite = hpZombie_r;
-            }
-        }
-        if (spriteNum == 3)
-        {
-            if (forward == "left")
-            {
-                mainSpriteRender.sprite = atkZombie_l;
-            }
-            if (forward == "right")
-            {
-                mainSpriteRender.sprite = atkZombie_r;
-            }
-        }
-        if (spriteNum == 4)
-        {
-            if (forward == "left")
-            {
-                mainSpriteRender.sprite = speedZombie_l;
-            }
-            if (forward == "right")
-            {
-                mainSpriteRender.sprite = speedZombie_r;
-            }
+            //mainSpriteRender.sprite = defZombie_r;
+            mainSpriteRender.flipX = false;
         }
     }
 

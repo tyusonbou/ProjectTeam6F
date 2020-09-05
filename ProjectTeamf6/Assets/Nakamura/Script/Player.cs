@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D rb2d;
+    private AudioSource audioSource;
 
     public static float WalkSped;　//歩き速度
     [SerializeField]
@@ -76,11 +77,16 @@ public class Player : MonoBehaviour
 
     Base ATKBase1;
     Base ATKBase2;
+    
+    [SerializeField]
+    AudioClip[] audioClips;
 
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
+
         status = GetComponent<Status>();
         MoveState = "RIGHT";
 
@@ -249,6 +255,7 @@ public class Player : MonoBehaviour
             doAttack = 1;
             ATimer = 0;
             //rb2d.AddForce(transform.up * ATKRB);
+            audioSource.PlayOneShot(audioClips[0]);
             
         }
         if (Input.GetButtonUp("Y") && doAttack == 1 )
@@ -265,9 +272,11 @@ public class Player : MonoBehaviour
             attackSword2.SetActive(true);
             doAttack = 3;
             ATimer -= 5;
-            rb2d.velocity = Vector2.zero;
 
+            rb2d.velocity = Vector2.zero;
             rb2d.AddForce(transform.right * ATKRB * 1.2f);
+
+            audioSource.PlayOneShot(audioClips[1]);
         }
         if (Input.GetButtonUp("Y") && doAttack == 3)
         {   //攻撃アップが2つでコンボ3
@@ -283,9 +292,11 @@ public class Player : MonoBehaviour
             attackSword3.SetActive(true);
             doAttack = 5;
             ATimer -= 5;
-            rb2d.velocity = Vector2.zero;
 
+            rb2d.velocity = Vector2.zero;
             rb2d.AddForce(transform.right * ATKRB * 1.5f);
+
+            audioSource.PlayOneShot(audioClips[2]);
         }
         if (Input.GetButtonUp("Y") && doAttack == 5)
         {
@@ -369,7 +380,18 @@ public class Player : MonoBehaviour
             
             if (ATKBase1.ReturnBaf() == true && ATKBase2.ReturnBaf() == true)//攻撃アップが2つでチャージ段階３，４
             {
+                if (ChargeTimer >= LimitChargeTimerDef / 4 && ChargeTimer < LimitChargeTimerDef / 2)
+                {
+                    ChargeEffect.SetActive(true);
 
+                    CESpprite.color = Color.blue;
+                    EXdoAttack = 1;
+                }
+                if (ChargeTimer >= LimitChargeTimerDef / 2 && ChargeTimer < LimitChargeTimerDef * 3 / 4)
+                {
+                    CESpprite.color = Color.green;
+                    EXdoAttack = 2;
+                }
                 if (ChargeTimer >= LimitChargeTimerDef * 3 / 4 && ChargeTimer < LimitChargeTimerDef)
                 {
                     CESpprite.color = Color.yellow;
@@ -423,21 +445,29 @@ public class Player : MonoBehaviour
             {
                 PlayerMP -= PlayerMaxMP / 4;
                 Instantiate(EXAttack1, transform.position, transform.rotation);
+
+                audioSource.PlayOneShot(audioClips[4]);
             }
             if (EXdoAttack == 2)
             {
                 PlayerMP -= PlayerMaxMP / 2;
                 Instantiate(EXAttack2, transform.position , transform.rotation);
+
+                audioSource.PlayOneShot(audioClips[3]);
             }
             if (EXdoAttack == 3)
             {
                 PlayerMP -= PlayerMaxMP * 3 / 4;
                 EXAttack3.SetActive(true);
+
+                audioSource.PlayOneShot(audioClips[4]);
             }
             if (EXdoAttack == 4)
             {  
                 PlayerMP -= PlayerMaxMP;
                 Instantiate(EXAttack4, transform.position , transform.rotation);
+
+                audioSource.PlayOneShot(audioClips[5]);
             }
         }
     }

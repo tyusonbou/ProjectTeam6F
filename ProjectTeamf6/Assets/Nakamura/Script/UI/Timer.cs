@@ -30,7 +30,7 @@ public class Timer : MonoBehaviour
     void Update()
     {
         if (Mathf.Approximately(Time.timeScale, 0f)) { return; }
-
+        if (CountDown.isCountDown) { return; }
         //　制限時間が0秒以下なら何もしない
         //if (totalTime <= 0f)
         //{

@@ -19,11 +19,10 @@ public class BaseHPUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //BaseHP = GetComponentInChildren<GameObject>();
         PlayerBase = GetComponentInParent<Base>();
         BHPSlider = BaseHP.GetComponent<Slider>();
         Guage = GetComponentInChildren<Image>();
-        //Button = GameObject.Find("Button");
+        
 
         YButton.SetActive(false);      
 
@@ -62,15 +61,15 @@ public class BaseHPUI : MonoBehaviour
                 return;
             }
 
-            //if (PlayerBase.ReturnBaf() == false)　//バフを受けてないとき表示
-            //{
-            //    YButton.SetActive(true);
-            //}
+            if (PlayerBase.ReturnBaf() == false)　//バフを受けてないとき表示
+            {
+                YButton.SetActive(true);
+            }
 
-            //if (PlayerBase.ReturnBaf() == true)　//バフを受けてるとき非表示
-            //{
-            //    YButton.SetActive(false);
-            //}
+            if (PlayerBase.ReturnBaf() == true)　//バフを受けてるとき非表示
+            {
+                YButton.SetActive(false);
+            }
         }
     }
 

@@ -54,21 +54,21 @@ public class BaseUI : MonoBehaviour
         Spawners[1] = GameObject.Find("enemyBase (2)").GetComponent<ZombieVillageStatus>();
 
         PbSlider.maxValue = PlayerBase.ReturnHP();
-        //EbSlider.maxValue = EnemyBase.ReturnHP();
+        EbSlider.maxValue = EnemyBase.ReturnHP();
 
         for (int i = 0; i < 4; i++)
         {
             ViSlider[i].maxValue = Villeges[i].ReturnHP();
         }
-        //ViSlider[4].maxValue = Spawners[0].ReturnHP();
-        //ViSlider[5].maxValue = Spawners[1].ReturnHP();
+        ViSlider[4].maxValue = Spawners[0].ReturnHP();
+        ViSlider[5].maxValue = Spawners[1].ReturnHP();
     }
 
     // Update is called once per frame
     void Update()
     {
         PbSlider.value = PlayerBase.ReturnHP();
-        //EbSlider.value = EnemyBase.ReturnHP();
+        EbSlider.value = EnemyBase.ReturnHP();
 
         for(int i = 0; i < 4; i++)
         {
@@ -92,9 +92,9 @@ public class BaseUI : MonoBehaviour
                 Guages[i].color = new Color32(53, 53, 53, 100);
             }
         }
-        //ViSlider[4].value = Spawners[0].ReturnHP();
-        //ViSlider[5].value = Spawners[1].ReturnHP();
+        ViSlider[4].value = Spawners[0].ReturnHP();
+        ViSlider[5].value = Spawners[1].ReturnHP();
 
-        
+
     }
 }

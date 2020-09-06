@@ -3172,7 +3172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnTime: 5
-  maxSpawn: 100
+  maxSpawn: 75
   pv_enemy: {fileID: 3889363092191256165, guid: 944ffa99984db0945884e235cb4521a2,
     type: 3}
   pl_enemy: {fileID: 3942048175537981177, guid: 87d2d8737705ee3488946568432617c3,
@@ -3236,7 +3236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnTime: 5
-  maxSpawn: 100
+  maxSpawn: 75
   pv_enemy: {fileID: 3889363092191256165, guid: 944ffa99984db0945884e235cb4521a2,
     type: 3}
   pl_enemy: {fileID: 3942048175537981177, guid: 87d2d8737705ee3488946568432617c3,
@@ -3352,6 +3352,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1179826129, guid: 44523d95d60e486419dc93c412746763, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1191047115, guid: 44523d95d60e486419dc93c412746763, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -3398,6 +3402,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1363638845, guid: 44523d95d60e486419dc93c412746763, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1460859956, guid: 44523d95d60e486419dc93c412746763, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1776287478, guid: 44523d95d60e486419dc93c412746763, type: 3}
@@ -4416,7 +4424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnTime: 5
-  maxSpawn: 100
+  maxSpawn: 75
   pv_enemy: {fileID: 3889363092191256165, guid: 944ffa99984db0945884e235cb4521a2,
     type: 3}
   pl_enemy: {fileID: 3942048175537981177, guid: 87d2d8737705ee3488946568432617c3,
@@ -5122,7 +5130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf2f87babde8d043bf512fbee8d5421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 1000
+  HP: 1500
 --- !u!61 &825342532
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5280,7 +5288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnTime: 5
-  maxSpawn: 100
+  maxSpawn: 75
   pv_enemy: {fileID: 3889363092191256165, guid: 944ffa99984db0945884e235cb4521a2,
     type: 3}
   pl_enemy: {fileID: 3942048175537981177, guid: 87d2d8737705ee3488946568432617c3,
@@ -5714,7 +5722,7 @@ PrefabInstance:
     - target: {fileID: 4962574305367549980, guid: 3bea6035f1ef7d341a4ddf5d98fbf28d,
         type: 3}
       propertyPath: RecoveryUpPoint
-      value: 1.05
+      value: 1.01
       objectReference: {fileID: 0}
     - target: {fileID: 4962574305367549981, guid: 3bea6035f1ef7d341a4ddf5d98fbf28d,
         type: 3}
@@ -5917,7 +5925,7 @@ PrefabInstance:
     - target: {fileID: 8150447942817126502, guid: 5a1ef7a64e4e85c4d86ecb569fa64306,
         type: 3}
       propertyPath: maxSpawn
-      value: 100
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 8150447942817126502, guid: 5a1ef7a64e4e85c4d86ecb569fa64306,
         type: 3}
@@ -10806,7 +10814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf2f87babde8d043bf512fbee8d5421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 1000
+  HP: 1500
 --- !u!61 &2142969056
 BoxCollider2D:
   m_ObjectHideFlags: 0

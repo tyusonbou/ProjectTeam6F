@@ -95,7 +95,7 @@ public class Base : MonoBehaviour
             {
                 //拠点の場合
                 case 0:
-
+                    Destroy(gameObject);
                     break;
                 //村（攻撃力バフ）の場合
                 case 1:

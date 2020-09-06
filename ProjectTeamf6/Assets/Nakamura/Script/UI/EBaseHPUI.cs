@@ -19,13 +19,13 @@ public class EBaseHPUI : MonoBehaviour
         EnemyBase = GetComponentInParent<ZombieVillageStatus>();
         BHPSlider = BaseHP.GetComponent<Slider>();
 
-        //BHPSlider.maxValue = EnemyBase.ReturnHP();
+        BHPSlider.maxValue = EnemyBase.ReturnHP();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //BHPSlider.value = EnemyBase.ReturnHP();
+        BHPSlider.value = EnemyBase.ReturnHP();
 
         
     }

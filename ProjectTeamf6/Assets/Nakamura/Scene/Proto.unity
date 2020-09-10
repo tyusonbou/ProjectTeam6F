@@ -241,6 +241,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32917cb56c763647a12d1da76fab180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerTouch: 0
+  pv_EnemyTouch: 0
+  player_EnemyTouch: 0
   Touch: 0
   ON: 0
   Sand: {fileID: -1743226805721588428, guid: 981d1a2bb77716645b5baab2257c25a9, type: 3}
@@ -250,7 +253,7 @@ MonoBehaviour:
   HP: 0
   TerrainType: 1
   RecoveryPoint: 1
-  RecoveryUpPoint: 1.1
+  RecoveryDownPoint: 0
   SpeedDownPoint: 0
 --- !u!483693784 &31125585
 TilemapRenderer:
@@ -2432,6 +2435,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32917cb56c763647a12d1da76fab180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerTouch: 0
+  pv_EnemyTouch: 0
+  player_EnemyTouch: 0
   Touch: 0
   ON: 0
   Sand: {fileID: -1743226805721588428, guid: 981d1a2bb77716645b5baab2257c25a9, type: 3}
@@ -2441,7 +2447,7 @@ MonoBehaviour:
   HP: 0
   TerrainType: 4
   RecoveryPoint: 0
-  RecoveryUpPoint: 0
+  RecoveryDownPoint: 0
   SpeedDownPoint: 5
 --- !u!483693784 &300572592
 TilemapRenderer:
@@ -4113,6 +4119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32917cb56c763647a12d1da76fab180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerTouch: 0
+  pv_EnemyTouch: 0
+  player_EnemyTouch: 0
   Touch: 0
   ON: 0
   Sand: {fileID: -1743226805721588428, guid: 981d1a2bb77716645b5baab2257c25a9, type: 3}
@@ -4122,7 +4131,7 @@ MonoBehaviour:
   HP: 100
   TerrainType: 2
   RecoveryPoint: 0
-  RecoveryUpPoint: 0
+  RecoveryDownPoint: 0
   SpeedDownPoint: 0
 --- !u!483693784 &531633941
 TilemapRenderer:
@@ -4603,6 +4612,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32917cb56c763647a12d1da76fab180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerTouch: 0
+  pv_EnemyTouch: 0
+  player_EnemyTouch: 0
   Touch: 0
   ON: 0
   Sand: {fileID: -1743226805721588428, guid: 981d1a2bb77716645b5baab2257c25a9, type: 3}
@@ -4612,7 +4624,7 @@ MonoBehaviour:
   HP: 100
   TerrainType: 2
   RecoveryPoint: 0
-  RecoveryUpPoint: 0
+  RecoveryDownPoint: 0
   SpeedDownPoint: 0
 --- !u!483693784 &671720855
 TilemapRenderer:
@@ -9832,6 +9844,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32917cb56c763647a12d1da76fab180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerTouch: 0
+  pv_EnemyTouch: 0
+  player_EnemyTouch: 0
   Touch: 0
   ON: 0
   Sand: {fileID: -1743226805721588428, guid: 981d1a2bb77716645b5baab2257c25a9, type: 3}
@@ -9841,7 +9856,7 @@ MonoBehaviour:
   HP: 0
   TerrainType: 3
   RecoveryPoint: 0
-  RecoveryUpPoint: 0
+  RecoveryDownPoint: 0
   SpeedDownPoint: 0
 --- !u!19719996 &1392755665
 TilemapCollider2D:

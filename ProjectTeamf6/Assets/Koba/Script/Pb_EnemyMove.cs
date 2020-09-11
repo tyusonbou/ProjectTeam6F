@@ -17,10 +17,14 @@ public class Pb_EnemyMove : MonoBehaviour
     private float knockBack = 2.0f;
     [SerializeField, Header("注意を引くエリア"), Range(0, 100)]
     private float attractSeachArea = 4.0f;
+    [SerializeField, Header("攻撃速度"), Range(0, 100)]
+    private float atkTime = 0.0f;
     [SerializeField]
     private Player playerScript;
     [SerializeField]
     private SearchAreaMove searchScript;
+    [SerializeField]
+    private GameObject EnemyAtk;
 
     SpriteRenderer mainSpriteRender;
     int spriteNum;
@@ -60,6 +64,8 @@ public class Pb_EnemyMove : MonoBehaviour
     bool isDamage;
     public bool isSearchPlayer;
 
+    public bool villageAtk;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,6 +85,8 @@ public class Pb_EnemyMove : MonoBehaviour
         mainSpriteRender = gameObject.GetComponent<SpriteRenderer>();
 
         currentTime = 3.0f;
+
+        EnemyAtk.SetActive(false);
 
         int rand = Random.Range(1, 5);
 
@@ -111,7 +119,7 @@ public class Pb_EnemyMove : MonoBehaviour
         }
         if (rand == 4)
         {
-             health = CSVReader.csvIntDatas[3, 1];
+            health = CSVReader.csvIntDatas[3, 1];
             atk = CSVReader.csvIntDatas[3, 2];
             //speed = CSVReader.csvIntDatas[3, 3];
             navMeshAge.speed = CSVReader.csvIntDatas[3, 3];
@@ -125,6 +133,8 @@ public class Pb_EnemyMove : MonoBehaviour
     {
         var velocity = rb.velocity;
         velocity = Vector2.zero;
+
+        EnemyAtk.SetActive(false);
 
         playerPos = player.transform.position;
         if (playerBase != null)
@@ -198,8 +208,14 @@ public class Pb_EnemyMove : MonoBehaviour
 
         forward = (navMeshAge.velocity.x < 0) ? "left" : (navMeshAge.velocity.x > 0) ? "right" : forward;
         varti = (navMeshAge.velocity.y < 0) ? "down" : (navMeshAge.velocity.y > 0) ? "up" : varti;
-        //Debug.Log(forward);
-        //Debug.Log(varti);
+
+        atkTime -= Time.deltaTime;
+
+        if (atkTime <= 0)
+        {
+            EnemyAtk.SetActive(true);
+            atkTime = 2.0f;
+        }
 
         ChangeSprite();
 
@@ -335,16 +351,25 @@ public class Pb_EnemyMove : MonoBehaviour
         }
     }
 
-    /*
-    void OnTriggerExit2D(Collision2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
-
-        if (other.gameObject.CompareTag("Attack"))
+        if (other.gameObject.CompareTag("Village"))
         {
-            isDamage = false;
+            villageAtk = true;
+            //transform.position += new Vector3(1.0f, 1.0f, 0.0f);
+            //Debug.Log("当たりました");
         }
     }
-    */
+
+    void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Village"))
+        {
+            //villageAtk = false;
+            //transform.position += new Vector3(1.0f, 1.0f, 0.0f);
+            //Debug.Log("当たりました");
+        }
+    }
 
     public float ReturnEnemyAttackP()
     {

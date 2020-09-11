@@ -18,10 +18,14 @@ public class pv_EnemyMove : MonoBehaviour
     private float knockBack = 2.0f;
     [SerializeField, Header("注意を引くエリア"), Range(0, 100)]
     private float attractSeachArea = 4.0f;
+    [SerializeField, Header("攻撃速度"), Range(0, 100)]
+    private float atkTime = 0.0f;
     [SerializeField]
     private Player playerScript;
     [SerializeField]
     private SearchAreaMove searchScript;
+    [SerializeField]
+    private GameObject EnemyAtk;
 
     SpriteRenderer mainSpriteRender;
     int spriteNum;
@@ -54,7 +58,7 @@ public class pv_EnemyMove : MonoBehaviour
     Vector3 playerPos, playerBasePos, village1Pos, village2Pos, village3Pos, village4Pos, attractObjPos;
     Vector3 targetPosNoma;
 
-    Vector3 relayPoint1,relayPoint2, relayPoint3, relayPoint4, relayPoint5,relayPoint6;
+    Vector3 relayPoint1, relayPoint2, relayPoint3, relayPoint4, relayPoint5, relayPoint6;
 
     /*
     float pex, pey, pesq;
@@ -67,7 +71,6 @@ public class pv_EnemyMove : MonoBehaviour
     float sqrMin;
     Vector3 startPos;
     float startPosMagni;
-    int curTime;
     int rps;
 
     public int village1Judg;
@@ -85,9 +88,6 @@ public class pv_EnemyMove : MonoBehaviour
     float playerDamage;
     float currentTime;
 
-    float oldState;
-    float newState;
-
     bool isRelayPointMove;
     bool inAttractArea;
     //public bool isAttract;
@@ -97,19 +97,6 @@ public class pv_EnemyMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //CSVの読み込み
-        {
-            /*
-            string path = @"C:\Users\yuta\Documents\GitHub\ProjectTeam6F\ProjectTeamf6\Assets\Koba\CSV\zombie_parameter.csv";
-            //var csv = Resources.Load(path) as TextAsset;
-            //var sr = new StringReader(csv.text);
-            Debug.Log(path);
-            //var cr = new CsvReader(sr);
-            //cr.Configuration.RegisterClassMap<>
-        */
-
-        }
-
         rb = GetComponent<Rigidbody2D>();
 
         navMeshAge = GetComponent<NavMeshAgent>();
@@ -135,7 +122,7 @@ public class pv_EnemyMove : MonoBehaviour
 
         currentTime = 3.0f;
 
-        oldState = 0;
+        EnemyAtk.SetActive(false);
 
         isRelayPointMove = false;
         inAttractArea = false;
@@ -185,6 +172,8 @@ public class pv_EnemyMove : MonoBehaviour
     {
         var velocity = rb.velocity;
         velocity = Vector3.zero;
+
+        EnemyAtk.SetActive(false);
 
         playerPos = player.transform.position;
         if (playerBase != null)
@@ -257,28 +246,28 @@ public class pv_EnemyMove : MonoBehaviour
                             sqrMin = (playerBasePos - transform.position).sqrMagnitude;
                             state = 2;
                         }
-                        
+
                         if (sqrMin > ((village1Pos - transform.position).sqrMagnitude)
                             && village1Judg != 4)
                         {
                             sqrMin = (village1Pos - transform.position).sqrMagnitude;
                             state = 3;
                         }
-                        
+
                         if (sqrMin > ((village2Pos - transform.position).sqrMagnitude)
                             && village2Judg != 4)
                         {
                             sqrMin = (village2Pos - transform.position).sqrMagnitude;
                             state = 4;
                         }
-                        
+
                         if (sqrMin > ((village3Pos - transform.position).sqrMagnitude)
                             && village3Judg != 4)
                         {
                             sqrMin = (village3Pos - transform.position).sqrMagnitude;
                             state = 5;
                         }
-                        
+
                         if (sqrMin > ((village4Pos - transform.position).sqrMagnitude)
                               && village4Judg != 4)
                         {
@@ -327,7 +316,6 @@ public class pv_EnemyMove : MonoBehaviour
             State7();
         }
 
-        oldState = state;
         //transform.position += targetPosNoma * speed;
         Vector2 nomaVec2 = targetPosNoma;
         //Debug.Log(targetPosNoma);
@@ -342,8 +330,13 @@ public class pv_EnemyMove : MonoBehaviour
         forward = (navMeshAge.velocity.x < 0) ? "left" : (navMeshAge.velocity.x > 0) ? "right" : forward;
         varti = (navMeshAge.velocity.y < 0) ? "down" : (navMeshAge.velocity.y > 0) ? "up" : varti;
 
-        //Debug.Log(forward);
-        //Debug.Log(varti);
+        atkTime -= Time.deltaTime;
+
+        if (atkTime <= 0)
+        {
+            EnemyAtk.SetActive(true);
+            atkTime = 2.0f;
+        }
 
         ChangeSprite();
 
@@ -352,7 +345,6 @@ public class pv_EnemyMove : MonoBehaviour
             HitDamage();
         }
         IsDestroy();
-        //oldPos = transform.position;
     }
 
     void State1()
@@ -361,7 +353,6 @@ public class pv_EnemyMove : MonoBehaviour
         {
             navMeshAge.SetDestination(playerPos);
         }
-        //targetPosNoma = (playerPos - transform.position).normalized;
     }
 
     void State2()
@@ -370,7 +361,6 @@ public class pv_EnemyMove : MonoBehaviour
         {
             navMeshAge.SetDestination(playerBasePos);
         }
-        //targetPosNoma = (playerBasePos - transform.position).normalized;
     }
 
     void State3()
@@ -379,7 +369,6 @@ public class pv_EnemyMove : MonoBehaviour
         {
             navMeshAge.SetDestination(village1Pos);
         }
-        //targetPosNoma = (village1Pos - transform.position).normalized;
     }
     void State4()
     {
@@ -387,7 +376,6 @@ public class pv_EnemyMove : MonoBehaviour
         {
             navMeshAge.SetDestination(village2Pos);
         }
-        //targetPosNoma = (village2Pos - transform.position).normalized;
     }
 
     void State5()
@@ -396,7 +384,6 @@ public class pv_EnemyMove : MonoBehaviour
         {
             navMeshAge.SetDestination(village3Pos);
         }
-        //targetPosNoma = (village3Pos - transform.position).normalized;
     }
 
     void State6()
@@ -405,7 +392,6 @@ public class pv_EnemyMove : MonoBehaviour
         {
             navMeshAge.SetDestination(village4Pos);
         }
-        //targetPosNoma = (village4Pos - transform.position).normalized;
     }
 
     void State7()
@@ -414,122 +400,8 @@ public class pv_EnemyMove : MonoBehaviour
         {
             navMeshAge.SetDestination(attractObjPos);
         }
-        //attractObjPos = attractObj.transform.position;
-        //targetPosNoma = (attractObjPos - transform.position).normalized;
     }
 
-    /*
-    void relayPointState()
-    {
-        
-        float sqrMagMin;
-
-        if ((relayPoint1 - transform.position).sqrMagnitude < (relayPoint2 - transform.position).sqrMagnitude)
-        {
-            sqrMagMin = (relayPoint1 - transform.position).sqrMagnitude;
-            rps = 1;
-        }
-        else
-        {
-            sqrMagMin = (relayPoint2 - transform.position).sqrMagnitude;
-            rps = 2;
-        }
-
-        if (sqrMagMin > (relayPoint3 - transform.position).sqrMagnitude)
-        {
-            sqrMagMin = (relayPoint3 - transform.position).sqrMagnitude;
-            rps = 3;
-        }
-
-        if (sqrMagMin > (relayPoint4 - transform.position).sqrMagnitude)
-        {
-            sqrMagMin = (relayPoint4 - transform.position).sqrMagnitude;
-            rps = 4;
-        }
-
-        if (sqrMagMin > (relayPoint5 - transform.position).sqrMagnitude)
-        {
-            sqrMagMin = (relayPoint5 - transform.position).sqrMagnitude;
-            rps = 5;
-        }
-
-        if (curTime == 0)
-        {
-            startPos = transform.position;
-            curTime++;
-        }
-
-        if (rps == 1)
-        {
-            var velocity = rb.velocity;
-            velocity = Vector3.zero;
-            targetPosNoma = (relayPoint1 - transform.position).normalized;
-            Vector2 nomaVec2 = targetPosNoma;
-            velocity += nomaVec2 * speed;
-            if ((startPos - transform.position).sqrMagnitude > (startPos - relayPoint1).sqrMagnitude)
-            {
-                isRelayPointMove = false;
-                curTime = 0;
-            }
-        }
-
-        if (rps == 2)
-        {
-            var velocity = rb.velocity;
-            velocity = Vector3.zero;
-            targetPosNoma = (relayPoint2 - transform.position).normalized;
-            Vector2 nomaVec2 = targetPosNoma;
-            velocity += nomaVec2 * speed;
-            if ((startPos - transform.position).sqrMagnitude > (startPos - relayPoint2).sqrMagnitude)
-            {
-                isRelayPointMove = false;
-                curTime = 0;
-            }
-        }
-
-        if (rps == 3)
-        {
-            var velocity = rb.velocity;
-            velocity = Vector3.zero;
-            targetPosNoma = (relayPoint3 - transform.position).normalized;
-            Vector2 nomaVec2 = targetPosNoma;
-            velocity += nomaVec2 * speed;
-            if ((startPos - transform.position).sqrMagnitude > (startPos - relayPoint3).sqrMagnitude)
-            {
-                isRelayPointMove = false;
-                curTime = 0;
-            }
-        }
-
-        if (rps == 4)
-        {
-            var velocity = rb.velocity;
-            velocity = Vector3.zero;
-            targetPosNoma = (relayPoint4 - transform.position).normalized;
-            Vector2 nomaVec2 = targetPosNoma;
-            velocity += nomaVec2 * speed;
-            if ((startPos - transform.position).sqrMagnitude > (startPos - relayPoint4).sqrMagnitude)
-            {
-                isRelayPointMove = false;
-                curTime = 0;
-            }
-        }
-
-        if (rps == 5)
-        {
-            var velocity = rb.velocity;
-            velocity = Vector3.zero;
-            targetPosNoma = (relayPoint5 - transform.position).normalized;
-            Vector2 nomaVec2 = targetPosNoma;
-            velocity += nomaVec2 * speed;
-            if ((startPos - transform.position).sqrMagnitude > (startPos - relayPoint5).sqrMagnitude)
-            {
-                isRelayPointMove = false;
-                curTime = 0;
-            }
-        }
-    }
-    */
 
     void HitDamage()
     {
@@ -563,66 +435,20 @@ public class pv_EnemyMove : MonoBehaviour
 
     }
 
-    /*
-    void Dijkstra(Vector3 tagepos)
-    {
-        int dijkState = 0;
-        float dijkSqrMin = 0;
-        if ((relayPoint1 - transform.position).sqrMagnitude
-                           < (relayPoint2 - transform.position).sqrMagnitude)
-        {
-            dijkSqrMin = (relayPoint1 - transform.position).sqrMagnitude;
-            dijkState = 1;
-        }
-        else
-        {
-            dijkSqrMin = (relayPoint2 - transform.position).sqrMagnitude;
-            dijkState = 2;
-        }
-
-        if (sqrMin > ((relayPoint3 - transform.position).sqrMagnitude))
-        {
-            dijkSqrMin = (relayPoint3 - transform.position).sqrMagnitude;
-            dijkState = 3;
-        }
-
-        if (sqrMin > ((relayPoint4 - transform.position).sqrMagnitude))
-        {
-            dijkSqrMin = (relayPoint4 - transform.position).sqrMagnitude;
-            dijkState = 4;
-        }
-
-        if (sqrMin > ((relayPoint5 - transform.position).sqrMagnitude))
-        {
-            dijkSqrMin = (relayPoint5 - transform.position).sqrMagnitude;
-            dijkState = 5;
-        }
-
-        if (sqrMin > ((relayPoint6 - transform.position).sqrMagnitude))
-        {
-            dijkSqrMin = (relayPoint6 - transform.position).sqrMagnitude;
-            dijkState = 6;
-        }
-
-        
-    }
-    */
-
-       
     void ChangeSprite()
     {
-            if (forward == "left")
-            {
-                //mainSpriteRender.sprite = defZombie_l;
-                mainSpriteRender.flipX = true;
-            }
-            if (forward == "right")
-            {
-                //mainSpriteRender.sprite = defZombie_r;
-                mainSpriteRender.flipX = false;
-            }
+        if (forward == "left")
+        {
+            //mainSpriteRender.sprite = defZombie_l;
+            mainSpriteRender.flipX = true;
+        }
+        if (forward == "right")
+        {
+            //mainSpriteRender.sprite = defZombie_r;
+            mainSpriteRender.flipX = false;
+        }
     }
-  
+
 
     void IsDestroy()
     {
@@ -648,11 +474,12 @@ public class pv_EnemyMove : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Village"))
-        {
-            transform.position += new Vector3(1.0f, 1.0f, 0.0f);
-            //Debug.Log("当たりました");
-        }
+        
+    }
+
+    void OnCollisionExit2D(Collision2D other)
+    {
+       
     }
 
     /*

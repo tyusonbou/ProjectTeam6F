@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Nakamura/Scene/Title.unity
-    guid: 8ed80a479a9a92e4a8f020fd6b485b8d
+    path: Assets/Nakamura/Title/Hosoda/Title.unity
+    guid: ccbc9777e124ad742ad79fc418d44f80
   - enabled: 1
     path: Assets/Nakamura/Scene/Proto.unity
     guid: cfcc487ea1d672145b923307a57fdeef

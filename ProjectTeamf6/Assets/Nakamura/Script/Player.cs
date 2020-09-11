@@ -77,7 +77,11 @@ public class Player : MonoBehaviour
 
     Base ATKBase1;
     Base ATKBase2;
-    
+
+    Animator AttackAnim1;
+    Animator AttackAnim2;
+    Animator AttackAnim3;
+
     [SerializeField]
     AudioClip[] audioClips;
 
@@ -89,6 +93,10 @@ public class Player : MonoBehaviour
 
         status = GetComponent<Status>();
         MoveState = "RIGHT";
+
+        AttackAnim1 = attackSword.GetComponent<Animator>();
+        AttackAnim2 = attackSword2.GetComponent<Animator>();
+        AttackAnim3 = attackSword3.GetComponent<Animator>();
 
         doAttack = 0;
         attackSword.SetActive(false);
@@ -309,15 +317,25 @@ public class Player : MonoBehaviour
 
             if (ATimer > ALimitTimer)
             {
-                attackSword.SetActive(false);
-                attackSword2.SetActive(false);
-                attackSword3.SetActive(false);
+                
                 isAttack = false;
                 rb2d.velocity = Vector2.zero;
                 doAttack = 0;
             }
         }
 
+        if (AttackAnim1.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+        {
+            attackSword.SetActive(false);
+        }
+        if (AttackAnim2.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+        {
+            attackSword2.SetActive(false);
+        }
+        if (AttackAnim3.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+        {
+            attackSword3.SetActive(false);
+        }
     }
 
     //遠距離攻撃

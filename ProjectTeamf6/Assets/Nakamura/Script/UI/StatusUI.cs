@@ -57,7 +57,7 @@ public class StatusUI : MonoBehaviour
         ATKText.text = "ATK:" + (int)player.ReturnAttackP();
         SPDText.text = "SPD:" + (int)player.ReturnSpeed();
 
-        if (player.ReturnAttackP() > 50)
+        if (player.ReturnAttackP() > 70)
         {
             UPImage[0].color = Color.white; //一定以上で攻撃表示
         }
@@ -65,7 +65,7 @@ public class StatusUI : MonoBehaviour
         {
             UPImage[0].color = new Color32(50, 50, 50, 200);
         }
-        if (player.ReturnAttackP() > 70)
+        if (player.ReturnAttackP() > 150)
         {
             UPImage[1].color = Color.white;
         }

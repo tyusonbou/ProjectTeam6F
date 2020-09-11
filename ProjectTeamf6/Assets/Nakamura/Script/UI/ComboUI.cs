@@ -12,6 +12,8 @@ public class ComboUI : MonoBehaviour
     Image[] Buttons; //ボタン画像
     [SerializeField]
     Image[] Bafs;  //バフ画像
+    [SerializeField]
+    Text ChargeText;
 
     Player player;
 
@@ -42,18 +44,20 @@ public class ComboUI : MonoBehaviour
         if (ATKBase1.ReturnBaf() == true || ATKBase2.ReturnBaf() == true) //攻撃アップが1つ以上の時
         {
             Buttons[0].color = Color.white;
-            Buttons[2].color = Color.white;
+            //Buttons[2].color = Color.white;
             Bafs[0].color = Color.clear;
             Bafs[2].color = Color.clear;
             Bafs[4].color = Color.clear;
+            ChargeText.color = new Color32(238, 244, 60, 255);
         }
         else
         {
             Buttons[0].color = Color.gray;
-            Buttons[2].color = Color.gray;
+            //Buttons[2].color = Color.gray;
             Bafs[0].color = Color.gray;
             Bafs[2].color = Color.gray;
             Bafs[4].color = Color.gray;
+            ChargeText.color = Color.gray;
         }
 
         if (ATKBase1.ReturnBaf() == true && ATKBase2.ReturnBaf() == true)//攻撃アップが2つ以上の時

@@ -61,7 +61,7 @@ public class PauseScript : MonoBehaviour
 
         if (GameObject.Find("Player") == null || GameObject.Find("enemyBase") == null || GameObject.Find("playerBase") == null)
         {
-            retry.GetComponent<Text>().text = "リトライ";
+            retry.GetComponent<Text>().text = "Retry";
             if (!menu)
             {
                 menu = true;

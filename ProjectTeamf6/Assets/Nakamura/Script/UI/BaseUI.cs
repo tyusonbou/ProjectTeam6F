@@ -77,19 +77,19 @@ public class BaseUI : MonoBehaviour
 
             if (BaseType[i] == 1)
             {
-                Guages[i].color = new Color32(255, 0, 0, 100);
+                Guages[i].color = new Color32(255, 0, 0, 255);
             }
             if (BaseType[i] == 2)
             {
-                Guages[i].color = new Color32(0, 0, 255, 100);
+                Guages[i].color = new Color32(0, 0, 255, 255);
             }
             if (BaseType[i] == 3)
             {
-                Guages[i].color = new Color32(0, 255, 0, 100);
+                Guages[i].color = new Color32(0, 255, 0, 255);
             }
             if (BaseType[i] == 4)
             {
-                Guages[i].color = new Color32(53, 53, 53, 100);
+                Guages[i].color = new Color32(150, 150, 150, 255);
             }
         }
         ViSlider[4].value = Spawners[0].ReturnHP();

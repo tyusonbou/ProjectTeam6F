@@ -106,6 +106,7 @@ MonoBehaviour:
   BaseType: 1
   ON: 0
   Touch: 0
+  Baf: 0
 --- !u!61 &4962574305367549981
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -19,7 +19,7 @@ public class pv_EnemyMove : MonoBehaviour
     [SerializeField, Header("注意を引くエリア"), Range(0, 100)]
     private float attractSeachArea = 4.0f;
     [SerializeField, Header("攻撃速度"), Range(0, 100)]
-    private float atkTime = 0.0f;
+    private float atkTime = 2.0f;
     [SerializeField]
     private Player playerScript;
     [SerializeField]

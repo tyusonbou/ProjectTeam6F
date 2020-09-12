@@ -12,6 +12,7 @@ public class Base : MonoBehaviour
     GameObject Player;
     pv_EnemyMove pv_enemy;
     Pl_EnemyMove pl_enemy;
+    Pb_EnemyMove pb_enemy;
     [SerializeField]
     private float HP;//拠点の体力
     [SerializeField]
@@ -146,9 +147,9 @@ public class Base : MonoBehaviour
                         break;
                 }
             }
-            
+
         }
-        
+
     }
 
     //攻撃力バフ
@@ -228,37 +229,67 @@ public class Base : MonoBehaviour
     {
         if (BaseType != 4)
         {
-            if (col.gameObject.name == "player_Enemy" || col.gameObject.name == "player_Enemy(Clone)")
+            //if (col.gameObject.name == "player_Enemy(Clone)")
+            //{
+            //    //スクリプトを参照
+            //    pl_enemy = col.gameObject.GetComponent<Pl_EnemyMove>();
+            //    //メソッドを参照
+            //    BaseDamege = pl_enemy.RetrunEnemyAttackP();
+            //    //なぜか二回呼ばれるので２で割る
+            //    HP = HP - BaseDamege / 2;
+            //}
+            //else if (col.gameObject.name == "pv_Enemy(Clone)")
+            //{
+            //    //スクリプトを参照
+            //    pv_enemy = col.gameObject.GetComponent<pv_EnemyMove>();
+            //    //メソッドを参照
+            //    BaseDamege = pv_enemy.ReturnEnemyAttackP();
+            //    //なぜかニ回呼ばれるので２で割る
+            //    HP = HP - BaseDamege / 2;
+            //}
+            //else if (col.gameObject.name == "pb_Enemy(Clone)")
+            //{
+            //    //スクリプトを参照
+            //    pb_enemy = col.gameObject.GetComponent<Pb_EnemyMove>();
+            //    //メソッドを参照
+            //    BaseDamege = pb_enemy.ReturnEnemyAttackP();
+            //    //なぜか二回呼ばれるので２で割る
+            //    HP = HP - BaseDamege / 2;
+            //}
+            if (col.gameObject.tag == "EnemyAtk")
             {
-                //スクリプトを参照
-                pl_enemy = col.gameObject.GetComponent<Pl_EnemyMove>();
-                //メソッドを参照
-                BaseDamege = pl_enemy.RetrunEnemyAttackP();
-                //なぜか二回呼ばれるので２で割る
-                HP = HP - BaseDamege / 2;
-            }
-            else if (col.gameObject.name == "pv_Enemy" || col.gameObject.name == "pv_Enemy(Clone)")
-            {
-                //スクリプトを参照
-                pv_enemy = col.gameObject.GetComponent<pv_EnemyMove>();
-                //メソッドを参照
-                BaseDamege = pv_enemy.ReturnEnemyAttackP();
-                //なぜかニ回呼ばれるので２で割る
-                HP = HP - BaseDamege / 2;
+                Debug.Log("誰だ！？");
+                if (col.transform.root.name == "player_Enemy(Clone)")
+                {
+                    //スクリプトを参照
+                    pl_enemy = col.gameObject.GetComponentInParent<Pl_EnemyMove>();
+                    //メソッドを参照
+                    BaseDamege = pl_enemy.RetrunEnemyAttackP();
+                    //なぜか二回呼ばれるので２で割る
+                    HP = HP - BaseDamege / 2;
+                }
+                else if (col.transform.root.name == "pv_Enemy(Clone)")
+                {
+                    
+                    //スクリプトを参照
+                    pv_enemy = col.gameObject.GetComponentInParent<pv_EnemyMove>();
+                    //メソッドを参照
+                    BaseDamege = pv_enemy.ReturnEnemyAttackP();
+                    //なぜかニ回呼ばれるので２で割る
+                    HP = HP - BaseDamege / 2;
+                }
+                else if (col.transform.root.name == "pb_Enemy(Clone)")
+                {
+                    //スクリプトを参照
+                    pb_enemy = col.gameObject.GetComponentInParent<Pb_EnemyMove>();
+                    //メソッドを参照
+                    BaseDamege = pb_enemy.ReturnEnemyAttackP();
+                    //なぜか二回呼ばれるので２で割る
+                    HP = HP - BaseDamege / 2;
+                }
             }
         }
-        else if(col.gameObject.name == "pb_Enemy")
-        {
-            
 
-            //enmove = col.gameObject.GetComponent<EnemyMove>();
-            //HP = HP - enmove.damege;
-        }
-        else if(col.gameObject.name == "pb_Enemy")
-        {
-            //pben = col.gameObject.GetComponent<Pb_EnemyMove>();
-            //HP = HP - pben.damege;
-        }
         if (BaseType == 4 && col.gameObject.tag == "Attack")
         {
 

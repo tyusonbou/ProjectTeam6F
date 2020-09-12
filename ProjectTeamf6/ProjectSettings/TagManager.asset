@@ -9,6 +9,7 @@ TagManager:
   - AttractObject
   - Village
   - SpecialAttack
+  - EnemyAtk
   layers:
   - Default
   - TransparentFX

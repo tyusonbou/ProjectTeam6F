@@ -344,6 +344,7 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("X") && !isAttack && BulletCount.Count < BulletLimit)
         {
             BulletCount.Add(Instantiate(attackBullet, transform.position, transform.rotation));
+            audioSource.PlayOneShot(audioClips[6]);
         }
         if(BulletCount.Count == BulletLimit)
         {
@@ -453,7 +454,7 @@ public class Player : MonoBehaviour
 
             
         }
-        if (Input.GetButtonUp("X"))
+        if (Input.GetButtonUp("X"))　//ボタンが上がったらチャージ段階に応じて発動
         {
             ChargeEffect.SetActive(false);
             ChargeTimer = 0;

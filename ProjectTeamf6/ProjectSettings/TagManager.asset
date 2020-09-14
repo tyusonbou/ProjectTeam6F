@@ -26,8 +26,8 @@ TagManager:
   - SearchArea
   - AttackArea
   - EnemyVillage
-  - 
-  - 
+  - MiniMap
+  - Player
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
   m_SortingLayers:
   - name: Field
     uniqueID: 4124127035
+    locked: 0
+  - name: MiniMap
+    uniqueID: 34763001
     locked: 0
   - name: Default
     uniqueID: 0

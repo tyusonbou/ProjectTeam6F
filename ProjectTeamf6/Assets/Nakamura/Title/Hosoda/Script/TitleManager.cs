@@ -43,7 +43,7 @@ public class TitleManager : MonoBehaviour
         // ゲーム開始
         if (number == 0)
         {
-            if (Input.GetButtonDown("START"))
+            if (Input.GetButtonDown("START") || Input.GetButtonDown("A"))
             {
                 SceneManager.LoadScene(GameScene);
             }

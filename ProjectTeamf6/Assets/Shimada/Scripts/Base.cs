@@ -35,6 +35,7 @@ public class Base : MonoBehaviour
     public bool Touch;//触れているか
     public bool Baf;//バフを発生しているかどうか
     private bool zomb;//ゾンビかどうか
+    private AudioSource audio;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,11 +45,16 @@ public class Base : MonoBehaviour
         ON = true;
         Touch = false;
         Baf = false;
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(BaseType != 4)
+        {
+            zomb = false;
+        }
         //pv_enemy = GameObject.Find("pv_Enemy");
         //pl_enemy = GameObject.Find("player_Enemy");
         if (Touch == true)
@@ -140,6 +146,7 @@ public class Base : MonoBehaviour
                     case 4:
                         Debug.Log("ゾンビ");
                         zomb = true;
+                        audio.Play();
                         //ゾンビ村スクリプト起動
                         GetComponent<Renderer>().material.color = Color.grey;
                         this.GetComponent<EnemyBaseMove>().enabled = true;

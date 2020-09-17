@@ -31,7 +31,7 @@ public class StatusUI : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
-        SPDBase = GameObject.Find("playerVillage1").GetComponent<Base>();
+        SPDBase = GameObject.Find("village2").GetComponent<Base>();
         HPBase = GameObject.Find("village1").GetComponent<Base>();
 
         HPSlider = GameObject.Find("HPGuage").GetComponent<Slider>();

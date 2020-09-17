@@ -7,14 +7,20 @@ public class ZombieVillageStatus : MonoBehaviour
     [Header("ゾンビ村の耐久力")]
     [SerializeField]
     float HP;
-    //List<GameObject> zombiemura = new List<GameObject>();
+    [Header("本拠地か村か")]
+    [SerializeField]
+    int EBType;
 
+    GameObject[] zombiemura = new GameObject[2];
+    SpriteRenderer renderer;
     GameObject player;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
-        //zombiemura = GameObject.FindGameObjectWithTag("ZombieVillage");        
+        zombiemura[0] = GameObject.Find("enemyBase (1)");
+        zombiemura[1] = GameObject.Find("enemyBase (2)");
+        renderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -24,6 +30,15 @@ public class ZombieVillageStatus : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        if(EBType == 0 && zombiemura[0] == null && zombiemura[1] == null)
+        {
+            renderer.color = new Color32(65, 63, 63, 255);
+        }
+        if (EBType == 0 && zombiemura[0] && zombiemura[1])
+        {
+            renderer.color = new Color32(65, 63, 63, 100);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -31,7 +46,16 @@ public class ZombieVillageStatus : MonoBehaviour
         if (col.gameObject.CompareTag("Attack"))
         {
             //Debug.Log(" q");
-            HP -= player.GetComponent<Player>().ReturnAttackP();
+
+            //本拠地は拠点が残っているとダメージを受けない
+            if (EBType == 0 && zombiemura[0] == null && zombiemura[1] == null)
+            {
+                HP -= player.GetComponent<Player>().ReturnAttackP();
+            }
+            if(EBType == 1)
+            {
+                HP -= player.GetComponent<Player>().ReturnAttackP();
+            }
         }
     }
 

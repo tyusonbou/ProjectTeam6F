@@ -54,7 +54,7 @@ public class TitleManager : MonoBehaviour
         {
 
             // アプリケーション終了
-            if (Input.GetButtonDown("START"))
+            if (Input.GetButtonDown("START") || Input.GetButtonDown("A"))
             {
                 Quit();
             }

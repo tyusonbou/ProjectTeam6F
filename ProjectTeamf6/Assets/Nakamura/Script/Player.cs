@@ -109,7 +109,7 @@ public class Player : MonoBehaviour
         ChargeEffect.SetActive(false);
 
         ATKBase1 = GameObject.Find("playerVillage2").GetComponent<Base>();
-        ATKBase2 = GameObject.Find("village2").GetComponent<Base>();
+        ATKBase2 = GameObject.Find("playerVillage1").GetComponent<Base>();
     }
 
     // Update is called once per frame

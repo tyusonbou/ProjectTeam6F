@@ -43,7 +43,7 @@ public class BaseUI : MonoBehaviour
             Guages[i] = GameObject.Find("ViGuage" + i).GetComponentInChildren<Image>();
         }
 
-        
+        Guages[6] = GameObject.Find("EbGuage").GetComponentInChildren<Image>();
 
         Villeges[0] = GameObject.Find("playerVillage1").GetComponent<Base>();
         Villeges[1] = GameObject.Find("playerVillage2").GetComponent<Base>();
@@ -95,6 +95,18 @@ public class BaseUI : MonoBehaviour
         ViSlider[4].value = Spawners[0].ReturnHP();
         ViSlider[5].value = Spawners[1].ReturnHP();
 
+        if(Spawners[0] == null)
+        {
+            Destroy(ViSlider[4]);
+        }
+        if (Spawners[1] == null)
+        {
+            Destroy(ViSlider[5]);
+        }
 
+        if(Spawners[0] == null && Spawners[1] == null)
+        {
+            Guages[6].color = new Color32(150, 150, 150, 255);
+        }
     }
 }

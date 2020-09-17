@@ -31,6 +31,8 @@ public class EnemyBaseMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (CountDown.isCountDown) { return; }
+
         if (IsSpawn() == true)
         {
             currentTime += Time.deltaTime;

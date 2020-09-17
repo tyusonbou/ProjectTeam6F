@@ -936,6 +936,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 20dd42882b3cb724f83b2231c51bcb7e, type: 3}
   - {fileID: 8300000, guid: 35ea2d1e257e54346bd21184a9ddac77, type: 3}
   - {fileID: 8300000, guid: c88fa925fb80b41419f9538599779326, type: 3}
+  - {fileID: 8300000, guid: 226515d3e8de53f479808815c1318154, type: 3}
 --- !u!61 &7930285453773344250
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1063,7 +1064,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.01
   m_Pitch: 1
   Loop: 0
   Mute: 0
